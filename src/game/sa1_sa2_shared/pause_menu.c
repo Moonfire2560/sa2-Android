@@ -44,8 +44,8 @@ void CreatePauseMenu(void)
             s->prevVariant = -1;
             s->animSpeed = SPRITE_ANIM_SPEED(1.0);
             s->palId = 0;
-            s->x = (DISPLAY_WIDTH / 2);
-            s->y = (DISPLAY_HEIGHT / 2);
+            s->x = DISPLAY_CENTER_X;
+            s->y = DISPLAY_CENTER_Y;
             s->frameFlags = SPRITE_FLAG(PRIORITY, 0);
             UpdateSpriteAnimation(s);
 
@@ -62,8 +62,8 @@ void CreatePauseMenu(void)
             s->prevVariant = -1;
             s->animSpeed = SPRITE_ANIM_SPEED(1.0);
             s->palId = 0;
-            s->x = (DISPLAY_WIDTH / 2);
-            s->y = (DISPLAY_HEIGHT / 2);
+            s->x = DISPLAY_CENTER_X;
+            s->y = DISPLAY_CENTER_Y;
             s->frameFlags = SPRITE_FLAG(PRIORITY, 0);
             UpdateSpriteAnimation(s);
         } else {
@@ -79,8 +79,8 @@ void CreatePauseMenu(void)
             s->prevVariant = -1;
             s->animSpeed = SPRITE_ANIM_SPEED(1.0);
             s->palId = 0;
-            s->x = (DISPLAY_WIDTH / 2);
-            s->y = (DISPLAY_HEIGHT / 2);
+            s->x = DISPLAY_CENTER_X;
+            s->y = DISPLAY_CENTER_Y;
             s->frameFlags = SPRITE_FLAG(PRIORITY, 0);
             UpdateSpriteAnimation(s);
 
@@ -96,8 +96,8 @@ void CreatePauseMenu(void)
             s->prevVariant = -1;
             s->animSpeed = SPRITE_ANIM_SPEED(1.0);
             s->palId = 0;
-            s->x = (DISPLAY_WIDTH / 2);
-            s->y = (DISPLAY_HEIGHT / 2);
+            s->x = DISPLAY_CENTER_X;
+            s->y = DISPLAY_CENTER_Y;
             s->frameFlags = SPRITE_FLAG(PRIORITY, 0);
             UpdateSpriteAnimation(s);
         }

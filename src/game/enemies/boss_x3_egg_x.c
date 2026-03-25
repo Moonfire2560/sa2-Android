@@ -495,9 +495,9 @@ void Task_EggXMain()
 
     switch (boss->unk99) {
         case 0:
-            if ((boss->unk88 - (DISPLAY_WIDTH / 2)) <= gCamera.x) {
-                gCamera.minX = (u16)boss->unk88 - ((DISPLAY_WIDTH / 2) + 24);
-                gCamera.maxX = (u16)boss->unk88 + ((DISPLAY_WIDTH / 2) + 24);
+            if ((boss->unk88 - DISPLAY_CENTER_X) <= gCamera.x) {
+                gCamera.minX = (u16)boss->unk88 - (DISPLAY_CENTER_X + 24);
+                gCamera.maxX = (u16)boss->unk88 + (DISPLAY_CENTER_X + 24);
                 boss->unk99 = 1;
                 return;
             }
@@ -844,7 +844,7 @@ NONMATCH("asm/non_matching/game/enemies/boss_x3__Task_803775C.inc", void Task_80
                 {
                     // Likely easily matchable once sub_803A6EC__inline() matches
                     u16 v0;
-                    var_r5 = gCamera.x + (DISPLAY_WIDTH / 2);
+                    var_r5 = gCamera.x + DISPLAY_CENTER_X;
                     v0 = ((u16)s->x - 88);
                     spC = NULL;
                     sp10.left = -v0;
@@ -866,7 +866,7 @@ NONMATCH("asm/non_matching/game/enemies/boss_x3__Task_803775C.inc", void Task_80
             }
 
             // Likely easily matchable once sub_803A6EC__inline() matches
-            var_r5 = (u16)gCamera.x + (DISPLAY_WIDTH / 2);
+            var_r5 = (u16)gCamera.x + DISPLAY_CENTER_X;
             sp14 = 0;
             sp18.left = 88;
             sp18.right = s->x - 0x98;

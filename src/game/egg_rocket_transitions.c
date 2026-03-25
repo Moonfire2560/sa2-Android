@@ -56,7 +56,7 @@ NONMATCH("asm/non_matching/game/egg_rocket_trans__Task_8028CE4.inc", void Task_8
     EggRocketScreenShake *shake = TASK_DATA(gCurTask);
     u32 i;
 
-    if (++gCamera.shiftY >= shake->worldY - gCamera.y + (DISPLAY_HEIGHT / 2)) {
+    if (++gCamera.shiftY >= shake->worldY - gCamera.y + DISPLAY_CENTER_Y) {
         // _08028D1C
         void *tiles;
         struct Task *t;

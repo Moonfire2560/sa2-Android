@@ -99,8 +99,8 @@ NONMATCH("asm/non_matching/game/interactables/TeleportOrb__Task_TeleportOrb.inc"
                 PLAYER(i).moveState &= ~MOVESTATE_IA_OVERRIDE;
 
                 if (PLAYER(i).playerID == PLAYER_1) {
-                    PLAYER(i).qWorldY = Q(gCamera.y + (DISPLAY_HEIGHT / 2));
-                    PLAYER(i).qWorldX = Q(gCamera.x + (DISPLAY_WIDTH / 2));
+                    PLAYER(i).qWorldY = Q(gCamera.y + DISPLAY_CENTER_Y);
+                    PLAYER(i).qWorldX = Q(gCamera.x + DISPLAY_CENTER_X);
                     gCamera.SA2_LABEL(unkC) = 0;
                     gCamera.SA2_LABEL(unk8) = 0;
                 }

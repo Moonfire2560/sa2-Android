@@ -185,8 +185,8 @@ void Task_EditLanguageScreenInit(void)
 
         if (screen->unk28D > 1) {
             Sprite *s = &screen->spr250;
-            s->x = (DISPLAY_WIDTH / 2);
-            s->y = (DISPLAY_HEIGHT / 2);
+            s->x = DISPLAY_CENTER_X;
+            s->y = DISPLAY_CENTER_Y;
             s->graphics.dest = ALLOC_TILES(SA1_ANIM_ONLY_CHAO_MSGBOX);
             s->oamFlags = SPRITE_OAM_ORDER(0);
             s->graphics.size = 0;

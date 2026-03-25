@@ -668,8 +668,8 @@ void sub_8029EA8(s16 unusedCharacterId)
     s->graphics.anim = strc5690->anim48;
     s->variant = strc5690->variant4A;
     s->prevVariant = -1;
-    s->x = (DISPLAY_WIDTH / 2) + I(strc5690->unk0);
-    s->y = (DISPLAY_HEIGHT / 2) - I(strc5690->unk4);
+    s->x = DISPLAY_CENTER_X + I(strc5690->unk0);
+    s->y = DISPLAY_CENTER_Y - I(strc5690->unk4);
     s->oamFlags = 0x180;
     s->qAnimDelay = 0;
     s->animSpeed = SPRITE_ANIM_SPEED(1.0);

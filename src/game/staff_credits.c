@@ -162,7 +162,7 @@ void CreateStaffCredits()
     s->graphics.anim = SA1_ANIM_CREDITS_COPYRIGHT;
     s->variant = 1;
     s->graphics.dest = VRAM_RESERVED_STAFF_CREDITS_C;
-    s->x = (DISPLAY_WIDTH / 2);
+    s->x = DISPLAY_CENTER_X;
     s->y = 0;
     s->oamFlags = 0x480;
     s->graphics.size = 0;
@@ -382,7 +382,7 @@ NONMATCH("asm/non_matching/game/staff_credits__Task_805E888.inc", void Task_805E
             s->y = yPos + (var_r8 * 0x10);
 
             if (s->y < 0x9B) {
-                s32 xPos = (DISPLAY_WIDTH / 2);
+                s32 xPos = DISPLAY_CENTER_X;
                 s->x = xPos;
 
                 switch (var_r5) {
@@ -398,8 +398,8 @@ NONMATCH("asm/non_matching/game/staff_credits__Task_805E888.inc", void Task_805E
                     default:
                         s->graphics.anim = 0x2E4;
                         s->variant = 3;
-                        if (s->y < (DISPLAY_HEIGHT / 2)) {
-                            s->y = (DISPLAY_HEIGHT / 2);
+                        if (s->y < DISPLAY_CENTER_Y) {
+                            s->y = DISPLAY_CENTER_Y;
                         }
                         s2->x = xPos;
                         s2->y = s->y + 40;

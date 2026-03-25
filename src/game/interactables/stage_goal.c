@@ -112,7 +112,7 @@ NONMATCH("asm/non_matching/game/interactables/stage_goal__Task_StageGoal.inc", v
         if (I(gPlayer.qWorldX) > worldX) {
             // _0801F336
 
-            if ((gCurrentLevel != LEVEL_INDEX(ZONE_4, ACT_2)) || I(gPlayer.qWorldY) <= worldY - (DISPLAY_HEIGHT / 2)) {
+            if ((gCurrentLevel != LEVEL_INDEX(ZONE_4, ACT_2)) || I(gPlayer.qWorldY) <= worldY - DISPLAY_CENTER_Y) {
                 // _0801F34C
                 if (IS_MULTI_PLAYER) {
                     if ((gCurrentLevel == LEVEL_INDEX(ZONE_6, ACT_1)) && (I(gPlayer.qWorldY) < worldY)) {
@@ -142,7 +142,7 @@ NONMATCH("asm/non_matching/game/interactables/stage_goal__Task_StageGoal.inc", v
             }
         _0801F3D2:
             mpp->unk5C |= 0x1;
-            gCamera.maxX = worldX + (DISPLAY_WIDTH / 2);
+            gCamera.maxX = worldX + DISPLAY_CENTER_X;
 
             i = 0;
             if (gMultiplayerPlayerTasks[i] != NULL) {
@@ -187,7 +187,7 @@ NONMATCH("asm/non_matching/game/interactables/stage_goal__Task_StageGoal.inc", v
     } else if (I(gPlayer.qWorldX) > worldX) {
         // _0801F4D8 + 0x10
         // _0801F4E6
-        if ((gCurrentLevel == LEVEL_INDEX(ZONE_4, ACT_2) && (I(gPlayer.qWorldY) > worldY - (DISPLAY_HEIGHT / 2)))
+        if ((gCurrentLevel == LEVEL_INDEX(ZONE_4, ACT_2) && (I(gPlayer.qWorldY) > worldY - DISPLAY_CENTER_Y))
             || (((IS_MULTI_PLAYER && (gCurrentLevel == LEVEL_INDEX(ZONE_6, ACT_1) && I(gPlayer.qWorldY) < worldY))
                  || (IS_SINGLE_PLAYER
                      && ((gCurrentLevel == LEVEL_INDEX(ZONE_6, ACT_1))

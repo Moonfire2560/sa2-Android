@@ -121,7 +121,7 @@ void Task_TimeOverStateUpdate()
 
     timer = state->timer;
     if (timer > TIME(0, 2.0)) {
-        state->s2.x = state->s.x = (DISPLAY_WIDTH / 2);
+        state->s2.x = state->s.x = DISPLAY_CENTER_X;
     } else if (timer > TIME(0, 0.5)) {
         state->s2.x = state->s.x = (DISPLAY_WIDTH + 60) - ((timer - TIME(0, 0.5)) * 2);
     }

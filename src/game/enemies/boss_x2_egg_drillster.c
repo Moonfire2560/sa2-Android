@@ -276,9 +276,9 @@ void Task_EggDrillsterInit(void)
 
     switch (boss->unk8D) {
         case 0: {
-            if (boss->worldX - (DISPLAY_WIDTH / 2) <= gCamera.x) {
-                gCamera.minX = boss->worldX - (DISPLAY_WIDTH / 2) - 32;
-                gCamera.maxX = boss->worldX + (DISPLAY_WIDTH / 2) + 32;
+            if (boss->worldX - DISPLAY_CENTER_X <= gCamera.x) {
+                gCamera.minX = boss->worldX - DISPLAY_CENTER_X - 32;
+                gCamera.maxX = boss->worldX + DISPLAY_CENTER_X + 32;
                 boss->unk8D = 1;
             }
         } break;

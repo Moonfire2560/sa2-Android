@@ -555,7 +555,7 @@ NONMATCH("asm/non_matching/game/stage/ui__Task_8055458.inc", void Task_8055458(v
         }
 
         if (IS_EXTRA_STAGE(gCurrentLevel)) {
-            sub_804A5D8(Q(DISPLAY_WIDTH / 2), Q(DISPLAY_HEIGHT / 2));
+            sub_804A5D8(Q(DISPLAY_CENTER_X), Q(DISPLAY_CENTER_Y));
         }
     } else if (gCurrentLevel == LEVEL_INDEX(ZONE_4, ACT_1) || gCurrentLevel == LEVEL_INDEX(ZONE_4, ACT_2)) {
         //_08055708

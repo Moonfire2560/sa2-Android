@@ -281,8 +281,8 @@ void Task_EggWreckerInit(void)
 
     switch (boss->unk8D) {
         case 0: {
-            if (boss->worldX - (DISPLAY_WIDTH / 2) <= gCamera.x) {
-                gCamera.minX = boss->worldX - (DISPLAY_WIDTH / 2);
+            if (boss->worldX - DISPLAY_CENTER_X <= gCamera.x) {
+                gCamera.minX = boss->worldX - DISPLAY_CENTER_X;
                 gCamera.maxX = gCamera.minX + DISPLAY_WIDTH;
                 boss->unk8D = 1;
             }
@@ -296,7 +296,7 @@ void Task_EggWreckerInit(void)
         } break;
     }
 
-    if ((gCamera.minX == (boss->worldX - (DISPLAY_WIDTH / 2))) && (gCamera.maxY == (boss->worldY + DISPLAY_HEIGHT))) {
+    if ((gCamera.minX == (boss->worldX - DISPLAY_CENTER_X)) && (gCamera.maxY == (boss->worldY + DISPLAY_HEIGHT))) {
         boss->unk8D = 0;
         boss->unk78 = 0x100;
         gCurTask->main = Task_8034718;
@@ -375,7 +375,7 @@ void Task_8034718(void)
                 boss->unk8D = 0;
                 gCurTask->main = Task_803491C;
 
-                CreatePreBossCameraPan(gCamera.minY - (DISPLAY_HEIGHT / 2), gCamera.maxY);
+                CreatePreBossCameraPan(gCamera.minY - DISPLAY_CENTER_Y, gCamera.maxY);
             }
         } break;
     }

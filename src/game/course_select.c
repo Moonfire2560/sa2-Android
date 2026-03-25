@@ -256,8 +256,8 @@ void CreateCourseSelect(bool8 arg0)
 
     state->task18 = task1;
     s = &state->s;
-    s->x = (DISPLAY_WIDTH / 2);
-    s->y = (DISPLAY_HEIGHT / 2);
+    s->x = DISPLAY_CENTER_X;
+    s->y = DISPLAY_CENTER_Y;
     s->graphics.dest = strc54->s.graphics.dest + 0xC0;
     s->oamFlags = 0x80;
     s->graphics.size = 0;

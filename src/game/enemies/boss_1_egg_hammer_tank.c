@@ -1215,7 +1215,7 @@ NONMATCH("asm/non_matching/game/enemies/boss_1__Task_8027600.inc", void Task_802
         hammer->unk3E = y;
     }
 
-    if (x < gCamera.x + (DISPLAY_WIDTH / 2)) {
+    if (x < gCamera.x + DISPLAY_CENTER_X) {
         hammer->qUnk4C = +Q(2);
     } else {
         hammer->qUnk4C = -Q(2);

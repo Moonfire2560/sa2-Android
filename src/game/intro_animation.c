@@ -16,7 +16,7 @@
 
 #define INTRO_SPOTLIGHT_COUNT 2
 
-#define EMERALD_START_X (DISPLAY_WIDTH / 2)
+#define EMERALD_START_X DISPLAY_CENTER_X
 #define EMERALD_START_Y -36
 typedef struct IntroSprite {
     Sprite s;

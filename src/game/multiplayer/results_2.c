@@ -329,8 +329,8 @@ void SA2_LABEL(Task_808207C)(void)
 #ifndef COLLECT_RINGS_ROM
         if (gMultiSioStatusFlags & MULTI_SIO_PARENT) {
             s = &resultsScreen->unk400;
-            s->x = (DISPLAY_WIDTH / 2);
-            s->y = (DISPLAY_HEIGHT / 2);
+            s->x = DISPLAY_CENTER_X;
+            s->y = DISPLAY_CENTER_Y;
 
             if (resultsScreen->unk434) {
                 s->graphics.dest = resultsScreen->unk370[2].graphics.dest + UNK_GFX_SIZE;
@@ -629,7 +629,7 @@ void SA2_LABEL(sub_8082788)(void)
                     u16 temp;
 
                     s = &resultsScreen->unk80[i].unk0;
-                    s->x = (DISPLAY_WIDTH / 2);
+                    s->x = DISPLAY_CENTER_X;
                     s->y = gMultiplayerRanks[i] * 40 + 20;
                     UpdateSpriteAnimation(s);
                     DisplaySprite(s);
@@ -671,7 +671,7 @@ void SA2_LABEL(sub_8082788)(void)
                 } else {
                     u16 temp;
                     s = &resultsScreen->unk80[i].unk0;
-                    s->x = (DISPLAY_WIDTH / 2);
+                    s->x = DISPLAY_CENTER_X;
                     s->y = i * 40 + 20;
                     UpdateSpriteAnimation(s);
                     DisplaySprite(s);

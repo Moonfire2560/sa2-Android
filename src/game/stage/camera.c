@@ -547,10 +547,10 @@ void InitCamera(u32 level)
     camera->maxX = gRefCollision->pxWidth;
 
 #if (GAME == GAME_SA1)
-    camera->sa2__unk10 = I(gPlayer.qWorldX) - (DISPLAY_WIDTH / 2);
-    camera->x = I(gPlayer.qWorldX) - (DISPLAY_WIDTH / 2);
-    camera->sa2__unk14 = (I(gPlayer.qWorldY) + camera->sa2__unk4C) - ((DISPLAY_HEIGHT / 2) + 4);
-    camera->y = (I(gPlayer.qWorldY) + camera->sa2__unk4C) - ((DISPLAY_HEIGHT / 2) + 4);
+    camera->sa2__unk10 = I(gPlayer.qWorldX) - DISPLAY_CENTER_X;
+    camera->x = I(gPlayer.qWorldX) - DISPLAY_CENTER_X;
+    camera->sa2__unk14 = (I(gPlayer.qWorldY) + camera->sa2__unk4C) - (DISPLAY_CENTER_Y + 4);
+    camera->y = (I(gPlayer.qWorldY) + camera->sa2__unk4C) - (DISPLAY_CENTER_Y + 4);
 
     camera->sa2__unk8 = 16;
     camera->sa2__unkC = 12;
@@ -575,7 +575,7 @@ void InitCamera(u32 level)
             gBossCameraClampYLower = gBossCameraYClamps[ZONE_FINAL + 1][0];
             gBossCameraClampYUpper = gBossCameraYClamps[ZONE_FINAL + 1][1];
             camera->x = 600;
-            camera->unk10 = (DISPLAY_WIDTH / 2);
+            camera->unk10 = DISPLAY_CENTER_X;
             camera->unk14 = 0;
             camera->y = 0;
             camera->unk64 = -4;
@@ -585,13 +585,13 @@ void InitCamera(u32 level)
             // for now we use the original GBA values as otherwise the boss
             // goes off the screen (not sure why yet)
             camera->unk10 = I(player->qWorldX) - (2 * 240);
-            camera->y = I(player->qWorldY) - ((DISPLAY_HEIGHT / 2) + 4);
+            camera->y = I(player->qWorldY) - (DISPLAY_CENTER_Y + 4);
             camera->unk14 = camera->y;
             camera->unk64 = player->spriteOffsetY - 4;
         }
     } else {
-        camera->x = I(player->qWorldX) - (DISPLAY_WIDTH / 2);
-        camera->y = I(player->qWorldY) - ((DISPLAY_HEIGHT / 2) + 4);
+        camera->x = I(player->qWorldX) - DISPLAY_CENTER_X;
+        camera->y = I(player->qWorldY) - (DISPLAY_CENTER_Y + 4);
 
         if (camera->x < 0) {
             camera->x = 0;
@@ -635,7 +635,7 @@ void InitCamera(u32 level)
 
 // Only need to use the original value for these zones
 #define DISPLAY_WIDTH_FOR_BOSS_TAS                                                                                                         \
-    ((LEVEL_TO_ZONE(gCurrentLevel) == ZONE_2 || LEVEL_TO_ZONE(gCurrentLevel) == ZONE_6) ? (240 / 2) : (DISPLAY_WIDTH / 2))
+    ((LEVEL_TO_ZONE(gCurrentLevel) == ZONE_2 || LEVEL_TO_ZONE(gCurrentLevel) == ZONE_6) ? (240 / 2) : DISPLAY_CENTER_X)
 
 void UpdateCamera(void)
 {
@@ -693,19 +693,19 @@ void UpdateCamera(void)
 #if TAS_TESTING && TAS_TESTING_WIDESCREEN_HACK && DISPLAY_WIDTH > 240
         if (newX + (DISPLAY_WIDTH_FOR_BOSS_TAS + 1) < I(player->qWorldX))
 #else
-        if (newX + ((DISPLAY_WIDTH / 2) + 1) < I(player->qWorldX))
+        if (newX + (DISPLAY_CENTER_X + 1) < I(player->qWorldX))
 #endif
         {
-            if ((camera->sa2__unk20 + (DISPLAY_HEIGHT / 2)) > newX) {
+            if ((camera->sa2__unk20 + DISPLAY_CENTER_Y) > newX) {
                 s32 playerScreenX = I(player->qWorldX);
 #if TAS_TESTING && TAS_TESTING_WIDESCREEN_HACK && DISPLAY_WIDTH > 240
                 playerScreenX -= DISPLAY_WIDTH_FOR_BOSS_TAS;
 #else
-                playerScreenX -= DISPLAY_WIDTH / 2;
+                playerScreenX -= DISPLAY_CENTER_X;
 #endif
                 camera->shiftX = playerScreenX - newX;
             } else {
-                newX = (camera->sa2__unk20 + (DISPLAY_HEIGHT / 2));
+                newX = (camera->sa2__unk20 + DISPLAY_CENTER_Y);
                 camera->shiftX = 0;
             }
         } else {
@@ -759,7 +759,7 @@ void UpdateCamera(void)
                 MultiplayerPlayer *mpp = TASK_DATA(gMultiplayerPlayerTasks[camera->spectatorTarget]);
 
                 if (!(camera->sa2__unk50 & 0x1)) {
-                    camera->sa2__unk10 = (mpp->pos.x + camera->shiftX) - (DISPLAY_WIDTH / 2);
+                    camera->sa2__unk10 = (mpp->pos.x + camera->shiftX) - DISPLAY_CENTER_X;
                 }
 
                 if (!(camera->sa2__unk50 & 2)) {
@@ -784,16 +784,16 @@ void UpdateCamera(void)
                         camera->sa2__unk64 = unk64;
                     }
 
-                    camera->sa2__unk14 = ((mpp->pos.y) + camera->shiftY) - (DISPLAY_HEIGHT / 2) + camera->sa2__unk4C + unk64;
+                    camera->sa2__unk14 = ((mpp->pos.y) + camera->shiftY) - DISPLAY_CENTER_Y + camera->sa2__unk4C + unk64;
                 }
             } else
 #elif (GAME == GAME_SA2)
-            camera->unk14 = I(player->qWorldY) + camera->shiftY - (DISPLAY_HEIGHT / 2) + camera->unk4C + unk64;
+            camera->unk14 = I(player->qWorldY) + camera->shiftY - DISPLAY_CENTER_Y + camera->unk4C + unk64;
 #endif
             {
                 if (!(camera->sa2__unk50 & 1)) {
                     s16 airSpeedX = player->qSpeedAirX;
-                    camera->sa2__unk10 = I(player->qWorldX) + camera->shiftX - (DISPLAY_WIDTH / 2);
+                    camera->sa2__unk10 = I(player->qWorldX) + camera->shiftX - DISPLAY_CENTER_X;
 #if (GAME == GAME_SA2)
                     camera->unk56 = (airSpeedX + (camera->unk56 * 15)) >> 4;
                     camera->unk10 += (camera->unk56 >> 5);
@@ -822,9 +822,9 @@ void UpdateCamera(void)
                     }
 
 #if (GAME == GAME_SA1)
-                    camera->sa2__unk14 = I(player->qWorldY) + camera->shiftY - (DISPLAY_HEIGHT / 2) + camera->sa2__unk4C + unk64;
+                    camera->sa2__unk14 = I(player->qWorldY) + camera->shiftY - DISPLAY_CENTER_Y + camera->sa2__unk4C + unk64;
 #elif (GAME == GAME_SA2)
-                    camera->unk14 = I(player->qWorldY) + camera->shiftY - (DISPLAY_HEIGHT / 2) + camera->unk4C + unk64;
+                    camera->unk14 = I(player->qWorldY) + camera->shiftY - DISPLAY_CENTER_Y + camera->unk4C + unk64;
 #endif
                 }
             }

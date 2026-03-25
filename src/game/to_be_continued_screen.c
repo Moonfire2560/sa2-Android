@@ -47,7 +47,7 @@ void CreateToBeContinuedScreen(void)
     tbc->unk7C = 0;
 
     s->x = DISPLAY_WIDTH;
-    s->y = DISPLAY_HEIGHT / 2;
+    s->y = DISPLAY_CENTER_Y;
 
     s->graphics.dest = VRAM_RESERVED_TO_BE_CONTINUED;
     s->oamFlags = SPRITE_OAM_ORDER(18);
@@ -63,7 +63,7 @@ void CreateToBeContinuedScreen(void)
         tbc->tasks74[i] = t2 = sub_80125C0(t2, i + 1);
     }
 
-    DmaFill32(3, ((480 << 16) | (DISPLAY_HEIGHT / 2)), tbc->positions, sizeof(tbc->positions));
+    DmaFill32(3, ((480 << 16) | DISPLAY_CENTER_Y), tbc->positions, sizeof(tbc->positions));
 
     gBgPalette[0] = RGB_BLACK;
     gFlags |= FLAGS_UPDATE_BACKGROUND_PALETTES;
@@ -81,7 +81,7 @@ void Task_ToBeContinuedScreenInit(void)
     tbc->unk7C = (tbc->unk7C + 8) & ONE_CYCLE;
     s = &tbc->s;
 
-    s->x = ((COS_24_8(tbc->unk7C) * 15) >> 4) + (DISPLAY_WIDTH / 2);
+    s->x = ((COS_24_8(tbc->unk7C) * 15) >> 4) + DISPLAY_CENTER_X;
 
     tbc->positions[tbc->unk30][0] = s->x;
     tbc->positions[tbc->unk30][1] = s->y;
@@ -89,7 +89,7 @@ void Task_ToBeContinuedScreenInit(void)
     DisplaySprite(s);
 
     if (tbc->unk7C == 0x100) {
-        s->x = DISPLAY_WIDTH / 2;
+        s->x = DISPLAY_CENTER_X;
         tbc->unk7E = 0;
         gCurTask->main = Task_80124C4;
     } else if (tbc->unk7C == 0x200) {
@@ -161,7 +161,7 @@ struct Task *sub_80125C0(struct Task *tbcTask, u8 priority)
     s->frameFlags = SPRITE_FLAG(PRIORITY, 0);
     UpdateSpriteAnimation(s);
 
-    DmaFill32(3, ((480 << 16) | (DISPLAY_HEIGHT / 2)), shrunk->positions, sizeof(shrunk->positions));
+    DmaFill32(3, ((480 << 16) | DISPLAY_CENTER_Y), shrunk->positions, sizeof(shrunk->positions));
 
     return t;
 }

@@ -534,8 +534,8 @@ void CreateMainMenu(u32 param0)
     menu->unk1AC = 0;
     menu->unk1AF = param0;
 
-    s->x = (DISPLAY_WIDTH / 2);
-    s->y = (DISPLAY_HEIGHT / 2);
+    s->x = DISPLAY_CENTER_X;
+    s->y = DISPLAY_CENTER_Y;
     s->graphics.dest = (void *)BG_VRAM + 0x40;
     s->graphics.size = 0;
     s->graphics.anim = 1; // TODO: Why?
@@ -655,7 +655,7 @@ void Task_MainMenuInit(void)
 
         for (i = 0; i < ARRAY_COUNT(menu->items); i++) {
             s = &menu->items[i];
-            s->x = (DISPLAY_WIDTH / 2);
+            s->x = DISPLAY_CENTER_X;
             s->y = (i * MENU_ITEMS_SPACE) + MENU_ITEMS_TOP_Y;
             s->graphics.dest = VramMalloc((u32)sTitlescreenFrameTileSizes[i]);
             s->graphics.size = 0;

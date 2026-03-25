@@ -218,8 +218,8 @@ void sub_8062F90(void)
     strc5C->task10 = t;
 
     s = &strc5C->s;
-    s->x = (DISPLAY_WIDTH / 2);
-    s->y = (DISPLAY_HEIGHT / 2);
+    s->x = DISPLAY_CENTER_X;
+    s->y = DISPLAY_CENTER_Y;
     s->graphics.dest = OBJ_VRAM0 + 0xF00;
     s->oamFlags = 0x80;
     s->graphics.size = 0;

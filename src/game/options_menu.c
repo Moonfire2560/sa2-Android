@@ -218,8 +218,8 @@ void CreateOptionsMenu()
     UpdateSpriteAnimation(s);
 
     s = &menu->s270;
-    s->x = (DISPLAY_WIDTH / 2);
-    s->y = (DISPLAY_HEIGHT / 2);
+    s->x = DISPLAY_CENTER_X;
+    s->y = DISPLAY_CENTER_Y;
     s->graphics.dest = VramMalloc(0x90U);
     s->oamFlags = 0;
     s->graphics.size = 0;

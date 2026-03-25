@@ -198,7 +198,7 @@ void Task_801623C()
 
     s = &capsule->s;
     s2 = &capsule->s2;
-    s->x = (DISPLAY_WIDTH / 2);
+    s->x = DISPLAY_CENTER_X;
     s->y = (capsule->worldY - gCamera.y) - capsule->offsetY;
     s2->x = s->x;
     s2->y = s->y;
@@ -221,7 +221,7 @@ void Task_801623C()
     }
     capsule->worldY = (capsule->worldY - capsule->offsetY) + res;
     gCurTask->main = Task_BossCapsuleUpdate;
-    capsule->worldX = gCamera.x + (DISPLAY_WIDTH / 2);
+    capsule->worldX = gCamera.x + DISPLAY_CENTER_X;
     CreateScreenShake(0x800U, 0x40U, 0x100U, -1U, 0x80U);
     m4aSongNumStart(SE_136);
 
@@ -235,7 +235,7 @@ void Task_801623C()
         if ((Coll_Player_Entity_Intersection(s, capsule->worldX, capsule->worldY, p) & 0x80000)
             || (Coll_Player_Entity_Intersection(s2, capsule->worldX, capsule->worldY, p) & 0x80000)) {
             p->timerInvulnerability = TIME(0, 2);
-            if (I(p->qWorldX) < gCamera.x + (DISPLAY_WIDTH / 2)) {
+            if (I(p->qWorldX) < gCamera.x + DISPLAY_CENTER_X) {
                 p->qSpeedAirX = -Q(2);
                 sideX = (capsule->worldX + s->hitboxes[0].b.left) - p->spriteOffsetX;
                 if (I(p->qWorldX) > sideX) {
@@ -848,7 +848,7 @@ void Task_8017334()
     p = strc->p;
     screenX = I(p->qWorldX) - gCamera.x;
 
-    if (screenX > (DISPLAY_WIDTH / 2)) {
+    if (screenX > DISPLAY_CENTER_X) {
         p->moveState |= MOVESTATE_IGNORE_INPUT;
         p->heldInput = DPAD_RIGHT;
         if ((200 - (p->playerID * 8)) < screenX) {

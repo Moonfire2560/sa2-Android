@@ -3830,8 +3830,8 @@ void Task_PlayerHandleDeath(void)
             gSpecialRingCount = 0;
 #endif
             InitializePlayer(&gPlayer);
-            gCamera.x = I(gPlayer.qWorldX) + gCamera.shiftX - (DISPLAY_WIDTH / 2);
-            gCamera.y = I(gPlayer.qWorldY) + gCamera.shiftY - (DISPLAY_HEIGHT / 2);
+            gCamera.x = I(gPlayer.qWorldX) + gCamera.shiftX - DISPLAY_CENTER_X;
+            gCamera.y = I(gPlayer.qWorldY) + gCamera.shiftY - DISPLAY_CENTER_Y;
             m4aMPlayTempoControl(&gMPlayInfo_BGM, 256);
             gPlayer.moveState = 0;
             gStageFlags &= ~STAGE_FLAG__GRAVITY_INVERTED;
@@ -4220,7 +4220,7 @@ NONMATCH("asm/non_matching/game/stage/Player__Task_804597C.inc", void Task_80459
                 r1 = 0;
             }
         } else {
-            if (qPartnerWorldY > Q(cam->y - (DISPLAY_HEIGHT / 2))) {
+            if (qPartnerWorldY > Q(cam->y - DISPLAY_CENTER_Y)) {
                 r1 = 0;
             } else {
                 r1 = 1;

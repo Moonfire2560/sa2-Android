@@ -309,7 +309,7 @@ NONMATCH("asm/non_matching/game/enemies/boss_6__CreateEntity_EggSnake.inc",
     s2->hitboxes[0].index = -1;
     s2->frameFlags = 0x2000;
 #if PORTABLE && (DISPLAY_WIDTH > 320)
-    Bosses_SetCamBounds(s->y - (DISPLAY_HEIGHT - 32), s->y + 32, s->x - (DISPLAY_WIDTH / 2), s->x + (DISPLAY_WIDTH / 2));
+    Bosses_SetCamBounds(s->y - (DISPLAY_HEIGHT - 32), s->y + 32, s->x - DISPLAY_CENTER_X, s->x + DISPLAY_CENTER_X);
 #else
     Bosses_SetCamBounds(s->y - (DISPLAY_HEIGHT - 32), s->y + 32, s->x - 144, s->x + 176);
 #endif

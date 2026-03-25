@@ -240,7 +240,7 @@ void sub_806A5BC(void)
     DisplaySprite(s);
 
     s++;
-    s->x = I(lobby->qUnk12C) + (DISPLAY_WIDTH / 2);
+    s->x = I(lobby->qUnk12C) + DISPLAY_CENTER_X;
     if (UpdateSpriteAnimation(s) == ACMD_RESULT__ENDED) {
         s->graphics.anim = gUnknown_0868B6A0[gSelectedCharacter][1];
         s->variant = gUnknown_0868B6B8[gSelectedCharacter][1];

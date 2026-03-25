@@ -11,7 +11,7 @@ void sub_801C9AC(void);
 void sub_801C9C0(int_vcount vcount);
 void TaskDestructor_801C980(struct Task *t);
 
-#define ROOT            (DISPLAY_WIDTH / 2)
+#define ROOT            DISPLAY_CENTER_X
 #define X_RANGE(offset) WIN_RANGE((ROOT) - (offset), (ROOT) + (offset))
 
 static const winreg_t sWin0Ranges[DISPLAY_HEIGHT] = {

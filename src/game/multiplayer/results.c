@@ -82,8 +82,8 @@ void sub_8018538(void)
     UpdateSpriteAnimation(s);
 
     s = &strc->spr1C0;
-    s->x = (DISPLAY_WIDTH / 2);
-    s->y = (DISPLAY_HEIGHT / 2);
+    s->x = DISPLAY_CENTER_X;
+    s->y = DISPLAY_CENTER_Y;
     s->graphics.dest = strc->s2.graphics.dest + 0x180;
     s->oamFlags = 0x80;
     s->graphics.size = 0;

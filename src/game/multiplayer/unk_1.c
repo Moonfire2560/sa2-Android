@@ -120,7 +120,7 @@ void sub_801C9D8(void)
         SpriteStrc *spr = &strc->sprites[i];
         Sprite *s = &spr->s;
 
-        s->x = (DISPLAY_WIDTH / 2);
+        s->x = DISPLAY_CENTER_X;
         s->y = 20 + i * 0x28;
         s->graphics.dest = OBJ_VRAM0 + (i << 0xB);
         s->oamFlags = 0x400;

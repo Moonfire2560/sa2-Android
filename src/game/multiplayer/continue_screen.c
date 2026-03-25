@@ -142,8 +142,8 @@ void CreateMultiplayerContinueScreen(void)
     s->frameFlags = 0;
     s = &screen->spr130;
 
-    s->x = (DISPLAY_WIDTH / 2);
-    s->y = (DISPLAY_HEIGHT / 2);
+    s->x = DISPLAY_CENTER_X;
+    s->y = DISPLAY_CENTER_Y;
     s->graphics.dest = VramMalloc(0xCU);
     s->oamFlags = 0x80;
     s->graphics.size = 0;

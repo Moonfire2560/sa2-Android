@@ -818,7 +818,7 @@ void Task_8030364(void)
     s->x = worldX - gCamera.x;
     s->y = worldY - gCamera.y;
 
-    if (worldX < gCamera.x + (DISPLAY_WIDTH / 2)) {
+    if (worldX < gCamera.x + DISPLAY_CENTER_X) {
         boss_44->qUnk38 = +Q(2);
     } else {
         boss_44->qUnk38 = -Q(2);

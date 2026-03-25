@@ -274,8 +274,8 @@ void CreateCongratulationsAnimation(void)
     s->graphics.dest = (void *)OBJ_VRAM0 + 0x20;
     s->graphics.anim = gUnknown_0868B3D8[gSelectedCharacter][0];
     s->variant = gUnknown_0868B3D8[gSelectedCharacter][1];
-    s->x = (DISPLAY_WIDTH / 2);
-    s->y = (DISPLAY_HEIGHT / 2);
+    s->x = DISPLAY_CENTER_X;
+    s->y = DISPLAY_CENTER_Y;
     s->oamFlags = 0x180;
     s->graphics.size = 0;
     s->animCursor = 0;
@@ -288,9 +288,9 @@ void CreateCongratulationsAnimation(void)
     UpdateSpriteAnimation(s);
     strc164->unk3C = 0;
     strc164->unk44 = 0x780;
-    strc164->unk40 = Q(DISPLAY_WIDTH / 2);
+    strc164->unk40 = Q(DISPLAY_CENTER_X);
     strc164->unk4C = 0;
-    strc164->unk48 = Q(DISPLAY_HEIGHT / 2);
+    strc164->unk48 = Q(DISPLAY_CENTER_Y);
 
     sp4C = TaskCreate(Task_8066E58_164, sizeof(ExtraStageResults_164), 0x2120U, 0U, NULL);
     strc164 = TASK_DATA(sp4C);
@@ -400,8 +400,8 @@ void CreateCongratulationsAnimation(void)
     s->graphics.dest = (void *)OBJ_VRAM0 + 0x09C0;
     s->graphics.anim = 0x308;
     s->variant = 0;
-    s->x = (DISPLAY_WIDTH / 2);
-    s->y = (DISPLAY_HEIGHT / 2);
+    s->x = DISPLAY_CENTER_X;
+    s->y = DISPLAY_CENTER_Y;
     s->oamFlags = SPRITE_OAM_ORDER(0);
     s->graphics.size = 0;
     s->animCursor = 0;
@@ -1101,7 +1101,7 @@ void Task_8066ACC(void)
         s32 v = gUnknown_0868B498[i][0] + 0xF8;
         s->x = v - unk3C;
         index = ((u8)strc164->unk15C + i * 8) & 0x3F;
-        s->y = gUnknown_0868B498[i][1] + (DISPLAY_HEIGHT / 2) + strc164->unkD6[index];
+        s->y = gUnknown_0868B498[i][1] + DISPLAY_CENTER_Y + strc164->unkD6[index];
         DisplaySprite(s);
     }
 }
@@ -1134,7 +1134,7 @@ void Task_8066BA4(void)
         s32 v;
         s->x = gUnknown_0868B498[i][0] + 0xBC;
         index = ((u8)strc164->unk15C + i * 8) & 0x3F;
-        s->y = gUnknown_0868B498[i][1] + (DISPLAY_HEIGHT / 2) + strc164->unkD6[index];
+        s->y = gUnknown_0868B498[i][1] + DISPLAY_CENTER_Y + strc164->unkD6[index];
         DisplaySprite(s);
     }
 }
@@ -1191,7 +1191,7 @@ void Task_8066D64()
     if (unk3C > gUnknown_0868B4BE[strc64->qUnk44[0]]) {
         unk3C -= gUnknown_0868B4BE[strc64->qUnk44[0]];
         unk3C *= 3;
-        s->x = (DISPLAY_WIDTH / 2);
+        s->x = DISPLAY_CENTER_X;
         s->y = 180 - unk3C;
         if (s->y < gUnknown_0868B4B8[strc64->qUnk44[0]]) {
             s->y = gUnknown_0868B4B8[strc64->qUnk44[0]];
@@ -1516,13 +1516,13 @@ void CreateExtraStageResults(void)
     strc64 = TASK_DATA(task64_1);
     s = &strc64->s;
     strc64->unk3C = 0;
-    strc64->qUnk44[0] = Q(DISPLAY_WIDTH / 2);
-    strc64->qUnk54[0] = Q((DISPLAY_HEIGHT / 2) + 10);
+    strc64->qUnk44[0] = Q(DISPLAY_CENTER_X);
+    strc64->qUnk54[0] = Q(DISPLAY_CENTER_Y + 10);
     s->graphics.dest = OBJ_VRAM0 + 0x440;
     s->graphics.anim = SA1_END_CUTSCENE_PILOT_FACE;
     s->variant = 1; // Tails
-    s->x = (DISPLAY_WIDTH / 2);
-    s->y = (DISPLAY_HEIGHT / 2);
+    s->x = DISPLAY_CENTER_X;
+    s->y = DISPLAY_CENTER_Y;
     s->oamFlags = SPRITE_OAM_ORDER(3);
     s->graphics.size = 0;
     s->animCursor = 0;
@@ -1537,13 +1537,13 @@ void CreateExtraStageResults(void)
     strc64 = TASK_DATA(task64_2);
     s = &strc64->s;
     strc64->unk3C = 0;
-    strc64->qUnk44[0] = Q(DISPLAY_WIDTH / 2);
-    strc64->qUnk54[0] = Q((DISPLAY_HEIGHT / 2) + 10);
+    strc64->qUnk44[0] = Q(DISPLAY_CENTER_X);
+    strc64->qUnk54[0] = Q(DISPLAY_CENTER_Y + 10);
     s->graphics.dest = OBJ_VRAM0 + 0x560;
     s->graphics.anim = SA1_ANIM_FINAL_CUTSCENE_TORNADO_SIDE;
     s->variant = 0;
-    s->x = (DISPLAY_WIDTH / 2);
-    s->y = (DISPLAY_HEIGHT / 2);
+    s->x = DISPLAY_CENTER_X;
+    s->y = DISPLAY_CENTER_Y;
     s->oamFlags = SPRITE_OAM_ORDER(6);
     s->graphics.size = 0;
     s->animCursor = 0;
@@ -1569,8 +1569,8 @@ void CreateExtraStageResults(void)
     s->graphics.dest = OBJ_VRAM0 + 0x20;
     s->graphics.anim = 731;
     s->variant = 0;
-    s->x = (DISPLAY_WIDTH / 2);
-    s->y = (DISPLAY_HEIGHT / 2);
+    s->x = DISPLAY_CENTER_X;
+    s->y = DISPLAY_CENTER_Y;
     s->oamFlags = SPRITE_OAM_ORDER(15);
     s->graphics.size = 0;
     s->animCursor = 0;
@@ -2184,8 +2184,8 @@ void Task_8067F9C()
         strc64->s.graphics.dest = OBJ_VRAM0 + 0x26E0;
         strc64->s.graphics.anim = SA1_ANIM_FINAL_CUTSCENE_ART_B;
         strc64->s.variant = 0;
-        strc64->s.x = (DISPLAY_WIDTH / 2);
-        strc64->s.y = (DISPLAY_HEIGHT / 2);
+        strc64->s.x = DISPLAY_CENTER_X;
+        strc64->s.y = DISPLAY_CENTER_Y;
         strc64->s.oamFlags = 0x3C0;
         strc64->s.frameFlags = 0x2000;
     }
@@ -2202,8 +2202,8 @@ void Task_8068004()
         strc64->s.graphics.dest = OBJ_VRAM0 + 0x26E0;
         strc64->s.graphics.anim = SA1_ANIM_FINAL_CUTSCENE_ART_B;
         strc64->s.variant = 1;
-        strc64->s.x = (DISPLAY_WIDTH / 2);
-        strc64->s.y = (DISPLAY_HEIGHT / 2);
+        strc64->s.x = DISPLAY_CENTER_X;
+        strc64->s.y = DISPLAY_CENTER_Y;
         strc64->s.oamFlags = 0x3C0;
         strc64->s.frameFlags = 0x2000;
     }
@@ -2474,8 +2474,8 @@ void Task_8068570()
         strc64->s.graphics.dest = OBJ_VRAM0 + 0x26E0;
         strc64->s.graphics.anim = SA1_ANIM_FINAL_CUTSCENE_ART_A;
         strc64->s.variant = 0;
-        strc64->s.x = (DISPLAY_WIDTH / 2);
-        strc64->s.y = (DISPLAY_HEIGHT / 2);
+        strc64->s.x = DISPLAY_CENTER_X;
+        strc64->s.y = DISPLAY_CENTER_Y;
         strc64->s.frameFlags = 0;
     }
     UpdateSpriteAnimation(&strc64->s);
@@ -2492,8 +2492,8 @@ void Task_80685C8()
         strc64->s.graphics.dest = OBJ_VRAM0 + 0x26E0;
         strc64->s.graphics.anim = SA1_ANIM_FINAL_CUTSCENE_ART_A;
         strc64->s.variant = 1;
-        strc64->s.x = (DISPLAY_WIDTH / 2);
-        strc64->s.y = (DISPLAY_HEIGHT / 2);
+        strc64->s.x = DISPLAY_CENTER_X;
+        strc64->s.y = DISPLAY_CENTER_Y;
         strc64->s.frameFlags = 0;
     }
     UpdateSpriteAnimation(&strc64->s);
