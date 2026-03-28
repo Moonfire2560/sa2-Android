@@ -535,8 +535,8 @@ void sub_8050888()
     s->x = 0x80;
     s->y = 0x80;
     s->frameFlags = (s->frameFlags & 0xFFFE7FFF) | 0x10000;
-    sa2__sub_80036E0(s);
-    sa2__sub_8003914(s);
+    UpdateSpriteAnimation_BG(s);
+    DisplaySprite_BG(s);
     sa2__sub_8003EE4((strc->unk70 >> 6), 0x100, 0x100, 0x7C, 0x80, screenX, screenY, gBgAffineRegs);
 
     switch (boss->unk6E) {

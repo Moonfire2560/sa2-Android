@@ -668,7 +668,7 @@ void UpdateBgAnimationTiles(Background *bg)
 // Differences to UpdateSpriteAnimation:
 // - SPRITE_INIT_ANIM_IF_CHANGED gets executed *after* the if.
 // - Uses animCmdTable_BG instead of animCmdTable
-s32 sa2__sub_80036E0(Sprite *s)
+s32 UpdateSpriteAnimation_BG(Sprite *s)
 {
     if (s->frameFlags & SPRITE_FLAG_MASK_ANIM_OVER)
         return 0;
@@ -786,7 +786,7 @@ AnimCmdResult animCmd_AddHitbox_BG(void *cursor, Sprite *s)
     return 1;
 }
 
-void sa2__sub_8003914(Sprite *s)
+void DisplaySprite_BG(Sprite *s)
 {
     const SpriteOffset *dims;
 

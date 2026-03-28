@@ -271,9 +271,9 @@
 	strb r1, [r2]
 	str r3, [r7, #0x20]
 	adds r0, r4, #0
-	bl sa2__sub_80036E0
+	bl UpdateSpriteAnimation_BG
 	adds r0, r4, #0
-	bl sa2__sub_8003914
+	bl DisplaySprite_BG
 	add r4, sp, #0x30
 	movs r0, #0x27
 	strb r0, [r4]

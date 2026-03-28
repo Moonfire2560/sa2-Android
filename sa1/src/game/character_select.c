@@ -246,8 +246,8 @@ NONMATCH("asm/non_matching/game/char_select__CreateCharacterSelectionScreen.inc"
     s->graphics.anim = 723;
     s->variant = 0;
     temp_r7->task20 = t;
-    SA2_LABEL(sub_80036E0)(s);
-    SA2_LABEL(sub_8003914)(s);
+    UpdateSpriteAnimation_BG(s);
+    DisplaySprite_BG(s);
 
     gfx.uiGfxID = 0x27;
     gfx.unk2B = 0;
@@ -1571,6 +1571,6 @@ void Task_805B984(void)
     s->prevVariant = -1;
     s->graphics.anim = 723;
     s->variant = arr[index];
-    SA2_LABEL(sub_80036E0)(s);
-    SA2_LABEL(sub_8003914)(s);
+    UpdateSpriteAnimation_BG(s);
+    DisplaySprite_BG(s);
 }
