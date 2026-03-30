@@ -3,7 +3,7 @@
 #include "lib/m4a/m4a.h"
 #include "game/character_select.h"
 #include "game/multiplayer/multipak_connection.h"
-#include "game/sa1_sa2_shared/globals.h"
+#include "game/globals.h"
 #include "game/sa1/save.h"
 
 #include "constants/animations.h"

@@ -39,7 +39,7 @@ SECTIONS
 
         /* "SA1 Leftovers" */
         . = ALIGN(32); 
-        src/game/sa1_sa2_shared/globals.o(.data);
+        src/game/globals.o(.data);
 
         /* game */
         src/game/water_effects.o(.data);

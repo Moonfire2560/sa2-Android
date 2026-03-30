@@ -2,7 +2,7 @@
 #define GUARD_SAVE_H
 
 #include "global.h"
-#include "game/sa1_sa2_shared/globals.h"
+#include "game/globals.h"
 
 #include "constants/zones.h"
 #include "constants/characters.h"

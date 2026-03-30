@@ -233,6 +233,10 @@ extern struct InputCounters gNewInputCounters[32];
 
 extern u8 gUnknown_030055D8;
 
+#if (GAME == GAME_SA1)
+struct Task *gChaoTasks[3];
+#endif
+
 #if (GAME == GAME_SA1) && !defined(BUG_FIX)
 // NOTE: gNumLives is u8, so without the bounds-check,
 //       which SA1 did not have, 255 would overflow to 0.

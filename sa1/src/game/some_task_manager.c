@@ -2,7 +2,7 @@
 #include "core.h"
 #include "sprite.h"
 #include "malloc_vram.h"
-#include "game/sa1_sa2_shared/globals.h"
+#include "game/globals.h"
 #include "game/sa1_sa2_shared/camera.h"
 #include "game/some_task_manager.h"
 #include "game/stage/player_controls.h"

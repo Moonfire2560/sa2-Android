@@ -1,6 +1,6 @@
 #include "global.h"
 #include "core.h"
-#include "game/sa1_sa2_shared/globals.h"
+#include "game/globals.h"
 #include "game/multiplayer/multiplayer_event_mgr.h"
 
 u8 gSpikesUnknownTimer = 0;

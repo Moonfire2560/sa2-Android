@@ -7,7 +7,7 @@
 #include "game/amy_attack_heart_effect.h"
 #include "game/multiplayer/mp_player.h"
 #include "game/parameters/characters.h"
-#include "game/sa1_sa2_shared/globals.h"
+#include "game/globals.h"
 #include "game/sa1_sa2_shared/camera.h"
 #include "game/sa1_sa2_shared/collision.h"
 #include "game/sa1_sa2_shared/music_manager.h"

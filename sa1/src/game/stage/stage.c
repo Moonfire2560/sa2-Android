@@ -8,7 +8,7 @@
 #include "game/multiplayer/indicators.h"
 #include "game/multiplayer/mp_player.h"
 #include "game/multiplayer/multiplayer_event_mgr.h"
-#include "game/sa1_sa2_shared/globals.h"
+#include "game/globals.h"
 #include "game/sa1_sa2_shared/entities_manager.h"
 #include "game/sa1_sa2_shared/music_manager.h"
 #include "game/sa1_sa2_shared/palette_loader.h"
@@ -323,7 +323,7 @@ void CreateGameStage(void)
 
 #if (GAME == GAME_SA1)
         if (gGameMode == GAME_MODE_CHAO_HUNT || gGameMode == GAME_MODE_TEAM_PLAY) {
-            for (j = 0; j < NUM_MP_CHAO; j++) {
+            for (j = 0; j < ARRAY_COUNT(gChaoTasks); j++) {
                 gChaoTasks[j] = CreateMultiplayerChao((u8)(uintptr_t)gChaoTasks[j], j);
 
                 if (gGameMode == GAME_MODE_CHAO_HUNT) {

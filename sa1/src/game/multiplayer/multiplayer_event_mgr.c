@@ -9,7 +9,7 @@
 #include "game/multiplayer/multiplayer_event_mgr.h"
 #include "game/multiplayer/finish.h"
 #include "game/multiplayer/mp_player.h"
-#include "game/sa1_sa2_shared/globals.h"
+#include "game/globals.h"
 #include "game/sa1_sa2_shared/player.h"
 
 #include "lib/m4a/m4a.h"

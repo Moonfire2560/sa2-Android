@@ -10,7 +10,7 @@
 #include "game/options_screen.h"
 #include "game/multiboot/connection.h"
 
-#include "game/sa1_sa2_shared/globals.h"
+#include "game/globals.h"
 #include "game/sa1_sa2_shared/player.h"
 //#include "game/sa1_sa2_shared/entities_manager.h"
 

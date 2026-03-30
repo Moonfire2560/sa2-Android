@@ -4,7 +4,7 @@
 #include "malloc_vram.h"
 #include "data/ui_graphics.h"
 #include "game/sa1_sa2_shared/player.h"
-#include "game/sa1_sa2_shared/globals.h"
+#include "game/globals.h"
 #include "game/special_stage/main.h"
 #include "game/gTask_03006240.h"
 #include "game/multiplayer/mp_player.h"

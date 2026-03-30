@@ -1,7 +1,6 @@
 #include "global.h"
 #include "core.h"
-#include "game/sa1_sa2_shared/globals.h"
-#include "game/multiplayer/chao.h"
+#include "game/globals.h"
 #include "game/multiplayer/multiplayer_event_mgr.h"
 
 #if (GAME == GAME_SA1)
@@ -18,7 +17,7 @@ u8 gMultiplayerLanguage = 0;
 u16 ALIGNED(4) gRingCount = 0;
 
 #if (GAME == GAME_SA1)
-struct Task *gChaoTasks[NUM_MP_CHAO] = { 0 };
+struct Task *gChaoTasks[] = { 0 };
 #elif (GAME == GAME_SA2)
 #ifndef NON_MATCHING
 u8 ALIGNED(4) unused53F4[24] = {};

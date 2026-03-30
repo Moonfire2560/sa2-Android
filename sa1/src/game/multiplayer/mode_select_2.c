@@ -9,7 +9,7 @@
 #include "game/multiplayer/communication_outcome.h"
 #include "game/multiplayer/mode_select.h"
 #include "game/multiplayer/multipak_connection.h"
-#include "game/sa1_sa2_shared/globals.h"
+#include "game/globals.h"
 #include "game/sa1_sa2_shared/camera.h"
 #include "game/sa1_sa2_shared/player.h"
 #include "game/sa1/save.h"

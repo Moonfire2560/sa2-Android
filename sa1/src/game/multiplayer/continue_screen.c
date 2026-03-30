@@ -3,7 +3,7 @@
 #include "lib/m4a/m4a.h"
 #include "malloc_vram.h"
 #include "game/game_over.h"
-#include "game/sa1_sa2_shared/globals.h"
+#include "game/globals.h"
 #include "game/multiplayer/multipak_connection.h"
 #include "game/multiplayer/results.h"
 #include "game/sa1/save.h"

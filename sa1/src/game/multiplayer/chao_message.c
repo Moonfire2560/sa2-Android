@@ -7,7 +7,7 @@
 #include "data/ui_graphics.h"
 #include "game/gTask_03006240.h"
 #include "game/multiplayer/multipak_connection.h"
-#include "game/sa1_sa2_shared/globals.h"
+#include "game/globals.h"
 #include "game/sa1/save.h"
 #include "game/title_screen.h"
 
