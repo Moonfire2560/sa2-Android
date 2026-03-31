@@ -275,7 +275,7 @@ void CreateTimeAttackRecords()
 }
 
 // (92.00%) https://decomp.me/scratch/vEl3F
-NONMATCH("asm/non_matching/game/time_attack_records__Task_806BBC0.inc", void Task_806BBC0())
+NONMATCH("asm/non_matching/game/sa1/ui/time_attack_records__Task_806BBC0.inc", void Task_806BBC0())
 {
     StrcUi_805423C *temp_r1;
     s16 *temp_r2_2;

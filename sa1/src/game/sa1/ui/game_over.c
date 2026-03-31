@@ -4,7 +4,7 @@
 #include "trig.h"
 #include "lib/m4a/m4a.h"
 #include "malloc_vram.h"
-#include "game/game_over.h"
+#include "game/sa1/ui/game_over.h"
 #include "game/gTask_03006240.h"
 #include "game/globals.h"
 #include "game/sa1_sa2_shared/camera.h"
@@ -399,7 +399,7 @@ void Task_8056218(void)
 }
 
 // (96.84%) https://decomp.me/scratch/HKhxZ
-NONMATCH("asm/non_matching/game/game_over__Task_8056348.inc", void Task_8056348(void))
+NONMATCH("asm/non_matching/game/sa1/ui/game_over__Task_8056348.inc", void Task_8056348(void))
 {
     GameOverScreen *screen = TASK_DATA(gCurTask);
     s16 frames = screen->frames;
@@ -468,7 +468,7 @@ NONMATCH("asm/non_matching/game/game_over__Task_8056348.inc", void Task_8056348(
 END_NONMATCH
 
 // (91.56%) https://decomp.me/scratch/Rl7oS
-NONMATCH("asm/non_matching/game/game_over__Task_805648C.inc", void Task_805648C(void))
+NONMATCH("asm/non_matching/game/sa1/ui/game_over__Task_805648C.inc", void Task_805648C(void))
 {
     GameOverScreen *screen = TASK_DATA(gCurTask);
     s16 frames = screen->frames;
@@ -621,7 +621,7 @@ void Task_8056714(void)
 }
 
 // (98.85%) https://decomp.me/scratch/Sz0mp
-NONMATCH("asm/non_matching/game/game_over__Task_805676C.inc", void Task_805676C(void))
+NONMATCH("asm/non_matching/game/sa1/ui/game_over__Task_805676C.inc", void Task_805676C(void))
 {
     GameOverD *overD = TASK_DATA(gCurTask);
     s16 unk24 = overD->unk24;

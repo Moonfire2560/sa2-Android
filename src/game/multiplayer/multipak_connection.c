@@ -18,7 +18,7 @@
 #include "constants/text.h"
 #include "flags.h"
 
-#include "game/character_select.h"
+#include "game/sa2/ui/character_select.h"
 
 #include "data/sprite_tables.h"
 

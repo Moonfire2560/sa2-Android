@@ -3,7 +3,7 @@
 #include "flags.h"
 #include "trig.h"
 #include "lib/m4a/m4a.h"
-#include "game/game_over.h"
+#include "game/sa1/ui/game_over.h"
 #include "game/gTask_03006240.h"
 #include "game/sa1/save.h"
 #include "data/ui_graphics.h"
@@ -72,7 +72,7 @@ static inline void incUnkFC()
 }
 
 // (82.53%) https://decomp.me/scratch/rFE3j
-NONMATCH("asm/non_matching/game/player_name_input_menu__CreatePlayerNameInputMenu.inc", void CreatePlayerNameInputMenu(void))
+NONMATCH("asm/non_matching/game/sa1/ui/player_name_input_menu__CreatePlayerNameInputMenu.inc", void CreatePlayerNameInputMenu(void))
 {
     Strc_80528AC sp4;
     struct Task *t;
@@ -219,7 +219,7 @@ END_NONMATCH
 // TODO: This is so bad. Rewrite this entire thing.
 // The generated assembly could easily be halved doing that, and complexity would be MUCH improved.
 // (75.00%) https://decomp.me/scratch/WT79A
-NONMATCH("asm/non_matching/game/player_name_input_menu__sub_8058830.inc", void sub_8058830())
+NONMATCH("asm/non_matching/game/sa1/ui/player_name_input_menu__sub_8058830.inc", void sub_8058830())
 {
     Strc_80528AC subroutine_arg0;
     s8 sp28;
@@ -650,7 +650,7 @@ NONMATCH("asm/non_matching/game/player_name_input_menu__sub_8058830.inc", void s
 END_NONMATCH
 
 // (99.87%%) https://decomp.me/scratch/hkbKh
-NONMATCH("asm/non_matching/game/player_name_input_menu__Task_80595DC.inc", void Task_80595DC(void))
+NONMATCH("asm/non_matching/game/sa1/ui/player_name_input_menu__Task_80595DC.inc", void Task_80595DC(void))
 {
     u32 temp_r5;
     u32 i, j;

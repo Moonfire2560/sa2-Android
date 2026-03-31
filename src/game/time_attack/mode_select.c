@@ -5,7 +5,7 @@
 #include "task.h"
 #include "flags.h"
 #include "lib/m4a/m4a.h"
-#include "game/character_select.h"
+#include "game/sa2/ui/character_select.h"
 #include "game/sa2/gfx/boss_results_transition.h"
 #include "game/sa2/save.h"
 #include "game/time_attack/mode_select.h"

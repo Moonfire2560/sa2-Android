@@ -8,7 +8,7 @@
 #include "game/sa1_sa2_shared/pause_menu.h"
 #include "game/sa1_sa2_shared/rings_manager.h"
 #include "game/sa2/save.h"
-#include "game/game_over.h"
+#include "game/sa2/ui/game_over.h"
 #include "game/cheese.h"
 #include "game/stage/player_controls.h"
 #include "game/stage/player_super_sonic.h"
@@ -316,7 +316,7 @@ void Task_GameStage(void)
 #ifndef COLLECT_RINGS_ROM
     if (IS_SINGLE_PLAYER) {
 #if DEBUG
-#include "game/character_select.h"
+#include "game/sa2/ui/character_select.h"
         if (gInput & SELECT_BUTTON) {
             const u32 initialCharacter = CHARACTER_TAILS;
             const bool32 allUnlocked = TRUE;

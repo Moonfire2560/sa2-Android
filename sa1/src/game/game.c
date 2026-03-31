@@ -14,7 +14,7 @@
 #include "game/sa1_sa2_shared/player.h"
 //#include "game/sa1_sa2_shared/entities_manager.h"
 
-#include "game/character_select.h"
+#include "game/sa1/ui/character_select.h"
 #include "game/stage/tilemap_table.h"
 #include "game/stage/stage.h"
 //#include "game/stage/player.h"

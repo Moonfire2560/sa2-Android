@@ -2,7 +2,7 @@
 #include "core.h"
 #include "lib/m4a/m4a.h"
 #include "data/ui_graphics.h"
-#include "game/collect_chaos_emeralds_msg.h"
+#include "game/sa1/ui/collect_chaos_emeralds_msg.h"
 #include "game/credits.h"
 #include "game/gTask_03006240.h"
 #include "game/sa1/gfx/stage_ui.h"
@@ -327,7 +327,7 @@ void Task_805E758()
 }
 
 // (96.67%) https://decomp.me/scratch/cdKHE
-NONMATCH("asm/non_matching/game/staff_credits__Task_805E888.inc", void Task_805E888())
+NONMATCH("asm/non_matching/game/sa1/ui/staff_credits__Task_805E888.inc", void Task_805E888())
 {
     Sprite *s;
     Sprite *s2;

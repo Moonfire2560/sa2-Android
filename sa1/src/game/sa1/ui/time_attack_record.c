@@ -2,7 +2,7 @@
 #include "core.h"
 #include "lib/m4a/m4a.h"
 #include "data/ui_graphics.h"
-#include "game/course_select.h"
+#include "game/sa1/ui/course_select.h"
 #include "game/gTask_03006240.h"
 #include "game/sa1/save.h"
 #include "game/sa1/gfx/stage_ui.h"
@@ -282,7 +282,7 @@ void CreateTimeAttackRecord(u8 arg0)
 }
 
 // (87.95%) https://decomp.me/scratch/Bkzoh
-NONMATCH("asm/non_matching/game/time_attack_record__sub_8061144.inc", void sub_8061144())
+NONMATCH("asm/non_matching/game/sa1/ui/time_attack_record__sub_8061144.inc", void sub_8061144())
 {
     u32 var_r7 = 0;
     u8 sp0 = 0;
@@ -427,7 +427,7 @@ void sub_80613D0()
 }
 
 // (96.12%) https://decomp.me/scratch/l6XXR
-NONMATCH("asm/non_matching/game/time_attack_record__sub_8061480.inc", void sub_8061480())
+NONMATCH("asm/non_matching/game/sa1/ui/time_attack_record__sub_8061480.inc", void sub_8061480())
 {
     Strc_80528AC gfx;
     u8 sp30[8];

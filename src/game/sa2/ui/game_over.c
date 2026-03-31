@@ -8,7 +8,7 @@
 
 #include "game/globals.h"
 
-#include "game/game_over.h"
+#include "game/sa2/ui/game_over.h"
 #include "game/time_attack/lobby.h"
 #include "game/title_screen.h"
 

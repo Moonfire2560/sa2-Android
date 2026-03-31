@@ -5,7 +5,7 @@
 #include "task.h"
 
 #include "game/globals.h"
-#include "game/character_select.h"
+#include "game/sa2/ui/character_select.h"
 
 #include "game/stage/stage.h"
 

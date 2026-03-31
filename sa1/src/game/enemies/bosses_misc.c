@@ -9,7 +9,7 @@
 #include "game/sa1_sa2_shared/collision.h"
 #include "game/stage/player.h"
 #include "game/stage/screen_shake.h"
-#include "game/stage/results.h" // CreateStageResults
+#include "game/sa1/ui/stage_results.h" // CreateStageResults
 #include "game/stage/terrain_collision.h"
 
 #include "constants/animations.h"

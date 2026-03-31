@@ -3,7 +3,7 @@
 #include "malloc_vram.h"
 #include "lib/m4a/m4a.h"
 #include "game/entity.h"
-#include "game/game_over.h"
+#include "game/sa1/ui/game_over.h"
 #include "game/title_screen.h"
 #include "game/sa1/save.h"
 #include "game/stage/stage.h"

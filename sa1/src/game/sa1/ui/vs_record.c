@@ -422,7 +422,7 @@ void Task_VsRecordInit()
 }
 
 // (80.92%) https://decomp.me/scratch/QyXdU
-NONMATCH("asm/non_matching/game/vs_record__Task_8060874.inc", void Task_8060874())
+NONMATCH("asm/non_matching/game/sa1/ui/vs_record__Task_8060874.inc", void Task_8060874())
 {
     Sprite *s;
     u32 temp_r0;

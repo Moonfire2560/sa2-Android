@@ -3,7 +3,7 @@
 #include "flags.h"
 #include "malloc_vram.h"
 #include "lib/m4a/m4a.h"
-#include "game/game_over.h"
+#include "game/sa1/ui/game_over.h"
 #include "game/options_screen.h" // contains EditLanguageScreen
 #include "game/sa1/save.h"
 #include "game/sa1/gfx/stage_ui.h"

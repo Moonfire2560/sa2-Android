@@ -10,7 +10,7 @@
 #include "malloc_vram.h"
 #include "game/multiboot/connection.h"
 #include "game/title_screen.h"
-#include "game/character_select.h"
+#include "game/sa2/ui/character_select.h"
 
 #include "constants/animations.h"
 #include "constants/text.h"

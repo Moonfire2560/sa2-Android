@@ -5,7 +5,7 @@
 #include "malloc_vram.h"
 #include "bg_triangles.h"
 #include "lib/m4a/m4a.h"
-#include "game/character_select.h"
+#include "game/sa1/ui/character_select.h"
 #include "game/entity.h"
 #include "game/multiplayer/mode_select.h"
 #include "game/options_screen.h"

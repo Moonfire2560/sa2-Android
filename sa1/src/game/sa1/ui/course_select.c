@@ -2,7 +2,7 @@
 #include "core.h"
 #include "lib/m4a/m4a.h"
 #include "data/ui_graphics.h"
-#include "game/character_select.h"
+#include "game/sa1/ui/character_select.h"
 #include "game/gTask_03006240.h"
 #include "game/multiplayer/multipak_connection.h"
 #include "game/globals.h"
@@ -368,7 +368,7 @@ void CreateCourseSelect(bool8 arg0)
 }
 
 // (86.97%) https://decomp.me/scratch/1mKl5
-NONMATCH("asm/non_matching/game/course_select__Task_CourseSelectInit.inc", void Task_CourseSelectInit())
+NONMATCH("asm/non_matching/game/sa1/ui/course_select__Task_CourseSelectInit.inc", void Task_CourseSelectInit())
 {
     Strc_80528AC gfx;
     s32 sp38;

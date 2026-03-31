@@ -266,7 +266,7 @@ void sub_805C994(u8 arg0)
 }
 
 // (91.64%) https://decomp.me/scratch/oLMqr
-NONMATCH("asm/non_matching/game/game2_1__sub_805D048.inc", void sub_805D048(u8 arg0))
+NONMATCH("asm/non_matching/game/sa1/ui/game2_1__sub_805D048.inc", void sub_805D048(u8 arg0))
 {
     struct Task *task18;
     struct Task *task1C;
@@ -514,7 +514,7 @@ NONMATCH("asm/non_matching/game/game2_1__sub_805D048.inc", void sub_805D048(u8 a
 END_NONMATCH
 
 // (91.30%) https://decomp.me/scratch/ayTm4
-NONMATCH("asm/non_matching/game/game2_1__sub_805D4F0.inc", void sub_805D4F0())
+NONMATCH("asm/non_matching/game/sa1/ui/game2_1__sub_805D4F0.inc", void sub_805D4F0())
 {
     u8 unused[4];
     s32 temp_r6;

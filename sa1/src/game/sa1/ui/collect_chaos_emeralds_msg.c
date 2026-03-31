@@ -1,7 +1,7 @@
 #include "global.h"
 #include "core.h"
 #include "game/entity.h"
-#include "game/game_over.h"
+#include "game/sa1/ui/game_over.h"
 #include "game/title_screen.h"
 #include "game/sa1/save.h"
 #include "game/sa1/gfx/stage_ui.h"

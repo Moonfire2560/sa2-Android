@@ -169,10 +169,10 @@ SECTIONS
 
         src/game/sa2/ui/stage_intro.o(.text);
         src/game/sa2/ui/stage_results.o(.text);
-        src/game/character_select.o(.text);
-        src/game/course_select.o(.text);
-        src/game/countdown.o(.text);
-        src/game/game_over.o(.text);
+        src/game/sa2/ui/character_select.o(.text);
+        src/game/sa2/ui/course_select.o(.text);
+        src/game/sa2/ui/countdown.o(.text);
+        src/game/sa2/ui/game_over.o(.text);
 
         src/game/sa2/bosses/final_intro.o(.text);
         src/game/sa2/bosses/explosion_parts.o(.text);
@@ -420,9 +420,9 @@ SECTIONS
         src/game/sa2/gfx/boss_results_transition.o(.rodata);
         src/game/sa2/ui/stage_intro.o(.rodata);
         src/game/sa2/ui/stage_results.o(.rodata);
-        src/game/character_select.o(.rodata);
-        src/game/course_select.o(.rodata);
-        src/game/countdown.o(.rodata);
+        src/game/sa2/ui/character_select.o(.rodata);
+        src/game/sa2/ui/course_select.o(.rodata);
+        src/game/sa2/ui/countdown.o(.rodata);
         src/game/sa2/bosses/final_intro.o(.rodata);
         src/game/sa2/bosses/common.o(.rodata);
         src/game/sa2/bosses/boss_1.o(.rodata);

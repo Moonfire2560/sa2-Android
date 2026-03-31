@@ -1,4 +1,4 @@
-#include "game/course_select.h"
+#include "game/sa2/ui/course_select.h"
 #include "core.h"
 #include "sprite.h"
 
@@ -7,7 +7,7 @@
 #include "game/stage/stage.h"
 
 #include "lib/m4a/m4a.h"
-#include "game/character_select.h"
+#include "game/sa2/ui/character_select.h"
 #include "constants/songs.h"
 #include "constants/text.h"
 #include "task.h"

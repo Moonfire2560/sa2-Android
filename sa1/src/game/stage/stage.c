@@ -2,7 +2,7 @@
 #include "core.h"
 #include "flags.h"
 #include "lib/m4a/m4a.h"
-#include "game/game_over.h"
+#include "game/sa1/ui/game_over.h"
 #include "game/multiplayer/chao.h"
 #include "game/multiplayer/finish.h"
 #include "game/multiplayer/indicators.h"
@@ -22,9 +22,9 @@
 #include "game/stage/player.h"
 #include "game/stage/screen_shake.h"
 #include "game/stage/stage.h"
-#include "game/time_attack/lobby.h"
+#include "game/sa1/ui/time_attack_lobby.h"
 #if (GAME == GAME_SA1)
-#include "game/time_over.h"
+#include "game/sa1/ui/time_over.h"
 #endif
 
 #include "constants/characters.h"
@@ -363,7 +363,7 @@ void Task_GameStage(void)
 
     if (IS_SINGLE_PLAYER) {
 #if DEBUG
-#include "game/character_select.h"
+#include "game/sa1/ui/character_select.h"
         if (gInput & SELECT_BUTTON) {
             u32 initialCharacter = CHARACTER_TAILS;
             bool32 allUnlocked = TRUE;

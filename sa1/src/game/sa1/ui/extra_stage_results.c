@@ -5,9 +5,9 @@
 #include "lib/m4a/m4a.h"
 #include "game/credits.h"
 #include "game/gTask_03006240.h"
-#include "game/game_over.h"
+#include "game/sa1/ui/game_over.h"
 #include "game/sa1/save.h"
-#include "game/stage/results.h"
+#include "game/sa1/ui/stage_results.h"
 #include "game/sa1/gfx/stage_ui.h"
 #include "data/ui_graphics.h"
 
@@ -824,7 +824,7 @@ void Task_8066478(void)
 }
 
 // (96.54%) https://decomp.me/scratch/bDXGb
-NONMATCH("asm/non_matching/game/extra_stage_results__Task_8066520.inc", void Task_8066520(void))
+NONMATCH("asm/non_matching/game/sa1/ui/extra_stage_results__Task_8066520.inc", void Task_8066520(void))
 {
     ExtraStageResults_164 *sp0;
     ExtraStageResults_164 *sp4;
@@ -1978,7 +1978,7 @@ void Task_8067B9C()
 }
 
 // (81.56%) https://decomp.me/scratch/L5YKY
-NONMATCH("asm/non_matching/game/extra_stage_results__Task_8067C24.inc", void Task_8067C24())
+NONMATCH("asm/non_matching/game/sa1/ui/extra_stage_results__Task_8067C24.inc", void Task_8067C24())
 {
     struct Task *tasks[3];
     u32 sp10;

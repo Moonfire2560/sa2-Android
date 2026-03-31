@@ -31,6 +31,8 @@ SECTIONS {
         src/game/sa1_sa2_shared/collision_0.o(.text);
         src/game/sa1_sa2_shared/collision.o(.text);
         src/game/sa1_sa2_shared/palette_loader.o(.text);
+
+        /* Menus */
         src/game/title_screen.o(.text);
         src/game/sa1_sa2_shared/unused_level_select.o(.text);
         src/game/multiplayer/mode_select.o(.text);
@@ -38,6 +40,7 @@ SECTIONS {
         src/game/time_attack/menu.o(.text);
         src/game/options_menu.o(.text);
         src/game/player_data_menu.o(.text);
+
         src/game/sa1_sa2_shared/spot_light_beam_task.o(.text);
         src/game/to_be_continued_screen.o(.text);
         src/game/sa1_sa2_shared/enemy_defeat_score.o(.text);
@@ -151,28 +154,28 @@ SECTIONS {
         src/game/sa1/gfx/stage_ui_z.o(.text);
 
         /* game/sa1/ui */
-        src/game/game_over.o(.text);
-        src/game/stage/results.o(.text);
-        src/game/player_name_input_menu.o(.text);
-        src/game/character_select.o(.text);
-        src/game/time_over.o(.text);
-        src/game/sa1/special_stage/game_2_0.o(.text);
-        src/game/game_2_1.o(.text);
-        src/game/staff_credits.o(.text);
-        src/game/sound_test.o(.text);
-        src/game/vs_record.o(.text);
-        src/game/time_attack_record.o(.text);
-        src/game/course_select.o(.text);
-        src/game/game_2_3.o(.text);
-        src/game/intro_animation.o(.text);
-        src/game/extra_stage_results.o(.text);
-        src/game/sa1/special_stage/intro.o(.text);
-        src/game/collect_chaos_emeralds_msg.o(.text);
-        src/game/time_attack/results.o(.text);
-        src/game/time_attack/lobby.o(.text);
-        src/game/edit_language_screen.o(.text);
-        src/game/multiplayer/continue_screen.o(.text);
-        src/game/time_attack/records.o(.text);
+        src/game/sa1/ui/game_over.o(.text);
+        src/game/sa1/ui/stage_results.o(.text);
+        src/game/sa1/ui/player_name_input_menu.o(.text);
+        src/game/sa1/ui/character_select.o(.text);
+        src/game/sa1/ui/time_over.o(.text);
+        src/game/sa1/ui/game_2_0.o(.text);
+        src/game/sa1/ui/game_2_1.o(.text);
+        src/game/sa1/ui/staff_credits.o(.text);
+        src/game/sa1/ui/sound_test.o(.text);
+        src/game/sa1/ui/vs_record.o(.text);
+        src/game/sa1/ui/time_attack_record.o(.text);
+        src/game/sa1/ui/course_select.o(.text);
+        src/game/sa1/ui/game_2_3.o(.text);
+        src/game/sa1/ui/intro_animation.o(.text);
+        src/game/sa1/ui/extra_stage_results.o(.text);
+        src/game/sa1/ui/special_stage_intro.o(.text);
+        src/game/sa1/ui/collect_chaos_emeralds_msg.o(.text);
+        src/game/sa1/ui/time_attack_results.o(.text);
+        src/game/sa1/ui/time_attack_lobby.o(.text);
+        src/game/sa1/ui/edit_language_screen.o(.text);
+        src/game/sa1/ui/multiplayer_continue_screen.o(.text);
+        src/game/sa1/ui/time_attack_records.o(.text);
 
         src/game/enemies/gamigami.o(.text);
         src/game/enemies/rhinotank.o(.text);
@@ -355,21 +358,21 @@ SECTIONS {
         src/data/ui_graphics_table.o(.rodata);
         src/game/sa1/gfx/trapped_animals.o(.rodata);
         data/data_0_5_2.o(.rodata);
-        src/game/character_select.o(.rodata);
-        src/game/sa1/special_stage/game_2_0.o(.rodata);
-        src/game/game_2_1.o(.rodata);
-        src/game/staff_credits.o(.rodata);
+        src/game/sa1/ui/character_select.o(.rodata);
+        src/game/sa1/ui/game_2_0.o(.rodata);
+        src/game/sa1/ui/game_2_1.o(.rodata);
+        src/game/sa1/ui/staff_credits.o(.rodata);
         src/data/credits.o(.rodata);
         data/data_sound_test.o(.rodata);
-        src/game/sound_test.o(.rodata);
+        src/game/sa1/ui/sound_test.o(.rodata);
         data/data_0_6.o(.rodata);
-        src/game/course_select.o(.rodata);
-        src/game/game_2_3.o(.rodata);
-        src/game/intro_animation.o(.rodata);
+        src/game/sa1/ui/course_select.o(.rodata);
+        src/game/sa1/ui/game_2_3.o(.rodata);
+        src/game/sa1/ui/intro_animation.o(.rodata);
         data/data_0_6_0.o(.rodata);
-        src/game/time_attack/results.o(.rodata);
+        src/game/sa1/ui/time_attack_results.o(.rodata);
         data/data_0_6_1.o(.rodata);
-        src/game/time_attack/records.o(.rodata);
+        src/game/sa1/ui/time_attack_records.o(.rodata);
         data/data_0_6_2.o(.rodata);
         src/game/enemies/kerokero.o(.rodata);
         src/game/enemies/drisame.o(.rodata);

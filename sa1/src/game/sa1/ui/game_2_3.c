@@ -403,7 +403,7 @@ void Task_80634EC(void)
 // NOTE: Incomplete
 //       Related to MP Chao Hunt
 // (67.58%) https://decomp.me/scratch/7bJhx
-NONMATCH("asm/non_matching/game/game2_3__Task_8063638.inc", void Task_8063638())
+NONMATCH("asm/non_matching/game/sa1/ui/game2_3__Task_8063638.inc", void Task_8063638())
 {
     Sprite *s;
     s32 unk4C;

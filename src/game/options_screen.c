@@ -15,7 +15,7 @@
 #include "game/stage/stage.h"
 #include "game/sa2/gfx/stage_ui.h"
 #include "game/multiplayer/mode_select.h"
-#include "game/character_select.h"
+#include "game/sa2/ui/character_select.h"
 
 #include "constants/tilemaps.h"
 

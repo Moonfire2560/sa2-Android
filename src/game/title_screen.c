@@ -11,7 +11,7 @@
 
 #include "game/title_screen.h"
 #include "game/bg_palette_effects.h"
-#include "game/character_select.h"
+#include "game/sa2/ui/character_select.h"
 #include "game/math.h"
 #include "game/multiplayer/mode_select.h"
 #include "game/options_screen.h"

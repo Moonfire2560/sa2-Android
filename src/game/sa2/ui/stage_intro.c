@@ -7,7 +7,7 @@
 #include "game/cheese.h"
 #include "game/sa2/gfx/screen_mask.h"
 #include "game/sa2/bosses/common.h"
-#include "game/countdown.h"
+#include "game/sa2/ui/countdown.h"
 #include "game/boost_effect.h"
 #include "game/multiplayer/mp_player.h"
 #include "game/sa2/gfx/screen_fade.h"

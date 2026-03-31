@@ -6,7 +6,7 @@
 #include "lib/m4a/m4a.h"
 #include "game/stage/player.h"
 #include "game/stage/stage.h"
-#include "game/course_select.h"
+#include "game/sa2/ui/course_select.h"
 #include "game/cutscenes/endings.h"
 #include "game/cutscenes/level_endings.h"
 #include "game/sa2/save.h"

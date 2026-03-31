@@ -8,7 +8,7 @@
 #include "game/nuts_and_bolts_task.h"
 #include "game/sa1_sa2_shared/collision.h"
 #include "game/stage/terrain_collision.h"
-#include "game/stage/results.h"
+#include "game/sa1/ui/stage_results.h"
 #include "game/sa1/save.h"
 
 #include "constants/animations.h"

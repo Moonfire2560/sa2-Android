@@ -675,7 +675,7 @@ lbl:
 }
 
 // (94.09%) https://decomp.me/scratch/m9YNS
-NONMATCH("asm/non_matching/game/sound_test__sub_805F950.inc", void sub_805F950())
+NONMATCH("asm/non_matching/game/sa1/ui/sound_test__sub_805F950.inc", void sub_805F950())
 {
     s32 temp_r6;
 

@@ -5,7 +5,7 @@
 #include "lib/m4a/m4a.h"
 #include "constants/ui_graphics.h"
 #include "game/entity.h"
-#include "game/game_over.h"
+#include "game/sa1/ui/game_over.h"
 #include "game/gTask_03006240.h"
 #include "game/sa1_sa2_shared/spot_light_beam_task.h"
 #include "game/sa1/gfx/stage_ui.h"

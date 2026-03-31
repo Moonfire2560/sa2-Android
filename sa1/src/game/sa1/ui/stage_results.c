@@ -3,7 +3,7 @@
 #include "malloc_vram.h"
 #include "lib/m4a/m4a.h"
 #include "game/gTask_03006240.h"
-#include "game/collect_chaos_emeralds_msg.h"
+#include "game/sa1/ui/collect_chaos_emeralds_msg.h"
 #include "game/credits.h"
 #include "game/sa1/save.h"
 #include "game/globals.h"
@@ -177,7 +177,7 @@ void sub_8056FE4(VramPtrs *arg0)
 }
 
 // (93.06%) https://decomp.me/scratch/mM5tB
-NONMATCH("asm/non_matching/game/stage/results__CreateStageResults.inc", u32 CreateStageResults(u32 ringCount, u32 courseTime))
+NONMATCH("asm/non_matching/game/sa1/ui/stage_results__CreateStageResults.inc", u32 CreateStageResults(u32 ringCount, u32 courseTime))
 {
     s16 temp_r2_5;
     s16 var_r5_6;

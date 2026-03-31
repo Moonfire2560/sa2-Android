@@ -3,7 +3,7 @@
 #include "malloc_vram.h"
 #include "lib/m4a/m4a.h"
 #include "game/entity.h"
-#include "game/game_over.h"
+#include "game/sa1/ui/game_over.h"
 #include "game/title_screen.h"
 #include "game/sa1/save.h"
 #include "game/sa1/special_stage/main.h"
@@ -47,7 +47,7 @@ void Task_805C83C(void);
 void TaskDestructor_nullsub_805C8FC(struct Task *t);
 
 // (89.77%) https://decomp.me/scratch/ZhMAK
-NONMATCH("asm/non_matching/game/game2_0__sub_805BC94.inc", void sub_805BC94(u16 arg0))
+NONMATCH("asm/non_matching/game/sa1/ui/game2_0__sub_805BC94.inc", void sub_805BC94(u16 arg0))
 {
     Strc_80528AC sp00;
     s32 sp34;
