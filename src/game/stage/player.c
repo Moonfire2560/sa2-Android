@@ -26,7 +26,7 @@
 #include "game/stage/player.h"
 #include "game/stage/player_controls.h"
 #include "game/stage/player_super_sonic.h"
-#include "game/stage/results.h"
+#include "game/sa2/ui/stage_results.h"
 #include "game/stage/rings_scatter.h"
 #include "game/stage/spawn_positions.h"
 #include "game/stage/stage.h"

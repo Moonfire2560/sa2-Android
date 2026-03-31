@@ -7,7 +7,7 @@
 #include "game/multiplayer/multipak_connection.h"
 #include "game/multiplayer/results.h"
 #include "game/sa1/save.h"
-#include "game/stage/ui.h"
+#include "game/sa1/gfx/stage_ui.h"
 
 #include "constants/text.h"
 

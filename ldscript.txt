@@ -58,8 +58,8 @@ SECTIONS
         src/game/stage/underwater_effects.o(.data);
         src/game/stage/player_controls.o(.data);
         src/game/stage/player_super_sonic.o(.data);
-        src/game/stage/ui.o(.data);
-        src/game/stage/debug_text_printer.o(.data);
+        src/game/sa2/gfx/stage_ui.o(.data);
+        src/game/sa2/gfx/debug_text_printer.o(.data);
         src/game/sa2/bosses/common.o(.data);
         src/game/options_screen.o(.data);
         src/game/sa2/special_stage/utils.o(.data);
@@ -159,15 +159,16 @@ SECTIONS
         src/game/stage/screen_shake.o(.text);
         src/game/stage/player_controls.o(.text);
         src/game/stage/player_super_sonic.o(.text);
-        src/game/stage/ui.o(.text);
-        src/game/stage/debug_text_printer.o(.text);
-        src/game/stage/screen_fade.o(.text);
-        src/game/stage/trapped_animals.o(.text);
-        src/game/stage/screen_mask.o(.text);
-        src/game/stage/boss_results_transition.o(.text);
-        src/game/stage/intro.o(.text);
-        src/game/stage/results.o(.text);
 
+        src/game/sa2/gfx/stage_ui.o(.text);
+        src/game/sa2/gfx/debug_text_printer.o(.text);
+        src/game/sa2/gfx/screen_fade.o(.text);
+        src/game/sa2/gfx/trapped_animals.o(.text);
+        src/game/sa2/gfx/screen_mask.o(.text);
+        src/game/sa2/gfx/boss_results_transition.o(.text);
+
+        src/game/sa2/ui/stage_intro.o(.text);
+        src/game/sa2/ui/stage_results.o(.text);
         src/game/character_select.o(.text);
         src/game/course_select.o(.text);
         src/game/countdown.o(.text);
@@ -414,11 +415,11 @@ SECTIONS
         src/game/stage/rings_scatter.o(.rodata);
         src/game/stage/player.o(.rodata);
         src/game/stage/player_super_sonic.o(.rodata);
-        src/game/stage/ui.o(.rodata);
-        src/game/stage/trapped_animals.o(.rodata);
-        src/game/stage/boss_results_transition.o(.rodata);
-        src/game/stage/intro.o(.rodata);
-        src/game/stage/results.o(.rodata);
+        src/game/sa2/gfx/stage_ui.o(.rodata);
+        src/game/sa2/gfx/trapped_animals.o(.rodata);
+        src/game/sa2/gfx/boss_results_transition.o(.rodata);
+        src/game/sa2/ui/stage_intro.o(.rodata);
+        src/game/sa2/ui/stage_results.o(.rodata);
         src/game/character_select.o(.rodata);
         src/game/course_select.o(.rodata);
         src/game/countdown.o(.rodata);

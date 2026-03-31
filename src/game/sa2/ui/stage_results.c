@@ -10,10 +10,10 @@
 #include "game/cutscenes/endings.h"
 #include "game/cutscenes/level_endings.h"
 #include "game/sa2/save.h"
-#include "game/stage/screen_fade.h"
+#include "game/sa2/gfx/screen_fade.h"
 #include "game/sa2/special_stage/main.h"
-#include "game/stage/results.h"
-#include "game/stage/ui.h"
+#include "game/sa2/ui/stage_results.h"
+#include "game/sa2/gfx/stage_ui.h"
 
 #include "constants/animations.h"
 #include "constants/char_states.h"

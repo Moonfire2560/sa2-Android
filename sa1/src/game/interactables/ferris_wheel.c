@@ -6,7 +6,7 @@
 #include "game/entity.h"
 #include "game/sa1_sa2_shared/collision.h"
 #include "game/stage/player.h"
-#include "game/stage/ui.h"
+#include "game/sa1/gfx/stage_ui.h"
 
 #include "constants/animations.h"
 #include "constants/songs.h"

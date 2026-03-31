@@ -8,10 +8,10 @@
 #include "game/stage/player.h"
 #include "game/stage/camera.h"
 #include "game/cutscenes/level_endings.h"
-#include "game/stage/screen_fade.h"
-#include "game/stage/results.h"
+#include "game/sa2/gfx/screen_fade.h"
+#include "game/sa2/ui/stage_results.h"
 #include "game/time_attack/results.h"
-#include "game/stage/boss_results_transition.h"
+#include "game/sa2/gfx/boss_results_transition.h"
 
 #include "constants/songs.h"
 #include "constants/zones.h"

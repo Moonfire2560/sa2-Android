@@ -10,7 +10,7 @@
 #include "core.h"
 #include "trig.h"
 #include "flags.h"
-#include "game/stage/screen_mask.h"
+#include "game/sa2/gfx/screen_mask.h"
 
 #define MAX_SHAPE_PAIRS 8
 

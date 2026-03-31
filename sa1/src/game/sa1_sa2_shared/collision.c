@@ -17,7 +17,7 @@
 #include "game/parameters/characters.h"
 #include "game/stage/player.h"
 #include "game/stage/rings_scatter.h"
-#include "game/stage/trapped_animals.h"
+#include "game/sa1/gfx/trapped_animals.h"
 
 #include "constants/animations.h"
 #include "constants/char_states.h"

@@ -5,7 +5,7 @@
 #include "game/time_over.h"
 #include "game/entity.h"
 #include "game/stage/stage.h"
-#include "game/stage/ui.h"
+#include "game/sa1/gfx/stage_ui.h"
 
 #include "constants/animations.h"
 #include "constants/zones.h"

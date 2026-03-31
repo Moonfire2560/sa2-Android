@@ -18,7 +18,7 @@
 
 #include "game/stage/player_controls.h"
 #include "game/sa2/save.h"
-#include "game/stage/screen_fade.h"
+#include "game/sa2/gfx/screen_fade.h"
 #include "game/sa1_sa2_shared/entities_manager.h"
 #include "game/title_screen.h"
 #include "game/dummy_task.h"

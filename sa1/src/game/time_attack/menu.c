@@ -6,7 +6,7 @@
 #include "game/gTask_03006240.h"
 #include "game/sa1/save.h"
 #include "game/title_screen.h" // CreateMainMenu
-#include "game/stage/ui.h" // sub_805423C
+#include "game/sa1/gfx/stage_ui.h" // sub_805423C
 
 #include "constants/songs.h"
 #include "constants/text.h"

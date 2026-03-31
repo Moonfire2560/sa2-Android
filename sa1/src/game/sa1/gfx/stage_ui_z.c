@@ -7,7 +7,7 @@
 #include "game/gTask_03006240.h"
 #include "game/multiplayer/mp_player.h"
 #include "game/multiplayer/hud.h" // CreateChaoHuntHUD
-#include "game/stage/ui.h"
+#include "game/sa1/gfx/stage_ui.h"
 #include "game/stage/underwater_effects.h"
 #include "game/water_effects.h"
 
@@ -285,7 +285,7 @@ END_NONMATCH
 
 // Output: struct Task *t -> Struct_sub_80550F8
 // (94.00%) https://decomp.me/scratch/e0aBK
-NONMATCH("asm/non_matching/game/stage/ui__sub_80550F8.inc", struct Task *sub_80550F8(void))
+NONMATCH("asm/non_matching/game/sa1/gfx/stage_ui__sub_80550F8.inc", struct Task *sub_80550F8(void))
 {
     Strc_Ui_24 *ui_24;
     Strc_Ui_28 *ui_28;
@@ -452,7 +452,7 @@ NONMATCH("asm/non_matching/game/stage/ui__sub_80550F8.inc", struct Task *sub_805
 END_NONMATCH
 
 // (90.26%) https://decomp.me/scratch/eeD7q
-NONMATCH("asm/non_matching/game/stage/ui__Task_8055458.inc", void Task_8055458(void))
+NONMATCH("asm/non_matching/game/sa1/gfx/stage_ui__Task_8055458.inc", void Task_8055458(void))
 {
     Strc_Ui_28 *strcMain = TASK_DATA(gCurTask);
     Strc_Ui_24 *strc1 = TASK_DATA(strcMain->taskC);
@@ -586,7 +586,7 @@ void Task_8055730(void)
 }
 
 // (65.69%) https://decomp.me/scratch/wlHG6
-NONMATCH("asm/non_matching/game/stage/ui__Task_8055798.inc", void Task_8055798(void))
+NONMATCH("asm/non_matching/game/sa1/gfx/stage_ui__Task_8055798.inc", void Task_8055798(void))
 {
     Strc_Ui_24 *strc = TASK_DATA(gCurTask);
 

@@ -12,7 +12,7 @@
 #include "game/entity.h"
 #include "game/multiplayer/multiplayer_event_mgr.h"
 #include "game/stage/rings_scatter.h"
-#include "game/stage/trapped_animals.h"
+#include "game/sa2/gfx/trapped_animals.h"
 
 #include "constants/animations.h"
 #include "constants/player_transitions.h"

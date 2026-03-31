@@ -6,7 +6,7 @@
 #include "game/gTask_03006240.h"
 #include "game/options_screen.h"
 #include "game/sa1/save.h"
-#include "game/stage/ui.h"
+#include "game/sa1/gfx/stage_ui.h"
 
 #include "constants/animations.h"
 #include "constants/songs.h"

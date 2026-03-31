@@ -3,7 +3,7 @@
 #include "game/cutscenes/credits_end.h"
 #include "core.h"
 #include "sprite.h"
-#include "game/stage/screen_fade.h"
+#include "game/sa2/gfx/screen_fade.h"
 #include "task.h"
 #include "lib/m4a/m4a.h"
 #include "game/sa2/save.h"

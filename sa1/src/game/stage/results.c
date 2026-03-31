@@ -10,7 +10,7 @@
 #include "game/stage/camera.h"
 #include "game/stage/player.h"
 #include "game/stage/stage.h"
-#include "game/stage/ui.h"
+#include "game/sa1/gfx/stage_ui.h"
 #include "data/ui_graphics.h"
 
 #include "constants/ui_graphics.h"

@@ -3,7 +3,7 @@
 
 #include "global.h" // for Vec2_16/32
 #include "sprite.h" // Sprite
-#include "game/stage/screen_fade.h"
+#include "game/sa2/gfx/screen_fade.h"
 
 // NOTE:
 // struct TA53Boss and all the structs referenced in it have to be declared in the .h

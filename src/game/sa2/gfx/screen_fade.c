@@ -1,5 +1,5 @@
 #include "core.h"
-#include "game/stage/screen_fade.h"
+#include "game/sa2/gfx/screen_fade.h"
 
 static inline void ScreenFadeUpdateValues_inline(ScreenFade *fade)
 {

@@ -9,7 +9,7 @@
 #include "game/sa1/special_stage/main.h"
 #include "game/stage/player_controls.h"
 #include "game/stage/stage.h"
-#include "game/stage/ui.h"
+#include "game/sa1/gfx/stage_ui.h"
 #include "data/ui_graphics.h"
 
 #include "constants/animations.h"

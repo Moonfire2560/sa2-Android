@@ -6,7 +6,7 @@
 #include "game/entity.h"
 #include "game/cheese.h"
 #include "game/enemies/projectiles.h"
-#include "game/stage/trapped_animals.h"
+#include "game/sa2/gfx/trapped_animals.h"
 #include "game/multiplayer/multiplayer_event_mgr.h"
 #include "lib/m4a/m4a.h"
 

@@ -15,7 +15,7 @@
 #include "game/stage/terrain_collision.h"
 #include "game/stage/player.h"
 #include "game/stage/stage.h"
-#include "game/stage/ui.h"
+#include "game/sa1/gfx/stage_ui.h"
 #include "game/time_attack/menu.h"
 #include "game/title_screen.h"
 #include "game/water_effects.h"

@@ -14,7 +14,7 @@
 #include "bg_triangles.h"
 #include "game/sa2/save.h"
 #include "game/title_screen.h"
-#include "game/stage/screen_fade.h"
+#include "game/sa2/gfx/screen_fade.h"
 #include "lib/m4a/m4a.h"
 #include "multi_boot.h"
 #include "sio32_multi_load.h"

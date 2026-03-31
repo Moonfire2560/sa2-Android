@@ -8,7 +8,7 @@
 #include "game/multiplayer/unk_1.h"
 #include "game/globals.h"
 #include "game/stage/stage.h"
-#include "game/stage/ui.h"
+#include "game/sa1/gfx/stage_ui.h"
 #include "game/sa1/save.h"
 #include "game/time_attack/menu.h"
 #include "game/title_screen.h"

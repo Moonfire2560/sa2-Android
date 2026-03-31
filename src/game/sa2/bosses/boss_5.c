@@ -9,16 +9,16 @@
 #include "game/sa2/save.h"
 #include "game/sa2/bosses/common.h"
 #include "game/sa2/bosses/eggmobile_escape_sequence.h"
-#include "game/stage/boss_results_transition.h"
+#include "game/sa2/gfx/boss_results_transition.h"
 
 #include "game/player_callbacks.h"
 
 #include "game/stage/terrain_collision.h"
 #include "game/stage/player.h"
 #include "game/stage/camera.h"
-#include "game/stage/screen_mask.h"
+#include "game/sa2/gfx/screen_mask.h"
 
-#include "game/stage/screen_fade.h"
+#include "game/sa2/gfx/screen_fade.h"
 
 #include "lib/m4a/m4a.h"
 #include "constants/songs.h"

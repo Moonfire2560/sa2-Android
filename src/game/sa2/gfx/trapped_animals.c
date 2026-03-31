@@ -3,7 +3,7 @@
 
 #include "game/globals.h"
 
-#include "game/stage/ui.h"
+#include "game/sa2/gfx/stage_ui.h"
 #include "game/stage/terrain_collision.h"
 #include "game/stage/player.h"
 #include "game/stage/camera.h"

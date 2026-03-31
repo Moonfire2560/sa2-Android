@@ -2,7 +2,7 @@
 #include "game/cutscenes/level_endings.h"
 #include "core.h"
 #include "sprite.h"
-#include "game/stage/screen_fade.h"
+#include "game/sa2/gfx/screen_fade.h"
 #include "task.h"
 #include "malloc_vram.h"
 #include "lib/m4a/m4a.h"
@@ -13,7 +13,7 @@
 #include "game/stage/terrain_collision.h"
 #include "game/stage/player.h"
 #include "game/stage/camera.h"
-#include "game/stage/results.h"
+#include "game/sa2/ui/stage_results.h"
 
 #if TAS_TESTING
 #include "game/title_screen.h"

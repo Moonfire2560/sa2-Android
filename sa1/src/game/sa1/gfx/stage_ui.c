@@ -9,7 +9,7 @@
 #include "game/gTask_03006240.h"
 #include "game/multiplayer/mp_player.h"
 #include "game/sa1/save.h"
-#include "game/stage/ui.h"
+#include "game/sa1/gfx/stage_ui.h"
 #include "game/water_effects.h"
 
 #include "constants/songs.h"
@@ -66,7 +66,7 @@ void Task_SpecialStageUIMain(void);
 void CreateChaoHuntHUD(void);
 
 // (98.15%) https://decomp.me/scratch/LupqY
-NONMATCH("asm/non_matching/game/stage/ui__Task_StageUIMain.inc", void Task_StageUIMain(void))
+NONMATCH("asm/non_matching/game/sa1/gfx/stage_ui__Task_StageUIMain.inc", void Task_StageUIMain(void))
 {
     StageUI *ui;
     GameOverB overB;
@@ -311,7 +311,7 @@ void StageUI_DrawTimer(u32 courseTime)
 }
 
 // (95.64%) https://decomp.me/scratch/qd1UL
-NONMATCH("asm/non_matching/game/stage/ui__sub_8053BAC.inc", void sub_8053BAC(void))
+NONMATCH("asm/non_matching/game/sa1/gfx/stage_ui__sub_8053BAC.inc", void sub_8053BAC(void))
 {
     struct Task *t = gCurTask;
     StageUI *ui = TASK_DATA(t);
@@ -393,7 +393,7 @@ NONMATCH("asm/non_matching/game/stage/ui__sub_8053BAC.inc", void sub_8053BAC(voi
 END_NONMATCH
 
 // (99.48%) https://decomp.me/scratch/Sg21j
-NONMATCH("asm/non_matching/game/stage/ui__Task_SpecialStageUIMain.inc", void Task_SpecialStageUIMain(void))
+NONMATCH("asm/non_matching/game/sa1/gfx/stage_ui__Task_SpecialStageUIMain.inc", void Task_SpecialStageUIMain(void))
 {
     StageUI *ui = TASK_DATA(gCurTask);
     u8 r7 = ui->unk48;

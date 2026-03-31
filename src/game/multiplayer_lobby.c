@@ -3,7 +3,7 @@
 #include "game/multiplayer_lobby.h"
 #include "task.h"
 #include "sprite.h"
-#include "game/stage/screen_fade.h"
+#include "game/sa2/gfx/screen_fade.h"
 #include "lib/m4a/m4a.h"
 #include "constants/songs.h"
 #include "game/sa2/save.h"

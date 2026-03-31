@@ -8,7 +8,7 @@
 #include "game/sa2/bosses/common.h"
 #include "game/sa2/bosses/boss_3.h"
 #include "game/sa2/bosses/eggmobile_escape_sequence.h"
-#include "game/stage/boss_results_transition.h"
+#include "game/sa2/gfx/boss_results_transition.h"
 #include "game/parameters/bosses.h"
 #include "game/player_callbacks.h"
 

@@ -75,7 +75,7 @@ src/game/some_task_manager.o(.data);
 src/game/enemies/boss_xtra_super_egg_robot.o(.data);
 
 . = 0x00006240; 
-src/game/stage/ui_rendering.o(.data);
+src/game/sa1/gfx/ui_rendering.o(.data);
 
 . = 0x00006414;
 sa2/src/lib/agb_flash/agb_flash.o(.data);

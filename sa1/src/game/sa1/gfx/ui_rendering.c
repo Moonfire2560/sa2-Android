@@ -2,7 +2,7 @@
 #include "core.h"
 #include "flags.h"
 #include "game/gTask_03006240.h"
-#include "game/stage/ui.h"
+#include "game/sa1/gfx/stage_ui.h"
 
 /* TODO: I guess this can be called ui_rendering.c or something like that? */
 

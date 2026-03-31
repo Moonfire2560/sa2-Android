@@ -18,7 +18,7 @@
 #include "game/sa1_sa2_shared/demo_manager.h"
 #include "game/sa2/save.h"
 #include "game/stage/stage.h"
-#include "game/stage/screen_fade.h"
+#include "game/sa2/gfx/screen_fade.h"
 #include "game/time_attack/lobby.h"
 #include "game/time_attack/mode_select.h"
 #include "game/sa1_sa2_shared/camera.h" // TILE_WIDTH

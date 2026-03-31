@@ -8,7 +8,7 @@
 #include "game/sa1/save.h"
 #include "data/ui_graphics.h"
 #include "game/multiplayer/mode_select.h"
-#include "game/stage/ui.h"
+#include "game/sa1/gfx/stage_ui.h"
 
 #include "constants/songs.h"
 

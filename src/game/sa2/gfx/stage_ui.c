@@ -6,7 +6,7 @@
 #include "game/sa2/save.h"
 
 #include "game/stage/player.h"
-#include "game/stage/ui.h"
+#include "game/sa2/gfx/stage_ui.h"
 
 #include "lib/m4a/m4a.h"
 
@@ -101,6 +101,7 @@ typedef struct {
 void Task_StageUIMain(void);
 void TaskDestructor_CreateStageUI(struct Task *t);
 
+// TODO: rename stage hud
 struct Task *CreateStageUI(void)
 {
     u32 i;

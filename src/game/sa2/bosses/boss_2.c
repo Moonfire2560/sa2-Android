@@ -12,7 +12,7 @@
 
 #include "game/sa2/bosses/common.h"
 #include "game/sa2/bosses/eggmobile_escape_sequence.h"
-#include "game/stage/boss_results_transition.h"
+#include "game/sa2/gfx/boss_results_transition.h"
 #include "game/cheese.h"
 
 #include "lib/m4a/m4a.h"

@@ -19,7 +19,7 @@
 #include "game/parameters/bosses.h"
 
 #include "game/stage/screen_shake.h"
-#include "game/stage/boss_results_transition.h"
+#include "game/sa2/gfx/boss_results_transition.h"
 
 #include "constants/animations.h"
 #include "constants/char_states.h"

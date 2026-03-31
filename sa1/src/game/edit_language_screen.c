@@ -6,7 +6,7 @@
 #include "game/game_over.h"
 #include "game/options_screen.h" // contains EditLanguageScreen
 #include "game/sa1/save.h"
-#include "game/stage/ui.h"
+#include "game/sa1/gfx/stage_ui.h"
 
 #include "constants/animations.h"
 #include "constants/songs.h"
