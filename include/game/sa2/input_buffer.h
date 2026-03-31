@@ -1,7 +1,7 @@
 #ifndef GUARD_SA2_INPUT_BUFFER
 #define GUARD_SA2_INPUT_BUFFER
 
-#include "game/sa1_sa2_shared/player.h"
+#include "game/stage/player.h"
 
 void InputBuffer_NewFrameInput(u16 param0, u16 param1);
 void InputBuffer_HandleFrameInput(Player *p);

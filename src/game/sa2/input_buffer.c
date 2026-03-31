@@ -1,18 +1,22 @@
 #include "global.h"
-#include "game/globals.h"
+
 #include "game/sa2/input_buffer.h"
-#include "game/sa1_sa2_shared/player.h"
+#include "game/stage/player.h"
 
 #include "data/input_combos.h"
 
-UNUSED u32 unused_030055C0[4] = {};
+typedef struct {
+    u8 unk0, unk1, unk2, unk3;
+} InputCounter;
 
-u8 gFrameInputsBuf[4] = {};
-u8 gNewInputCountersIndex = 0;
-u8 ALIGNED(4) gFrameInputsBufIndex = 0;
+static UNUSED u32 unused_030055C0[4] = {};
+
+static u8 sFrameInputsBuf[4] = {};
+static u8 sNewInputCountersIndex = 0;
+static u8 ALIGNED(4) sFrameInputsBufIndex = 0;
 
 // Fills available space, but size not yet confirmed
-struct InputCounters ALIGNED(8) gNewInputCounters[32] = {};
+static InputCounter ALIGNED(8) sNewInputCounters[32] = {};
 
 // Trick input patterns
 const u8 gUnknown_080D5254[] = { 0x04, 0x01, 0x00, 0xF0, 0x08, 0x10, 0xF0, 0x08, 0x00, 0xF0, 0x08, 0x10, 0xF0, 0x01 };
@@ -35,14 +39,14 @@ const u8 gUnknown_080D52B6[] = { 0x04, 0x02, 0x10, 0xF0, 0x0F, 0x00, 0xF0, 0x0F,
 const u8 gUnknown_080D52C4[] = { 0x04, 0x01, 0x10, 0xF0, 0x0F, 0x00, 0xF0, 0x0F, 0x10, 0xF0, 0x0F, 0x03, 0x07, 0x0F };
 const u8 gUnknown_080D52D2[] = { 0x04, 0x02, 0x10, 0xF0, 0x0F, 0x00, 0xF0, 0x0F, 0x10, 0xF0, 0x0F, 0x03, 0x07, 0x0F };
 
-// The current value in gNewInputCounters[gNewInputCountersIndex]
+// The current value in sNewInputCounters[sNewInputCountersIndex]
 // gets increased until either it reaches 0xFF or a new button was pressed.
 // Letting go of a button does not trigger the index increase.
 //
 // This is likely used for trick timings
 void InputBuffer_HandleFrameInput(Player *p)
 {
-    const u8 **unk0;
+    const u8 *const *unk0;
     const u8 *data;
 
     if (p->moveState & (MOVESTATE_IGNORE_INPUT | MOVESTATE_DEAD)) {
@@ -64,7 +68,7 @@ void InputBuffer_HandleFrameInput(Player *p)
 
             // _0800E002
             while (p->unk71 != r8) {
-                u8 cid = gNewInputCountersIndex;
+                u8 cid = sNewInputCountersIndex;
 
                 // _0800E012
                 while (r6 != 0) {
@@ -92,8 +96,8 @@ void InputBuffer_HandleFrameInput(Player *p)
 #else
                         s32 r2, r3;
 #endif
-                        r3 = gNewInputCounters[cid].unk0 & r7;
-                        r2 = gNewInputCounters[cid].unk1;
+                        r3 = sNewInputCounters[cid].unk0 & r7;
+                        r2 = sNewInputCounters[cid].unk1;
 
                         r0 = r1;
                         r2 &= maskFF;
@@ -149,10 +153,10 @@ void InputBuffer_NewFrameInput(u16 frameInputs1, u16 frameInputs2)
     r5 = frameInputs1;
     r5 &= frameInputs2;
     r5 = (r5) | r3;
-    gFrameInputsBufIndex = (gFrameInputsBufIndex + 1) % ARRAY_COUNT(gFrameInputsBuf);
-    gFrameInputsBuf[gFrameInputsBufIndex] = r5;
-    r5 |= gFrameInputsBuf[(gFrameInputsBufIndex - 1) % ARRAY_COUNT(gFrameInputsBuf)];
-    r5 |= gFrameInputsBuf[(gFrameInputsBufIndex - 2) % ARRAY_COUNT(gFrameInputsBuf)];
+    sFrameInputsBufIndex = (sFrameInputsBufIndex + 1) % ARRAY_COUNT(sFrameInputsBuf);
+    sFrameInputsBuf[sFrameInputsBufIndex] = r5;
+    r5 |= sFrameInputsBuf[(sFrameInputsBufIndex - 1) % ARRAY_COUNT(sFrameInputsBuf)];
+    r5 |= sFrameInputsBuf[(sFrameInputsBufIndex - 2) % ARRAY_COUNT(sFrameInputsBuf)];
     r5 &= frameInputs1;
 
 #ifndef NON_MATCHING
@@ -162,17 +166,17 @@ void InputBuffer_NewFrameInput(u16 frameInputs1, u16 frameInputs2)
         : "r"(r5));
 #endif
 
-    if ((gNewInputCounters[gNewInputCountersIndex].unk0 == r5) && (gNewInputCounters[gNewInputCountersIndex].unk1 != 0xFF)) {
-        gNewInputCounters[gNewInputCountersIndex].unk1++;
+    if ((sNewInputCounters[sNewInputCountersIndex].unk0 == r5) && (sNewInputCounters[sNewInputCountersIndex].unk1 != 0xFF)) {
+        sNewInputCounters[sNewInputCountersIndex].unk1++;
     } else {
-        gNewInputCountersIndex = (gNewInputCountersIndex + 1) % ARRAY_COUNT(gNewInputCounters);
-        gNewInputCounters[gNewInputCountersIndex].unk0 = r5;
-        gNewInputCounters[gNewInputCountersIndex].unk1 = 0;
+        sNewInputCountersIndex = (sNewInputCountersIndex + 1) % ARRAY_COUNT(sNewInputCounters);
+        sNewInputCounters[sNewInputCountersIndex].unk0 = r5;
+        sNewInputCounters[sNewInputCountersIndex].unk1 = 0;
     }
 }
 
 void InitNewInputCounters(void)
 {
-    gNewInputCountersIndex = 0;
-    DmaFill32(3, 0, gNewInputCounters, sizeof(gNewInputCounters) - 4);
+    sNewInputCountersIndex = 0;
+    DmaFill32(3, 0, sNewInputCounters, sizeof(sNewInputCounters) - 4);
 }
