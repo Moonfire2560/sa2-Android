@@ -5,8 +5,8 @@
 #include "game/types/entity.h"
 #include "game/sa2/enemies/mouse.h"
 
-#include "game/stage/player.h"
-#include "game/stage/camera.h"
+#include "game/shared/stage/player.h"
+#include "game/shared/stage/camera.h"
 #include "malloc_vram.h"
 #include "sprite.h"
 

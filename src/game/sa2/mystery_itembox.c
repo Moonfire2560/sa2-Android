@@ -6,8 +6,8 @@
 #include "game/sa2/mystery_itembox.h"
 #include "game/multiplayer/multiplayer_event_mgr.h"
 #include "game/sa1_sa2_shared/dust_cloud.h"
-#include "game/stage/player.h"
-#include "game/stage/camera.h"
+#include "game/shared/stage/player.h"
+#include "game/shared/stage/camera.h"
 #include "lib/m4a/m4a.h"
 
 #include "constants/animations.h"

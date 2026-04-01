@@ -4,8 +4,8 @@
 #include "game/types/entity.h"
 #include "game/sa1_sa2_shared/collision.h"
 #include "game/multiplayer/multiplayer_event_mgr.h"
-#include "game/stage/terrain_collision.h"
-#include "game/stage/player.h"
+#include "game/shared/stage/terrain_collision.h"
+#include "game/shared/stage/player.h"
 #include "game/sa1/gfx/stage_ui.h" // for sub_80549FC
 #include "game/water_effects.h"
 #include "malloc_vram.h"

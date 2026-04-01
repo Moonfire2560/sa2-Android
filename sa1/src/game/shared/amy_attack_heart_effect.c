@@ -5,8 +5,8 @@
 
 #include "game/shared/amy_attack_heart_effect.h"
 #include "game/globals.h"
-#include "game/stage/camera.h"
-#include "game/stage/player.h"
+#include "game/shared/stage/camera.h"
+#include "game/shared/stage/player.h"
 
 #include "constants/animations.h"
 #if (GAME == GAME_SA2)

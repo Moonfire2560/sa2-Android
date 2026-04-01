@@ -3,8 +3,8 @@
 #include "game/types/entity.h"
 #include "game/sa1_sa2_shared/collision.h"
 #include "game/sa1_sa2_shared/entities_manager.h"
-#include "game/stage/player.h"
-#include "game/stage/camera.h"
+#include "game/shared/stage/player.h"
+#include "game/shared/stage/camera.h"
 #include "task.h"
 #include "sprite.h"
 

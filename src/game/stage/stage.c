@@ -13,10 +13,10 @@
 #include "game/sa2/stage/player_controls.h"
 #include "game/stage/player_super_sonic.h"
 #include "game/sa2/race_progress.h"
-#include "game/stage/screen_shake.h"
+#include "game/shared/stage/screen_shake.h"
 #include "game/stage/stage.h"
-#include "game/stage/player.h"
-#include "game/stage/camera.h"
+#include "game/shared/stage/player.h"
+#include "game/shared/stage/camera.h"
 #include "game/sa2/time_attack/lobby.h"
 #if (GAME == GAME_SA1)
 #include "game/time_over.h"

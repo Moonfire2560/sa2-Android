@@ -4,7 +4,7 @@
 #include "sprite.h"
 #include "task.h"
 #include "lib/m4a/m4a.h"
-#include "game/stage/player.h"
+#include "game/shared/stage/player.h"
 #include "game/stage/stage.h"
 #include "game/sa2/ui/course_select.h"
 #include "game/sa2/cutscenes/endings.h"

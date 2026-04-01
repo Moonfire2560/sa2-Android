@@ -4,9 +4,9 @@
 #include "game/globals.h"
 
 #include "game/sa1/gfx/stage_ui.h"
-#include "game/stage/terrain_collision.h"
-#include "game/stage/player.h"
-#include "game/stage/camera.h"
+#include "game/shared/stage/terrain_collision.h"
+#include "game/shared/stage/player.h"
+#include "game/shared/stage/camera.h"
 
 #include "constants/animations.h"
 #include "constants/zones.h"

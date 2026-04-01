@@ -11,8 +11,8 @@
 
 #include "game/math.h"
 
-#include "game/stage/player.h"
-#include "game/stage/camera.h"
+#include "game/shared/stage/player.h"
+#include "game/shared/stage/camera.h"
 #include "game/stage/stage.h"
 
 #include "constants/animations.h"

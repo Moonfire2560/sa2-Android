@@ -6,8 +6,8 @@
 #include "lib/m4a/m4a.h"
 #include "game/sa1_sa2_shared/collision.h"
 #include "game/types/entity.h"
-#include "game/stage/player.h"
-#include "game/stage/camera.h"
+#include "game/shared/stage/player.h"
+#include "game/shared/stage/camera.h"
 #include "game/interactables_2/techno_base/arrow_platform.h"
 
 #include "constants/animations.h"

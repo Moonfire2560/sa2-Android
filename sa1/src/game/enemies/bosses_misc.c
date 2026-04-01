@@ -7,10 +7,10 @@
 #include "game/enemies/bosses_shared.h"
 #include "game/nuts_and_bolts_task.h"
 #include "game/sa1_sa2_shared/collision.h"
-#include "game/stage/player.h"
-#include "game/stage/screen_shake.h"
+#include "game/shared/stage/player.h"
+#include "game/shared/stage/screen_shake.h"
 #include "game/sa1/ui/stage_results.h" // CreateStageResults
-#include "game/stage/terrain_collision.h"
+#include "game/shared/stage/terrain_collision.h"
 
 #include "constants/animations.h"
 #include "constants/anim_sizes.h"

@@ -10,15 +10,15 @@
 #include "game/game.h" // sub_801E4E4
 
 #include "game/sa2/player_callbacks.h"
-#include "game/stage/player.h"
-#include "game/stage/terrain_collision.h"
+#include "game/shared/stage/player.h"
+#include "game/shared/stage/terrain_collision.h"
 
 #include "game/types/entity.h" // Coll_Player_Entity_Intersection
 #include "game/sa2/bosses/common.h"
 #include "game/sa2/bosses/eggmobile_escape_sequence.h"
 #include "game/parameters/bosses.h"
 
-#include "game/stage/screen_shake.h"
+#include "game/shared/stage/screen_shake.h"
 #include "game/sa2/gfx/boss_results_transition.h"
 
 #include "constants/animations.h"

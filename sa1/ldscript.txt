@@ -101,7 +101,7 @@ SECTIONS {
         src/game/game.o(.text);
         src/game/dummy_task.o(.text);
         src/game/stage/stage.o(.text);
-        src/game/stage/camera.o(.text);
+        src/game/shared/stage/camera.o(.text);
         src/game/stage/backgrounds/zone_1.o(.text);
         src/game/stage/backgrounds/zone_2_interior.o(.text);
         src/game/stage/backgrounds/zone_3.o(.text);
@@ -117,22 +117,22 @@ SECTIONS {
         src/game/stage/backgrounds/zone_5.o(.text);
         src/game/stage/backgrounds/zone_3_firework.o(.text);
         src/game/stage/backgrounds/zone_6_hblank.o(.text);
-        src/game/stage/terrain_collision.o(.text);
-        src/game/stage/mp_sprite_task.o(.text);
-        src/game/stage/dust_effect_braking.o(.text);
-        src/game/stage/dust_effect_spindash.o(.text);
-        src/game/stage/grind_effect_1.o(.text);
-        src/game/stage/rings_scatter.o(.text);
-        src/game/stage/player.o(.text);
+        src/game/shared/stage/terrain_collision.o(.text);
+        src/game/shared/stage/mp_sprite_task.o(.text);
+        src/game/shared/stage/dust_effect_braking.o(.text);
+        src/game/shared/stage/dust_effect_spindash.o(.text);
+        src/game/shared/stage/grind_effect_1.o(.text);
+        src/game/shared/stage/rings_scatter.o(.text);
+        src/game/shared/stage/player.o(.text);
         src/game/stage/player_sonic.o(.text);
         src/game/stage/player_tails.o(.text);
         src/game/stage/player_knuckles.o(.text);
         src/game/stage/player_amy.o(.text);
         src/game/stage/player_super_sonic.o(.text);
-        src/game/stage/item_tasks.o(.text);
-        src/game/stage/underwater_effects.o(.text);
+        src/game/shared/stage/item_tasks.o(.text);
+        src/game/shared/stage/underwater_effects.o(.text);
         src/game/water_effects.o(.text);
-        src/game/stage/screen_shake.o(.text);
+        src/game/shared/stage/screen_shake.o(.text);
 
         /* NOTE: input_recorder was not part of the engine in this version */
         sa2/src/input_recorder.o(.text);
@@ -347,9 +347,9 @@ SECTIONS {
         src/game/shared/amy_attack_heart_effect.o(.rodata);
         src/game/sa1_sa2_shared/music_manager.o(.rodata);
         src/game/stage/stage.o(.rodata);
-        src/game/stage/camera.o(.rodata);
+        src/game/shared/stage/camera.o(.rodata);
         src/data/tilemap_table.o(.rodata);
-        src/game/stage/terrain_collision.o(.rodata);
+        src/game/shared/stage/terrain_collision.o(.rodata);
         data/data_0_4.o(.rodata);
         src/game/enemies/boss_5_mecha_knuckles.o(.rodata);
         src/game/enemies/boss_xtra_super_egg_robot.o(.rodata);

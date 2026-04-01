@@ -6,8 +6,8 @@
 
 #include "game/globals.h"
 
-#include "game/stage/player.h"
-#include "game/stage/camera.h"
+#include "game/shared/stage/player.h"
+#include "game/shared/stage/camera.h"
 #include "game/multiplayer/mp_player.h"
 #include "lib/m4a/m4a.h"
 

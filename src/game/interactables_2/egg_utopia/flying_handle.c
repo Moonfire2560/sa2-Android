@@ -2,8 +2,8 @@
 #include "core.h"
 #include "task.h"
 
-#include "game/stage/player.h"
-#include "game/stage/camera.h"
+#include "game/shared/stage/player.h"
+#include "game/shared/stage/camera.h"
 #include "game/sa2/stage/player_controls.h"
 #include "game/interactables_2/egg_utopia/flying_handle.h"
 #include "malloc_vram.h"

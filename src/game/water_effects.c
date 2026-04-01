@@ -6,9 +6,9 @@
 
 #include "game/sa2/boost_effect.h"
 #include "game/globals.h"
-#include "game/stage/player.h"
-#include "game/stage/camera.h"
-#include "game/stage/mp_sprite_task.h"
+#include "game/shared/stage/player.h"
+#include "game/shared/stage/camera.h"
+#include "game/shared/stage/mp_sprite_task.h"
 #include "data/sprite_data.h"
 #include "game/water_effects.h"
 

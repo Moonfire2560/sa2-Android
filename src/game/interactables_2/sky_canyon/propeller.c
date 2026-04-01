@@ -9,8 +9,8 @@
 
 #include "game/types/entity.h"
 
-#include "game/stage/player.h"
-#include "game/stage/camera.h"
+#include "game/shared/stage/player.h"
+#include "game/shared/stage/camera.h"
 
 #include "game/interactables_2/sky_canyon/propeller.h"
 #include "game/interactables_2/sky_canyon_init.h"

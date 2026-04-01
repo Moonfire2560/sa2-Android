@@ -6,11 +6,11 @@
 
 #include "game/globals.h"
 
-#include "game/stage/terrain_collision.h"
-#include "game/stage/player.h"
-#include "game/stage/camera.h"
+#include "game/shared/stage/terrain_collision.h"
+#include "game/shared/stage/player.h"
+#include "game/shared/stage/camera.h"
 
-#include "game/stage/rings_scatter.h"
+#include "game/shared/stage/rings_scatter.h"
 #include "game/shared/collect_ring_effect.h"
 #include "game/sa1_sa2_shared/rings_manager.h"
 

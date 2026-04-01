@@ -8,9 +8,9 @@
 #include "game/multiplayer/mp_player.h"
 #include "game/sa1_sa2_shared/dust_cloud.h"
 #include "game/sa1_sa2_shared/itembox.h"
-#include "game/stage/camera.h"
-#include "game/stage/player.h"
-#include "game/stage/terrain_collision.h"
+#include "game/shared/stage/camera.h"
+#include "game/shared/stage/player.h"
+#include "game/shared/stage/terrain_collision.h"
 #include "lib/m4a/m4a.h"
 
 #include "constants/animations.h"

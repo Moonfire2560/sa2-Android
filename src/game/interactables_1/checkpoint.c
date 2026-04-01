@@ -12,8 +12,8 @@
 
 #include "game/types/entity.h"
 #include "game/stage/spawn_positions.h"
-#include "game/stage/player.h"
-#include "game/stage/camera.h"
+#include "game/shared/stage/player.h"
+#include "game/shared/stage/camera.h"
 
 #include "data/sprite_data.h"
 

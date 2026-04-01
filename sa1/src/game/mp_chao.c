@@ -6,7 +6,7 @@
 #include "game/globals.h"
 #include "game/multiplayer/chao.h"
 #include "game/multiplayer/mp_player.h"
-#include "game/stage/terrain_collision.h"
+#include "game/shared/stage/terrain_collision.h"
 #include "game/types/entity.h"
 
 #include "constants/animations.h"

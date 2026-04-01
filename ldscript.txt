@@ -21,10 +21,10 @@ SECTIONS
         src/multi_boot.o(.bss);
         
         . = 0x00000408;
-        src/game/stage/camera.o(.bss);
+        src/game/shared/stage/camera.o(.bss);
 
         . = 0x00000410;
-        src/game/stage/terrain_collision.o(.bss);
+        src/game/shared/stage/terrain_collision.o(.bss);
 
         src/lib/agb_flash/agb_flash.o(.bss);
 
@@ -50,12 +50,12 @@ SECTIONS
         src/game/multiplayer/mp_attack_2_effect.o(.data);
         src/game/dummy_task.o(.data);
         src/game/stage/stage.o(.data);
-        src/game/stage/camera.o(.data);
-        src/game/stage/terrain_collision.o(.data);
-        src/game/stage/dust_effect_braking.o(.data);
-        src/game/stage/rings_scatter.o(.data);
-        src/game/stage/player.o(.data);
-        src/game/stage/underwater_effects.o(.data);
+        src/game/shared/stage/camera.o(.data);
+        src/game/shared/stage/terrain_collision.o(.data);
+        src/game/shared/stage/dust_effect_braking.o(.data);
+        src/game/shared/stage/rings_scatter.o(.data);
+        src/game/shared/stage/player.o(.data);
+        src/game/shared/stage/underwater_effects.o(.data);
         src/game/sa2/stage/player_controls.o(.data);
         src/game/stage/player_super_sonic.o(.data);
         src/game/sa2/gfx/stage_ui.o(.data);
@@ -146,17 +146,17 @@ SECTIONS
         src/game/dummy_task.o(.text);
     
         src/game/stage/stage.o(.text);
-        src/game/stage/camera.o(.text);
-        src/game/stage/terrain_collision.o(.text);
-        src/game/stage/mp_sprite_task.o(.text);
-        src/game/stage/dust_effect_braking.o(.text);
-        src/game/stage/dust_effect_spindash.o(.text);
-        src/game/stage/grind_effect_1.o(.text);
-        src/game/stage/rings_scatter.o(.text);
-        src/game/stage/player.o(.text);
-        src/game/stage/item_tasks.o(.text);
-        src/game/stage/underwater_effects.o(.text);
-        src/game/stage/screen_shake.o(.text);
+        src/game/shared/stage/camera.o(.text);
+        src/game/shared/stage/terrain_collision.o(.text);
+        src/game/shared/stage/mp_sprite_task.o(.text);
+        src/game/shared/stage/dust_effect_braking.o(.text);
+        src/game/shared/stage/dust_effect_spindash.o(.text);
+        src/game/shared/stage/grind_effect_1.o(.text);
+        src/game/shared/stage/rings_scatter.o(.text);
+        src/game/shared/stage/player.o(.text);
+        src/game/shared/stage/item_tasks.o(.text);
+        src/game/shared/stage/underwater_effects.o(.text);
+        src/game/shared/stage/screen_shake.o(.text);
         src/game/sa2/stage/player_controls.o(.text);
         src/game/stage/player_super_sonic.o(.text);
 
@@ -407,13 +407,13 @@ SECTIONS
         src/game/multiplayer/finish.o(.rodata);
 
         src/game/stage/stage.o(.rodata);
-        src/game/stage/camera.o(.rodata);
+        src/game/shared/stage/camera.o(.rodata);
         src/game/stage/tilemap_table.o(.rodata);
-        src/game/stage/terrain_collision.o(.rodata);
-        src/game/stage/mp_sprite_task.o(.rodata);
+        src/game/shared/stage/terrain_collision.o(.rodata);
+        src/game/shared/stage/mp_sprite_task.o(.rodata);
         src/game/stage/spawn_positions.o(.rodata);
-        src/game/stage/rings_scatter.o(.rodata);
-        src/game/stage/player.o(.rodata);
+        src/game/shared/stage/rings_scatter.o(.rodata);
+        src/game/shared/stage/player.o(.rodata);
         src/game/stage/player_super_sonic.o(.rodata);
         src/game/sa2/gfx/stage_ui.o(.rodata);
         src/game/sa2/gfx/trapped_animals.o(.rodata);

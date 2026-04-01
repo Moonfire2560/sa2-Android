@@ -6,7 +6,7 @@
 #include "game/interactables/party_balloon.h"
 #include "game/multiplayer/multiplayer_event_mgr.h"
 #include "game/types/player.h"
-#include "game/stage/player.h"
+#include "game/shared/stage/player.h"
 
 #include "constants/animations.h"
 #include "constants/char_states.h"

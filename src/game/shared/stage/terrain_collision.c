@@ -1,8 +1,8 @@
 #include "global.h"
 #include "tilemap.h"
-#include "game/stage/terrain_collision.h"
-#include "game/stage/camera.h"
-#include "game/stage/player.h"
+#include "game/shared/stage/terrain_collision.h"
+#include "game/shared/stage/camera.h"
+#include "game/shared/stage/player.h"
 
 #include "constants/zones.h"
 
@@ -125,6 +125,7 @@ extern const Collision CollHeader_zone_final_act_xx_fg;
 extern const Collision CollHeader_zone_final_act_ta53_fg;
 extern const Collision CollHeader_zone_final_act_unused_fg;
 
+#ifndef COLLECT_RINGS_ROM
 const Collision *const gCollisionTable[] = {
     &CollHeader_zone_1_act_1_fg,          &CollHeader_zone_1_act_2_fg,      &CollHeader_zone_1_act_boss_fg,
     &CollHeader_zone_1_act_dummy_fg,      &CollHeader_zone_2_act_1_fg,      &CollHeader_zone_2_act_2_fg,
@@ -138,6 +139,7 @@ const Collision *const gCollisionTable[] = {
     &CollHeader_zone_1_act_dummy_fg,      &CollHeader_zone_final_act_xx_fg, &CollHeader_zone_final_act_ta53_fg,
     &CollHeader_zone_final_act_unused_fg,
 };
+#endif
 #endif
 
 s32 SA2_LABEL(sub_801E4E4)(s32 p0, s32 p1, s32 p2, s32 p3, u8 *data, Func801F07C func)

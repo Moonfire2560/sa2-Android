@@ -11,7 +11,7 @@
 #include "game/sa1/save.h"
 #include "game/sa1/special_stage/main.h"
 #include "game/sa1/stage/player_controls.h"
-#include "game/stage/terrain_collision.h"
+#include "game/shared/stage/terrain_collision.h"
 
 extern struct MP2KSongHeader se_ring_copy;
 

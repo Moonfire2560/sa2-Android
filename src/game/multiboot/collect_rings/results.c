@@ -1,7 +1,7 @@
 #include "global.h"
 #include "core.h"
 
-#include "game/stage/player.h"
+#include "game/shared/stage/player.h"
 #include "game/stage/stage.h"
 #include "game/stage/tilemap_table.h"
 

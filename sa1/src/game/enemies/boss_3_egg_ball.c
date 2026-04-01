@@ -9,8 +9,8 @@
 #include "game/nuts_and_bolts_task.h"
 #include "game/sa1/save.h"
 #include "game/sa1/stage/player_controls.h"
-#include "game/stage/screen_shake.h"
-#include "game/stage/terrain_collision.h"
+#include "game/shared/stage/screen_shake.h"
+#include "game/shared/stage/terrain_collision.h"
 
 #include "constants/animations.h"
 #include "constants/anim_sizes.h"

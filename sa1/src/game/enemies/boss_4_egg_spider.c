@@ -9,16 +9,16 @@
 #include "game/nuts_and_bolts_task.h"
 #include "game/sa1/save.h"
 #include "game/sa1/stage/player_controls.h"
-#include "game/stage/rings_scatter.h"
-#include "game/stage/screen_shake.h"
-#include "game/stage/terrain_collision.h"
+#include "game/shared/stage/rings_scatter.h"
+#include "game/shared/stage/screen_shake.h"
+#include "game/shared/stage/terrain_collision.h"
 #include "game/water_effects.h"
 
 #include "constants/animations.h"
 #include "constants/anim_sizes.h"
 #include "constants/char_states.h"
 #include "constants/songs.h"
-#include "game/stage/underwater_effects.h"
+#include "game/shared/stage/underwater_effects.h"
 
 typedef struct EggSpider {
     /* 0x00 */ SpriteBase base;

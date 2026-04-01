@@ -2,7 +2,7 @@
 #include "core.h"
 #include "game/types/entity.h"
 #include "game/multiplayer/multiplayer_event_mgr.h"
-#include "game/stage/rings_scatter.h"
+#include "game/shared/stage/rings_scatter.h"
 #include "game/sa1_sa2_shared/entities_manager.h"
 
 void *CreateRoomEvent(void)

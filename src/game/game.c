@@ -15,11 +15,11 @@
 #include "game/decomp_credits.h"
 #include "game/stage/tilemap_table.h"
 #include "game/stage/stage.h"
-#include "game/stage/player.h"
-#include "game/stage/camera.h"
-#include "game/stage/underwater_effects.h"
-#include "game/stage/dust_effect_braking.h"
-#include "game/stage/rings_scatter.h"
+#include "game/shared/stage/player.h"
+#include "game/shared/stage/camera.h"
+#include "game/shared/stage/underwater_effects.h"
+#include "game/shared/stage/dust_effect_braking.h"
+#include "game/shared/stage/rings_scatter.h"
 
 #if COLLECT_RINGS_ROM
 #include "game/multiboot/collect_rings/results.h"

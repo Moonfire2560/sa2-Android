@@ -137,10 +137,10 @@ SA2_C_FILES := \
 	sa2/game/sa1_sa2_shared/dust_cloud.c \
 	sa2/game/shared/collect_ring_effect.c \
 	sa2/game/multiplayer/mp_attack_2_effect.c \
-	sa2/game/stage/camera.c \
-	sa2/game/stage/terrain_collision.c \
-	sa2/game/stage/player.c \
-	sa2/game/stage/rings_scatter.c \
+	sa2/game/shared/stage/camera.c \
+	sa2/game/shared/stage/terrain_collision.c \
+	sa2/game/shared/stage/player.c \
+	sa2/game/shared/stage/rings_scatter.c \
 	sa2/game/sa2/stage/player_controls.c \
 	sa2/game/stage/stage.c \
 	sa2/game/multiboot/connection.c \

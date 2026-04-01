@@ -7,8 +7,8 @@
 
 #include "data/sprite_data.h"
 
-#include "game/stage/player.h"
-#include "game/stage/camera.h"
+#include "game/shared/stage/player.h"
+#include "game/shared/stage/camera.h"
 #include "game/sa2/boost_effect.h"
 
 #include "constants/animations.h"

@@ -15,8 +15,8 @@
 #include "game/types/entity.h"
 #include "game/multiplayer/multiplayer_event_mgr.h"
 #include "game/parameters/characters.h"
-#include "game/stage/player.h"
-#include "game/stage/rings_scatter.h"
+#include "game/shared/stage/player.h"
+#include "game/shared/stage/rings_scatter.h"
 #include "game/sa1/gfx/trapped_animals.h"
 
 #include "constants/animations.h"

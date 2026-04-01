@@ -8,8 +8,8 @@
 #include "game/nuts_and_bolts_task.h"
 #include "game/globals.h"
 #include "game/types/camera.h"
-#include "game/stage/player.h"
-#include "game/stage/screen_shake.h"
+#include "game/shared/stage/player.h"
+#include "game/shared/stage/screen_shake.h"
 #include "lib/m4a/m4a.h"
 
 #include "constants/move_states.h"

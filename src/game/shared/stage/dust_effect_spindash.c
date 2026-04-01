@@ -5,8 +5,8 @@
 
 #include "game/globals.h"
 
-#include "game/stage/player.h"
-#include "game/stage/camera.h"
+#include "game/shared/stage/player.h"
+#include "game/shared/stage/camera.h"
 #include "game/multiplayer/mp_player.h"
 
 #include "constants/animations.h"
@@ -49,14 +49,14 @@ void Task_SpindashDustEffect(void)
     Player *p = &gPlayer;
     s32 offY;
 
-    if (p->spriteTask == NULL || (p->moveState & (MOVESTATE_SPINDASH | MOVESTATE_DEAD)) != MOVESTATE_SPINDASH) {
+    if (p->spriteTask == NULL || (p->moveState & (MOVESTATE_400 | MOVESTATE_DEAD)) != MOVESTATE_400) {
         TaskDestroy(gCurTask);
         return;
     } else {
         DustEffect *sde = TASK_DATA(gCurTask);
         Sprite *s = &sde->s;
 
-        if (p->qSpindashAccel > Q(2.0)) {
+        if (p->spindashAccel > Q(2.0)) {
 #if (GAME == GAME_SA1)
             GET_SPRITE_ANIM(s) = SA1_ANIM_SPINDASH_DUST_EFFECT_BIG;
 #elif (GAME == GAME_SA2)
@@ -110,14 +110,14 @@ void Task_SpindashDustEffectBig(void)
     Player *p = &gPlayer;
     s32 offY;
 
-    if (p->spriteTask == NULL || (p->moveState & (MOVESTATE_SPINDASH | MOVESTATE_DEAD)) != MOVESTATE_SPINDASH) {
+    if (p->spriteTask == NULL || (p->moveState & (MOVESTATE_400 | MOVESTATE_DEAD)) != MOVESTATE_400) {
         TaskDestroy(gCurTask);
         return;
     } else {
         DustEffect *sde = TASK_DATA(gCurTask);
         Sprite *s = &sde->s;
 
-        if (p->qSpindashAccel <= Q(2.0)) {
+        if (p->spindashAccel <= Q(2.0)) {
 #if (GAME == GAME_SA1)
             GET_SPRITE_ANIM(s) = SA1_ANIM_SPINDASH_DUST_EFFECT;
 #elif (GAME == GAME_SA2)

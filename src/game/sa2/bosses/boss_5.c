@@ -13,9 +13,9 @@
 
 #include "game/sa2/player_callbacks.h"
 
-#include "game/stage/terrain_collision.h"
-#include "game/stage/player.h"
-#include "game/stage/camera.h"
+#include "game/shared/stage/terrain_collision.h"
+#include "game/shared/stage/player.h"
+#include "game/shared/stage/camera.h"
 #include "game/sa2/gfx/screen_mask.h"
 
 #include "game/sa2/gfx/screen_fade.h"

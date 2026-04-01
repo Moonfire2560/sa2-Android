@@ -4,9 +4,9 @@
 
 #include "game/globals.h"
 
-#include "game/stage/player.h"
-#include "game/stage/camera.h"
-#include "game/stage/screen_shake.h"
+#include "game/shared/stage/player.h"
+#include "game/shared/stage/camera.h"
+#include "game/shared/stage/screen_shake.h"
 
 typedef struct {
     /* 0x00 */ s32 p0;

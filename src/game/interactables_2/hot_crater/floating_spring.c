@@ -5,8 +5,8 @@
 #include "trig.h"
 #include "lib/m4a/m4a.h"
 #include "game/types/entity.h"
-#include "game/stage/player.h"
-#include "game/stage/camera.h"
+#include "game/shared/stage/player.h"
+#include "game/shared/stage/camera.h"
 #include "game/interactables_2/hot_crater/floating_spring.h"
 
 #include "constants/animations.h"

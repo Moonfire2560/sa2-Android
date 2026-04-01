@@ -1,8 +1,8 @@
 #include "global.h"
 
 #include "task.h"
-#include "game/stage/player.h"
-#include "game/stage/camera.h"
+#include "game/shared/stage/player.h"
+#include "game/shared/stage/camera.h"
 #include "game/interactables_2/ice_paradise/slowing_snow.h"
 
 #include "game/types/entity.h"

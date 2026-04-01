@@ -9,10 +9,10 @@
 
 #include "game/stage/player_super_sonic.h"
 
-#include "game/stage/camera.h"
+#include "game/shared/stage/camera.h"
 #include "game/stage/stage.h"
-#include "game/stage/player.h"
-#include "game/stage/terrain_collision.h"
+#include "game/shared/stage/player.h"
+#include "game/shared/stage/terrain_collision.h"
 
 #include "constants/tilemaps.h"
 #include "constants/zones.h"

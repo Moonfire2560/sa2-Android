@@ -5,7 +5,7 @@
 #include "core.h"
 
 #include "game/multiplayer/mp_player.h"
-#include "game/stage/player.h"
+#include "game/shared/stage/player.h"
 
 typedef struct {
     /* 0x54 */ s32 unk54;

@@ -7,8 +7,8 @@
 #include "game/types/entity.h"
 #include "game/sa2/enemies/mon.h"
 
-#include "game/stage/player.h"
-#include "game/stage/camera.h"
+#include "game/shared/stage/player.h"
+#include "game/shared/stage/camera.h"
 
 #include "constants/animations.h"
 

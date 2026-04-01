@@ -2,7 +2,7 @@
 #include "task.h"
 #include "lib/m4a/m4a.h"
 #include "game/types/camera.h"
-#include "game/stage/player.h"
+#include "game/shared/stage/player.h"
 #include "game/types/entity.h"
 
 #include "constants/char_states.h"

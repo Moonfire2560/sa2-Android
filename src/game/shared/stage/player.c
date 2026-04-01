@@ -17,20 +17,20 @@
 #include "game/sa2/input_buffer.h"
 #include "game/sa1_sa2_shared/music_manager.h"
 #include "game/sa2/save.h"
-#include "game/stage/camera.h"
-#include "game/stage/terrain_collision.h"
-#include "game/stage/dust_effect_braking.h" // CreateSpindashDustEffect
-#include "game/stage/dust_effect_spindash.h" // CreateSpindashDustEffect
-#include "game/stage/item_tasks.h"
-#include "game/stage/mp_sprite_task.h"
-#include "game/stage/player.h"
+#include "game/shared/stage/camera.h"
+#include "game/shared/stage/terrain_collision.h"
+#include "game/shared/stage/dust_effect_braking.h" // CreateSpindashDustEffect
+#include "game/shared/stage/dust_effect_spindash.h" // CreateSpindashDustEffect
+#include "game/shared/stage/item_tasks.h"
+#include "game/shared/stage/mp_sprite_task.h"
+#include "game/shared/stage/player.h"
 #include "game/sa2/stage/player_controls.h"
 #include "game/stage/player_super_sonic.h"
 #include "game/sa2/ui/stage_results.h"
-#include "game/stage/rings_scatter.h"
+#include "game/shared/stage/rings_scatter.h"
 #include "game/stage/spawn_positions.h"
 #include "game/stage/stage.h"
-#include "game/stage/underwater_effects.h"
+#include "game/shared/stage/underwater_effects.h"
 #include "game/sa2/time_attack/results.h" // for Player_VictoryPose
 #include "game/multiplayer/mp_attack_1_effect.h"
 #include "game/water_effects.h"

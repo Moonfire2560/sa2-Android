@@ -1,6 +1,6 @@
 #include "global.h"
-#include "game/stage/player.h"
-#include "game/stage/camera.h"
+#include "game/shared/stage/player.h"
+#include "game/shared/stage/camera.h"
 #include "game/types/entity.h"
 #include "core.h"
 #include "task.h"

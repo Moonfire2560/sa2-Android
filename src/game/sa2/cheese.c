@@ -4,7 +4,7 @@
 
 #include "game/globals.h"
 #include "game/sa2/cheese.h"
-#include "game/stage/camera.h"
+#include "game/shared/stage/camera.h"
 #include "game/multiplayer/mp_player.h"
 
 #include "lib/m4a/m4a.h"

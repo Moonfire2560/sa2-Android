@@ -5,8 +5,8 @@
 #include "game/globals.h"
 #include "game/types/player.h"
 #include "game/some_task_manager.h"
-#include "game/stage/mp_sprite_task.h"
-#include "game/stage/player.h"
+#include "game/shared/stage/mp_sprite_task.h"
+#include "game/shared/stage/player.h"
 #include "game/sa1/stage/player_controls.h"
 #include "game/stage/player_sonic.h"
 

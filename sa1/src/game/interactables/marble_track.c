@@ -3,8 +3,8 @@
 #include "trig.h"
 #include "game/types/entity.h"
 #include "game/sa1_sa2_shared/collision.h"
-#include "game/stage/terrain_collision.h"
-#include "game/stage/player.h"
+#include "game/shared/stage/terrain_collision.h"
+#include "game/shared/stage/player.h"
 #include "game/sa1/stage/player_controls.h" // gPlayerControls
 #include "game/sa1/gfx/stage_ui.h" // sub_80549FC
 #include "game/water_effects.h"

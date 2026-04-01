@@ -3,7 +3,7 @@
 #include "malloc_vram.h"
 #include "trig.h"
 #include "game/globals.h"
-#include "game/stage/player.h"
+#include "game/shared/stage/player.h"
 #include "game/sa2/cheese.h"
 #include "game/sa2/gfx/screen_mask.h"
 #include "game/sa2/bosses/common.h"

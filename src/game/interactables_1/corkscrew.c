@@ -7,8 +7,8 @@
 #include "sprite.h"
 #include "trig.h"
 #include "game/sa2/stage/player_controls.h"
-#include "game/stage/player.h"
-#include "game/stage/camera.h"
+#include "game/shared/stage/player.h"
+#include "game/shared/stage/camera.h"
 #include "game/types/entity.h"
 
 #include "constants/animations.h"

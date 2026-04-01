@@ -17,13 +17,13 @@
 #include "game/sa2/bosses/common.h"
 #include "game/sa2/player_callbacks.h" // UpdateHomingPosition
 #include "game/sa2/cheese.h"
-#include "game/stage/camera.h"
-#include "game/stage/player.h"
+#include "game/shared/stage/camera.h"
+#include "game/shared/stage/player.h"
 #include "game/sa2/ui/stage_results.h"
 #include "game/sa2/gfx/boss_results_transition.h"
 #include "game/sa2/gfx/screen_mask.h"
 #include "game/sa2/gfx/screen_fade.h"
-#include "game/stage/screen_shake.h"
+#include "game/shared/stage/screen_shake.h"
 
 #include "constants/animations.h"
 #include "constants/char_states.h"

@@ -10,9 +10,9 @@
 #include "game/sa2/ui/course_select.h"
 #include "game/sa2/save.h"
 
-#include "game/stage/terrain_collision.h"
-#include "game/stage/player.h"
-#include "game/stage/camera.h"
+#include "game/shared/stage/terrain_collision.h"
+#include "game/shared/stage/player.h"
+#include "game/shared/stage/camera.h"
 #include "game/sa2/ui/stage_results.h"
 
 #if TAS_TESTING

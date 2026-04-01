@@ -2,8 +2,8 @@
 
 #include "global.h"
 #include "game/types/entity.h"
-#include "game/stage/player.h"
-#include "game/stage/camera.h"
+#include "game/shared/stage/player.h"
+#include "game/shared/stage/camera.h"
 #include "game/interactables_2/hot_crater/turnaround_bar.h"
 #include "task.h"
 #include "sprite.h"

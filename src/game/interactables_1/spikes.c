@@ -9,8 +9,8 @@
 #include "game/globals.h"
 
 #include "game/types/entity.h"
-#include "game/stage/player.h"
-#include "game/stage/camera.h"
+#include "game/shared/stage/player.h"
+#include "game/shared/stage/camera.h"
 
 #include "constants/animations.h"
 #include "constants/interactables.h"

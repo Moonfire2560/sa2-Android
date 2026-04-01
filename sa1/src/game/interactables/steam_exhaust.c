@@ -6,9 +6,9 @@
 #include "lib/m4a/m4a.h"
 #include "game/types/entity.h"
 #include "game/sa1_sa2_shared/collision.h"
-#include "game/stage/player.h"
+#include "game/shared/stage/player.h"
 #include "game/sa1/stage/player_controls.h"
-#include "game/stage/terrain_collision.h"
+#include "game/shared/stage/terrain_collision.h"
 
 #include "constants/animations.h"
 #include "constants/char_states.h"

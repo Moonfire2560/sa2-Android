@@ -4,7 +4,7 @@ sa2/src/lib/m4a/m4a.o(.bss.code);
 
 . = 0x0000400;
 sa2/src/multi_boot.o(.bss);
-src/game/stage/terrain_collision.o(.bss);
+src/game/shared/stage/terrain_collision.o(.bss);
 
 . = 0x00000424;
 sa2/src/lib/agb_flash/agb_flash.o(.bss);
@@ -61,9 +61,9 @@ src/game/stage/stage.o(.data);
 . = 0x00005A18; gRingsScatterTask = .;
 
 . = 0x00005A20; 
-src/game/stage/player.o(.data);
+src/game/shared/stage/player.o(.data);
 src/game/stage/player_super_sonic.o(.data);
-src/game/stage/underwater_effects.o(.data);
+src/game/shared/stage/underwater_effects.o(.data);
 
 . = 0x00005C80;
 src/game/water_effects.o(.data);

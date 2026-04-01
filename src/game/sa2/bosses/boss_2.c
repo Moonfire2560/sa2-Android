@@ -5,10 +5,10 @@
 #include "game/globals.h"
 #include "game/sa1_sa2_shared/collision.h"
 
-#include "game/stage/terrain_collision.h"
-#include "game/stage/camera.h"
+#include "game/shared/stage/terrain_collision.h"
+#include "game/shared/stage/camera.h"
 #include "game/sa2/player_callbacks.h"
-#include "game/stage/player.h"
+#include "game/shared/stage/player.h"
 
 #include "game/sa2/bosses/common.h"
 #include "game/sa2/bosses/eggmobile_escape_sequence.h"

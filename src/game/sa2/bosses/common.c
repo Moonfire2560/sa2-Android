@@ -5,7 +5,7 @@
 
 #include "game/globals.h"
 
-#include "game/stage/player.h"
+#include "game/shared/stage/player.h"
 #include "game/sa2/bosses/common.h"
 #include "game/sa2/bosses/boss_1.h"
 #include "game/sa2/bosses/boss_2.h"

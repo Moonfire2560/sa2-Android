@@ -8,7 +8,7 @@
 #include "game/multiplayer/mp_player.h"
 #include "game/multiplayer/hud.h" // CreateChaoHuntHUD
 #include "game/sa1/gfx/stage_ui.h"
-#include "game/stage/underwater_effects.h"
+#include "game/shared/stage/underwater_effects.h"
 #include "game/water_effects.h"
 
 #include "constants/ui_graphics.h"

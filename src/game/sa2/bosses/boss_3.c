@@ -12,10 +12,10 @@
 #include "game/parameters/bosses.h"
 #include "game/sa2/player_callbacks.h"
 
-#include "game/stage/terrain_collision.h"
-#include "game/stage/player.h"
+#include "game/shared/stage/terrain_collision.h"
+#include "game/shared/stage/player.h"
 #include "game/sa2/save.h"
-#include "game/stage/screen_shake.h"
+#include "game/shared/stage/screen_shake.h"
 
 #include "constants/animations.h"
 #include "constants/songs.h"

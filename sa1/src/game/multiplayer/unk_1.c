@@ -11,7 +11,7 @@
 #include "game/multiplayer/multipak_connection.h"
 #include "game/multiplayer/unk_1.h"
 #include "game/globals.h"
-#include "game/stage/player.h"
+#include "game/shared/stage/player.h"
 #include "game/stage/stage.h"
 #include "game/sa1/save.h"
 

@@ -11,10 +11,10 @@
 
 #include "game/types/entity.h"
 #include "game/parameters/characters.h"
-#include "game/stage/item_tasks.h"
-#include "game/stage/player.h"
-#include "game/stage/camera.h"
-#include "game/stage/terrain_collision.h"
+#include "game/shared/stage/item_tasks.h"
+#include "game/shared/stage/player.h"
+#include "game/shared/stage/camera.h"
+#include "game/shared/stage/terrain_collision.h"
 
 #include "game/multiplayer/multiplayer_event_mgr.h"
 #include "game/multiplayer/mp_player.h"

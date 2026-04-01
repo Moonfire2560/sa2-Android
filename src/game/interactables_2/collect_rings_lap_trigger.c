@@ -1,8 +1,8 @@
 #include "global.h"
 #include "malloc_vram.h"
 #include "lib/m4a/m4a.h"
-#include "game/stage/player.h"
-#include "game/stage/camera.h"
+#include "game/shared/stage/player.h"
+#include "game/shared/stage/camera.h"
 
 #include "game/multiboot/collect_rings/time_display.h"
 #include "game/interactables_2/collect_rings_lap_trigger.h"

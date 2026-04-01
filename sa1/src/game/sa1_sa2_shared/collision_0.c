@@ -4,8 +4,8 @@
 #if (GAME == GAME_SA1)
 #include "lib/m4a/m4a.h"
 #include "game/multiplayer/mp_player.h"
-#include "game/stage/player.h"
-#include "game/stage/terrain_collision.h"
+#include "game/shared/stage/player.h"
+#include "game/shared/stage/terrain_collision.h"
 #include "constants/char_states.h"
 #endif
 #include "game/globals.h"

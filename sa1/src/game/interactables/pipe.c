@@ -10,9 +10,9 @@
 #include "game/sa1_sa2_shared/entities_manager.h"
 #include "game/multiplayer/mp_player.h"
 #include "game/multiplayer/multiplayer_event_mgr.h"
-#include "game/stage/player.h"
+#include "game/shared/stage/player.h"
 #include "game/sa1/stage/player_controls.h"
-#include "game/stage/terrain_collision.h"
+#include "game/shared/stage/terrain_collision.h"
 
 #include "constants/animations.h"
 #include "constants/char_states.h"

@@ -4,15 +4,13 @@
 #include "task.h"
 #include "trig.h"
 
+#include "game/multiplayer/mp_player.h"
 #include "game/globals.h"
-
-#include "game/stage/mp_sprite_task.h"
-#include "game/stage/player.h"
-#include "game/stage/camera.h"
-
+#include "game/shared/stage/camera.h"
+#include "game/shared/stage/mp_sprite_task.h"
+#include "game/shared/stage/player.h"
 #include "game/stage/stage.h"
 #include "game/water_effects.h"
-#include "game/multiplayer/mp_player.h"
 
 #include "constants/animations.h"
 
@@ -100,7 +98,7 @@ void Task_UpdateMpSpriteTaskSprite(void)
                         ts->y = mpp->pos.y;
 #endif
                     } else {
-                        Player *p = &PLAYER(id);
+                        Player *p = GET_SP_PLAYER_V1(id);
 
                         ts->x = I(p->qWorldX);
                         ts->y = I(p->qWorldY);
