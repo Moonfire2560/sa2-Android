@@ -8,7 +8,7 @@
 #include "game/sa2/ui/character_select.h"
 #include "game/sa2/stage/boss_results_transition.h"
 #include "game/sa2/save.h"
-#include "game/sa2/time_attack/mode_select.h"
+#include "game/sa2/ui/time_attack_mode_select.h"
 #include "game/sa2/stage/screen_fade.h"
 #include "game/sa2/title_screen.h"
 #include "game/sa2/stage/screen_mask.h"

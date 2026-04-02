@@ -23,7 +23,7 @@
 #include "game/sa2/ui/stage_results.h"
 #include "game/sa2/stage/screen_fade.h"
 #include "game/shared/stage/screen_shake.h"
-#include "game/sa2/time_attack/results.h"
+#include "game/sa2/ui/time_attack_results.h"
 
 #include "constants/animations.h"
 #include "constants/char_states.h"

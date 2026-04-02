@@ -1,4 +1,4 @@
-#include "game/sa2/time_attack/results.h"
+#include "game/sa2/ui/time_attack_results.h"
 #include "core.h"
 #include "sprite.h"
 #include "game/sa2/stage/screen_fade.h"
@@ -10,7 +10,7 @@
 #include "trig.h"
 #include "task.h"
 #include "game/sa2/ui/stage_results.h"
-#include "game/sa2/time_attack/lobby.h"
+#include "game/sa2/ui/time_attack_lobby.h"
 
 #include "constants/animations.h"
 #include "constants/char_states.h"

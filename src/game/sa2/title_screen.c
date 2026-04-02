@@ -19,8 +19,8 @@
 #include "game/sa2/save.h"
 #include "game/shared/stage/stage.h"
 #include "game/sa2/stage/screen_fade.h"
-#include "game/sa2/time_attack/lobby.h"
-#include "game/sa2/time_attack/mode_select.h"
+#include "game/sa2/ui/time_attack_lobby.h"
+#include "game/sa2/ui/time_attack_mode_select.h"
 #include "game/types/camera.h" // TILE_WIDTH
 
 #include "data/recordings.h"

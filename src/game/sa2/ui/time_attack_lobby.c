@@ -1,4 +1,4 @@
-#include "game/sa2/time_attack/lobby.h"
+#include "game/sa2/ui/time_attack_lobby.h"
 #include "core.h"
 #include "sprite.h"
 #include "game/sa2/save.h"
