@@ -12,9 +12,9 @@
 
 #include "game/sa2/stage/interactables/leaf_forest/stage_goal.h"
 
-#include "game/multiplayer/mp_player.h"
-#include "game/multiplayer/multiplayer_event_mgr.h"
-#include "game/multiplayer/finish.h"
+#include "game/shared/stage/mp_player.h"
+#include "game/shared/stage/mp_event_mgr.h"
+#include "game/shared/stage/mp_finish.h"
 
 #include "sprite.h"
 #include "task.h"

@@ -7,10 +7,10 @@
 #include "game/shared/stage/player.h"
 #include "game/shared/stage/camera.h"
 
-#include "game/multiplayer/finish.h"
-#include "game/multiplayer/mp_player.h"
-#include "game/multiplayer/results.h"
-#include "game/multiplayer/multiplayer_event_mgr.h"
+#include "game/shared/stage/mp_finish.h"
+#include "game/shared/stage/mp_player.h"
+#include "game/sa1/stage/mp_results.h"
+#include "game/shared/stage/mp_event_mgr.h"
 
 #include "game/multiboot/collect_rings/results.h"
 

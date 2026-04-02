@@ -4,10 +4,10 @@
 #include "game/shared/stage/camera.h"
 #include "game/shared/stage/item_tasks.h"
 
-#include "game/multiplayer/unk_0.h"
-#include "game/multiplayer/multiplayer_event_mgr.h"
-#include "game/multiplayer/finish.h"
-#include "game/multiplayer/mp_player.h"
+#include "game/sa1/stage/mp_unk_0.h"
+#include "game/shared/stage/mp_event_mgr.h"
+#include "game/shared/stage/mp_finish.h"
+#include "game/shared/stage/mp_player.h"
 #include "game/globals.h"
 #include "game/types/player.h"
 

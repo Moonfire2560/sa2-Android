@@ -2,7 +2,7 @@
 #include "core.h"
 #include "lib/m4a/m4a.h"
 #include "game/gTask_03006240.h"
-#include "game/multiplayer/chao.h"
+#include "game/sa1/stage/mp_chao.h"
 #include "game/multiplayer/multipak_connection.h"
 #include "game/globals.h"
 #include "game/shared/stage/stage.h"

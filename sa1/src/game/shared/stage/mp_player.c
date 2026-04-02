@@ -13,13 +13,13 @@
 #include "game/shared/stage/player.h"
 #include "game/shared/stage/camera.h"
 
-#include "game/multiplayer/mp_player.h"
+#include "game/shared/stage/mp_player.h"
 #include "game/shared/stage/player.h"
 #include "game/shared/stage/item_tasks.h"
 
-#include "game/multiplayer/multiplayer_event_mgr.h"
+#include "game/shared/stage/mp_event_mgr.h"
 #if (GAME == GAME_SA1)
-#include "game/multiplayer/chao.h"
+#include "game/sa1/stage/mp_chao.h"
 #include "constants/sa2_char_states.h"
 #elif (GAME == GAME_SA2)
 #include "game/multiplayer/mp_attack_2_effect.h"

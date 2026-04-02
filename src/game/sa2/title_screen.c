@@ -13,7 +13,7 @@
 #include "game/sa2/bg_palette_effects.h"
 #include "game/sa2/ui/character_select.h"
 #include "game/math.h"
-#include "game/multiplayer/mode_select.h"
+#include "game/sa2/multiplayer/mode_select.h"
 #include "game/sa2/options_screen.h"
 #include "game/shared/stage/demo_manager.h"
 #include "game/sa2/save.h"

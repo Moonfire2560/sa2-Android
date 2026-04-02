@@ -7,10 +7,10 @@
 #include "game/shared/stage/player.h"
 #include "game/shared/stage/camera.h"
 
-#include "game/multiplayer/finish.h"
-#include "game/multiplayer/mp_player.h"
-#include "game/multiplayer/results.h"
-#include "game/multiplayer/multiplayer_event_mgr.h"
+#include "game/shared/stage/mp_finish.h"
+#include "game/shared/stage/mp_player.h"
+#include "game/sa2/multiplayer/results.h"
+#include "game/shared/stage/mp_event_mgr.h"
 
 #include "game/multiboot/collect_rings/results.h"
 
@@ -195,7 +195,7 @@ void SA2_LABEL(TaskDestructor_8019EF4)(struct Task *t)
 #if (GAME == GAME_SA1)
 extern const u8 gUnknown_080BB490[4];
 // (97.32%) https://decomp.me/scratch/nE6RC
-NONMATCH("asm/non_matching/game/multiplayer/finish__CreateMultiplayerFinishHandler.inc", void CreateMultiplayerFinishHandler(void))
+NONMATCH("asm/non_matching/game/sa2/multiplayer/finish__CreateMultiplayerFinishHandler.inc", void CreateMultiplayerFinishHandler(void))
 #elif (GAME == GAME_SA2)
 void CreateMultiplayerFinishHandler(void)
 #endif

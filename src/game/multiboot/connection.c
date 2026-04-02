@@ -10,10 +10,10 @@
 #include "game/shared/stage/stage.h"
 #include "game/multiboot/connection.h"
 #include "game/multiboot/collect_rings/results.h"
-#include "game/multiplayer/multipak_connection.h"
+#include "game/sa2/multiplayer/multipak_connection.h"
 #include "game/shared/stage/player.h"
 #include "game/shared/stage/camera.h"
-#include "game/multiplayer/mode_select.h"
+#include "game/sa2/multiplayer/mode_select.h"
 #include "game/shared/stage/rings_scatter.h"
 
 #include "game/sa2/stage/player_controls.h"

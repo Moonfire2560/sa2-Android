@@ -14,7 +14,7 @@
 #include "game/sa2/sound_test.h"
 #include "game/shared/stage/stage.h"
 #include "game/sa2/stage/stage_ui.h"
-#include "game/multiplayer/mode_select.h"
+#include "game/sa2/multiplayer/mode_select.h"
 #include "game/sa2/ui/character_select.h"
 
 #include "constants/tilemaps.h"

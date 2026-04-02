@@ -5,7 +5,7 @@
 #include "game/sa1/ui/game_over.h"
 #include "game/globals.h"
 #include "game/multiplayer/multipak_connection.h"
-#include "game/multiplayer/results.h"
+#include "game/sa1/stage/mp_results.h"
 #include "game/sa1/save.h"
 #include "game/sa1/stage/stage_ui.h"
 

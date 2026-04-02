@@ -13,7 +13,7 @@
 #include "game/multiplayer/communication_outcome.h"
 #include "game/multiplayer/multipak_connection.h"
 #if (GAME == GAME_SA1)
-#include "game/multiplayer/results.h"
+#include "game/sa1/stage/mp_results.h"
 #endif
 
 #include "game/sa1/stage/tilemap_table.h"

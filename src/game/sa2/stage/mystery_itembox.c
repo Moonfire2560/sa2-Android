@@ -4,7 +4,7 @@
 
 #include "game/types/entity.h"
 #include "game/sa2/stage/mystery_itembox.h"
-#include "game/multiplayer/multiplayer_event_mgr.h"
+#include "game/shared/stage/mp_event_mgr.h"
 #include "game/shared/stage/dust_cloud.h"
 #include "game/shared/stage/player.h"
 #include "game/shared/stage/camera.h"

@@ -1,7 +1,7 @@
 #include "global.h"
 #include "core.h"
 #include "flags.h"
-#include "game/multiplayer/unk_0.h"
+#include "game/sa1/stage/mp_unk_0.h"
 #include "game/globals.h"
 
 void Task_801C770(void);

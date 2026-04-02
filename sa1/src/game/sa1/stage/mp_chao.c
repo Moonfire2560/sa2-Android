@@ -4,8 +4,8 @@
 #include "malloc_vram.h"
 #include "lib/m4a/m4a.h"
 #include "game/globals.h"
-#include "game/multiplayer/chao.h"
-#include "game/multiplayer/mp_player.h"
+#include "game/sa1/stage/mp_chao.h"
+#include "game/shared/stage/mp_player.h"
 #include "game/shared/stage/terrain_collision.h"
 #include "game/types/entity.h"
 

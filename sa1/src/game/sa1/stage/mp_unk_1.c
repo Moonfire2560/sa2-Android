@@ -9,7 +9,7 @@
 #include "game/shared/menus/unused_level_select.h"
 #include "game/gTask_03006240.h"
 #include "game/multiplayer/multipak_connection.h"
-#include "game/multiplayer/unk_1.h"
+#include "game/sa1/stage/mp_unk_1.h"
 #include "game/globals.h"
 #include "game/shared/stage/player.h"
 #include "game/shared/stage/stage.h"

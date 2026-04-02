@@ -7,7 +7,7 @@
 #include "game/globals.h"
 #include "game/sa1/special_stage/main.h"
 #include "game/gTask_03006240.h"
-#include "game/multiplayer/mp_player.h"
+#include "game/shared/stage/mp_player.h"
 #include "game/sa1/save.h"
 #include "game/sa1/stage/stage_ui.h"
 #include "game/shared/stage/water_effects.h"

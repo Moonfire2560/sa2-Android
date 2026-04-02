@@ -12,7 +12,7 @@
 #include "game/shared/stage/stage.h"
 #include "game/multiplayer/communication_outcome.h"
 #include "game/multiplayer/multipak_connection.h"
-#include "game/multiplayer/results.h"
+#include "game/sa1/stage/mp_results.h"
 
 #if (GAME == GAME_SA2)
 #include "game/bosses/common.h"

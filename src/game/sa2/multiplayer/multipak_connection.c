@@ -4,9 +4,9 @@
 #include "sprite.h"
 #include "multi_sio.h"
 
-#include "game/multiplayer/multipak_connection.h"
-#include "game/multiplayer/communication_outcome.h"
-#include "game/multiplayer/mode_select.h"
+#include "game/sa2/multiplayer/multipak_connection.h"
+#include "game/sa2/multiplayer/communication_outcome.h"
+#include "game/sa2/multiplayer/mode_select.h"
 
 #include "data/sprite_data.h"
 #include "game/sa2/save.h"

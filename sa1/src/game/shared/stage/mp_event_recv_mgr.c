@@ -2,9 +2,9 @@
 #include "core.h"
 #include "lib/m4a/m4a.h"
 #include "game/types/entity.h"
-#include "game/multiplayer/chao.h"
-#include "game/multiplayer/mp_player.h"
-#include "game/multiplayer/multiplayer_event_mgr.h"
+#include "game/sa1/stage/mp_chao.h"
+#include "game/shared/stage/mp_player.h"
+#include "game/shared/stage/mp_event_mgr.h"
 #include "game/shared/stage/rings_scatter.h"
 #include "game/shared/stage/entities_manager.h"
 

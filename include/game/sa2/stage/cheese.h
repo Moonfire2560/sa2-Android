@@ -4,7 +4,7 @@
 #include "global.h"
 #include "core.h"
 
-#include "game/multiplayer/mp_player.h"
+#include "game/shared/stage/mp_player.h"
 #include "game/shared/stage/player.h"
 
 typedef struct {

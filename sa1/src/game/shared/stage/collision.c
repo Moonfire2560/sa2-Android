@@ -2,7 +2,7 @@
 #include "rect.h"
 #include "sprite.h"
 #include "lib/m4a/m4a.h"
-#include "game/multiplayer/mp_player.h"
+#include "game/shared/stage/mp_player.h"
 #include "game/globals.h"
 #include "game/shared/stage/collision.h"
 #include "game/shared/stage/dust_cloud.h"
@@ -13,7 +13,7 @@
 #include "game/cheese.h"
 #endif
 #include "game/types/entity.h"
-#include "game/multiplayer/multiplayer_event_mgr.h"
+#include "game/shared/stage/mp_event_mgr.h"
 #include "game/parameters/characters.h"
 #include "game/shared/stage/player.h"
 #include "game/shared/stage/rings_scatter.h"

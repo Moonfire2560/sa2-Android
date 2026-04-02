@@ -9,7 +9,7 @@
 #include "game/sa2/stage/bosses/common.h"
 #include "game/sa2/ui/countdown.h"
 #include "game/sa2/stage/boost_effect.h"
-#include "game/multiplayer/mp_player.h"
+#include "game/shared/stage/mp_player.h"
 #include "game/sa2/stage/screen_fade.h"
 #include "game/sa2/stage/stage_ui.h"
 #include "game/sa2/stage/boss_results_transition.h"

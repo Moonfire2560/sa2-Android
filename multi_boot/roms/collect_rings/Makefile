@@ -117,17 +117,17 @@ SA2_C_FILES := \
 	sa2/malloc_vram.c \
 	sa2/bg_triangles.c \
 	sa2/game/globals.c \
-	sa2/game/multiplayer/multiplayer_event_mgr.c \
-	sa2/game/multiplayer/multiplayer_event_recv_mgr.c \
+	sa2/game/shared/stage/mp_event_mgr.c \
+	sa2/game/shared/stage/mp_event_recv_mgr.c \
 	sa2/game/multiboot/collect_rings/results.c \
 	sa2/game/shared/stage/entities_manager.c \
 	sa2/game/shared/stage/collision.c \
 	sa2/game/sa2/stage/mystery_itembox.c \
 	sa2/game/shared/stage/rings_manager.c \
 	sa2/game/multiboot/collect_rings/time_display.c \
-	sa2/game/multiplayer/indicators.c \
-	sa2/game/multiplayer/mp_player.c \
-	sa2/game/multiplayer/finish.c \
+	sa2/game/shared/stage/mp_indicators.c \
+	sa2/game/shared/stage/mp_player.c \
+	sa2/game/shared/stage/mp_finish.c \
 	sa2/game/sa2/stage/interactables/leaf_forest/toggle_player_layer.c \
 	sa2/game/sa2/stage/interactables/spring.c \
 	sa2/game/sa2/stage/interactables/ramp.c \
@@ -136,7 +136,7 @@ SA2_C_FILES := \
 	sa2/game/sa2/stage/interactables/collect_rings_lap_trigger.c \
 	sa2/game/shared/stage/dust_cloud.c \
 	sa2/game/shared/stage/collect_ring_effect.c \
-	sa2/game/multiplayer/mp_attack_2_effect.c \
+	sa2/game/sa2/stage/mp_attack_2_effect.c \
 	sa2/game/shared/stage/camera.c \
 	sa2/game/shared/stage/terrain_collision.c \
 	sa2/game/shared/stage/player.c \

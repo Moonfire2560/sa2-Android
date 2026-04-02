@@ -6,7 +6,7 @@
 #include "game/globals.h"
 #include "game/sa2/stage/race_progress.h"
 #include "game/shared/stage/player.h"
-#include "game/multiplayer/mp_player.h"
+#include "game/shared/stage/mp_player.h"
 #include "game/sa2/stage/screen_fade.h"
 
 #include "constants/animations.h"

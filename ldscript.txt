@@ -44,8 +44,8 @@ SECTIONS
         src/game/shared/stage/water_effects.o(.data);
         src/game/sa2/stage/cheese.o(.data);
         src/game/sa2/stage/boost_effect.o(.data);
-        src/game/multiplayer/mp_player.o(.data);
-        src/game/multiplayer/mp_attack_2_effect.o(.data);
+        src/game/shared/stage/mp_player.o(.data);
+        src/game/sa2/stage/mp_attack_2_effect.o(.data);
         src/game/dummy_task.o(.data);
         src/game/shared/stage/stage.o(.data);
         src/game/shared/stage/camera.o(.data);
@@ -135,12 +135,12 @@ SECTIONS
         src/game/sa2/stage/boost_effect.o(.text);
         src/game/shared/stage/amy_attack_heart_effect.o(.text);
 
-        src/game/multiplayer/mp_player.o(.text);
-        src/game/multiplayer/multiplayer_event_mgr.o(.text);
-        src/game/multiplayer/multiplayer_event_recv_mgr.o(.text);
-        src/game/multiplayer/indicators.o(.text);
-        src/game/multiplayer/finish.o(.text);
-        src/game/multiplayer/mp_attack_2_effect.o(.text);
+        src/game/shared/stage/mp_player.o(.text);
+        src/game/shared/stage/mp_event_mgr.o(.text);
+        src/game/shared/stage/mp_event_recv_mgr.o(.text);
+        src/game/shared/stage/mp_indicators.o(.text);
+        src/game/shared/stage/mp_finish.o(.text);
+        src/game/sa2/stage/mp_attack_2_effect.o(.text);
 
         src/game/game.o(.text);
         src/game/dummy_task.o(.text);
@@ -211,13 +211,13 @@ SECTIONS
         src/game/sa2/stage/enemies/kyura.o(.text);
         src/game/sa2/stage/enemies/bullet_buzzer.o(.text);
         src/game/sa2/stage/enemies/star.o(.text);
-        
+
         /* multiplayer_screens */
-        src/game/multiplayer/mode_select.o(.text);
-        src/game/multiplayer/multipak_connection.o(.text);
-        src/game/multiplayer/communication_outcome.o(.text);
-        src/game/multiplayer/results.o(.text);
-        src/game/multiplayer/team_play.o(.text);
+        src/game/sa2/multiplayer/mode_select.o(.text);
+        src/game/sa2/multiplayer/multipak_connection.o(.text);
+        src/game/sa2/multiplayer/communication_outcome.o(.text);
+        src/game/sa2/multiplayer/results.o(.text);
+        src/game/sa2/multiplayer/team_play.o(.text);
 
         src/game/sa2/stage/interactables/leaf_forest/decoration.o(.text);
         src/game/sa2/stage/interactables/leaf_forest/booster.o(.text);
@@ -400,8 +400,8 @@ SECTIONS
         src/game/sa2/stage/cheese.o(.rodata);
         src/game/sa2/stage/boost_effect.o(.rodata);
         src/game/shared/stage/amy_attack_heart_effect.o(.rodata);
-        src/game/multiplayer/multiplayer_event_mgr.o(.rodata);
-        src/game/multiplayer/finish.o(.rodata);
+        src/game/shared/stage/mp_event_mgr.o(.rodata);
+        src/game/shared/stage/mp_finish.o(.rodata);
 
         src/game/shared/stage/stage.o(.rodata);
         src/game/shared/stage/camera.o(.rodata);
@@ -436,11 +436,11 @@ SECTIONS
         src/game/sa2/stage/enemies/kubinaga.o(.rodata);
         src/game/sa2/stage/enemies/koura.o(.rodata);
         src/game/sa2/stage/enemies/geji_geji.o(.rodata);
-        src/game/multiplayer/mode_select.o(.rodata);
-        src/game/multiplayer/multipak_connection.o(.rodata);
-        src/game/multiplayer/communication_outcome.o(.rodata);
-        src/game/multiplayer/results.o(.rodata);
-        src/game/multiplayer/team_play.o(.rodata);
+        src/game/sa2/multiplayer/mode_select.o(.rodata);
+        src/game/sa2/multiplayer/multipak_connection.o(.rodata);
+        src/game/sa2/multiplayer/communication_outcome.o(.rodata);
+        src/game/sa2/multiplayer/results.o(.rodata);
+        src/game/sa2/multiplayer/team_play.o(.rodata);
         src/game/sa2/stage/interactables/leaf_forest/decoration.o(.rodata);
         src/game/sa2/stage/interactables/leaf_forest/booster.o(.rodata);
         src/game/sa2/stage/interactables/leaf_forest/spring_bouncy.o(.rodata);

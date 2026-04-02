@@ -21,10 +21,10 @@
 #if (GAME == GAME_SA1)
 #include "game/time_over.h"
 #endif
-#include "game/multiplayer/finish.h"
-#include "game/multiplayer/indicators.h"
+#include "game/shared/stage/mp_finish.h"
+#include "game/shared/stage/mp_indicators.h"
 #include "game/multiboot/collect_rings/time_display.h"
-#include "game/multiplayer/mp_player.h"
+#include "game/shared/stage/mp_player.h"
 
 #include "lib/m4a/m4a.h"
 
@@ -33,7 +33,7 @@
 #include "constants/songs.h"
 #include "constants/zones.h"
 
-#include "game/multiplayer/multiplayer_event_mgr.h"
+#include "game/shared/stage/mp_event_mgr.h"
 
 #define BOSS_RINGS_DEFAULT_RESPAWN_COUNT 10
 

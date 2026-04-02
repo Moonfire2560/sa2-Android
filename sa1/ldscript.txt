@@ -49,25 +49,25 @@ SECTIONS {
         src/game/sa1/save.o(.text);
 
         src/game/shared/stage/unused_flash_task.o(.text);
-        src/game/multiplayer/mp_player.o(.text);
-        src/game/multiplayer/indicators.o(.text);
+        src/game/shared/stage/mp_player.o(.text);
+        src/game/shared/stage/mp_indicators.o(.text);
         src/game/sa1/stage/enemies/bosses_egg_mobile.o(.text);
         src/game/sa1/stage/enemies/bosses_misc.o(.text);
         src/game/sa1/stage/nuts_and_bolts_task.o(.text);
         src/game/shared/stage/spot_lights_manager.o(.text);
 
-        src/game/multiplayer/multiplayer_event_mgr.o(.text);
-        src/game/multiplayer/multiplayer_event_recv_mgr.o(.text);
-        src/game/multiplayer/results.o(.text);
-        src/game/multiplayer/results_b.o(.text);
-        src/game/multiplayer/finish.o(.text);
+        src/game/shared/stage/mp_event_mgr.o(.text);
+        src/game/shared/stage/mp_event_recv_mgr.o(.text);
+        src/game/sa1/stage/mp_results.o(.text);
+        src/game/sa1/stage/mp_results_b.o(.text);
+        src/game/shared/stage/mp_finish.o(.text);
     
         src/game/shared/stage/pause_menu.o(.text);
-        src/game/multiplayer/results_2.o(.text);
-        src/game/multiplayer/hud.o(.text);
+        src/game/sa1/stage/mp_results_2.o(.text);
+        src/game/sa1/stage/mp_hud.o(.text);
         src/game/sa1/stage/mystery_itembox.o(.text);
-        src/game/multiplayer/unk_0.o(.text);
-        src/game/multiplayer/unk_1.o(.text);
+        src/game/sa1/stage/mp_unk_0.o(.text);
+        src/game/sa1/stage/mp_unk_1.o(.text);
         
         /* prototype ? */
         src/game/sa1/stage/enemies/kiki.o(.text);
@@ -329,10 +329,10 @@ SECTIONS {
         src/game/sa1/menus/player_data.o(.rodata);
         src/game/shared/stage/unused_flash_task.o(.rodata);
         data/data_0_1_2.o(.rodata);
-        src/game/multiplayer/multiplayer_event_mgr.o(.rodata);
-        src/game/multiplayer/results_b.o(.rodata);
-        src/game/multiplayer/results.o(.rodata);
-        src/game/multiplayer/finish.o(.rodata);
+        src/game/shared/stage/mp_event_mgr.o(.rodata);
+        src/game/sa1/stage/mp_results_b.o(.rodata);
+        src/game/sa1/stage/mp_results.o(.rodata);
+        src/game/shared/stage/mp_finish.o(.rodata);
         src/game/multiboot/collect_rings/time_display.o(.rodata);
         src/game/sa1/stage/mystery_itembox.o(.rodata);
         src/game/sa1/stage/interactables/spring.o(.rodata);
@@ -589,7 +589,7 @@ SECTIONS {
         sa2/src/lib/agb_flash/agb_flash_mx_512k.o(.rodata);
         sa2/src/lib/agb_flash/agb_flash_at_512k.o(.rodata);
         data/data1.o(.rodata);
-        src/game/multiplayer/unk_0.o(.rodata);
+        src/game/sa1/stage/mp_unk_0.o(.rodata);
         data/data1_1.o(.rodata);
         data/build_info.o(.rodata);
     } = 0

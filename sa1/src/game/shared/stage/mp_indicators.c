@@ -5,15 +5,26 @@
 #include "game/globals.h"
 
 #include "game/shared/stage/camera.h"
-#include "game/multiplayer/mp_player.h"
+#include "game/shared/stage/mp_player.h"
 
 #include "constants/animations.h"
+#include "constants/vram_hardcoded.h"
 
-#ifndef COLLECT_RINGS_ROM
-#define RESERVED_INDICATOR_TILES_VRAM (void *)(OBJ_VRAM0 + 0x2700)
-#else
-#define RESERVED_INDICATOR_TILES_VRAM (void *)(OBJ_VRAM0 + 0x3640)
-#endif
+typedef struct {
+    /* 0x00 */ u8 playerId;
+    /* 0x04 */ SpriteTransform transform;
+    /* 0x10 */ Sprite spr;
+} OpponentIndicator; /* size: 0x40 */
+
+typedef struct {
+    /* 0x00 */ Sprite spr;
+} SelfIndicator; /* size: 0x40 */
+
+// TODO: static
+static void SA2_LABEL(Task_801951C)(void);
+void SA2_LABEL(Task_8019898)(void);
+static void Task_SelfPositionIndicator(void);
+static void TaskDestructor_OpponentPositionIndicator(struct Task *);
 
 #define RETURN_IF_PLAYER_ONSCREEN(posX, posY, camX, camY)                                                                                  \
     if (((posX) - (camX) >= 0) && ((posX) - (camX) <= DISPLAY_WIDTH)) {                                                                    \
@@ -60,7 +71,7 @@
                 rot = 0;                                                                                                                   \
             }                                                                                                                              \
         } else {                                                                                                                           \
-            rot = sub_8004418(r4, r1);                                                                                                     \
+            rot = SA2_LABEL(sub_8004418)(r4, r1);                                                                                          \
         }                                                                                                                                  \
                                                                                                                                            \
         (transf)->rotation = (rot + 256) & ONE_CYCLE;                                                                                      \
@@ -162,23 +173,6 @@
         DisplaySprite((s));                                                                                                                \
     })
 
-typedef struct {
-    /* 0x00 */ u8 playerId;
-    /* 0x04 */ SpriteTransform transform;
-    /* 0x10 */ Sprite spr;
-} OpponentIndicator; /* size: 0x40 */
-
-typedef struct {
-    /* 0x00 */ Sprite spr;
-} SelfIndicator; /* size: 0x40 */
-
-#ifndef COLLECT_RINGS_ROM
-static void Task_801951C(void);
-#endif
-static void Task_8019898(void);
-static void Task_SelfPositionIndicator(void);
-static void TaskDestructor_8019CC8(struct Task *);
-
 void CreateOpponentPositionIndicator(u8 sid)
 {
     struct Task *t;
@@ -186,14 +180,15 @@ void CreateOpponentPositionIndicator(u8 sid)
     SpriteTransform *transform;
     OpponentIndicator *pi;
 
-#ifndef COLLECT_RINGS_ROM
+#if (GAME == GAME_SA1)
+    t = TaskCreate(SA2_LABEL(Task_801951C), sizeof(OpponentIndicator), 0x2001, 0, TaskDestructor_OpponentPositionIndicator);
+#elif (GAME == GAME_SA2)
     if (gGameMode != GAME_MODE_MULTI_PLAYER_COLLECT_RINGS) {
-        t = TaskCreate(Task_801951C, sizeof(OpponentIndicator), 0x2001, 0, TaskDestructor_8019CC8);
-    } else
-#endif
-    {
-        t = TaskCreate(Task_8019898, sizeof(OpponentIndicator), 0x2001, 0, TaskDestructor_8019CC8);
+        t = TaskCreate(SA2_LABEL(Task_801951C), sizeof(OpponentIndicator), 0x2001, 0, SA2_LABEL(TaskDestructor_OpponentPositionIndicator));
+    } else {
+        t = TaskCreate(SA2_LABEL(Task_8019898), sizeof(OpponentIndicator), 0x2001, 0, SA2_LABEL(TaskDestructor_OpponentPositionIndicator));
     }
+#endif
 
     pi = TASK_DATA(t);
 
@@ -208,17 +203,32 @@ void CreateOpponentPositionIndicator(u8 sid)
     spr->qAnimDelay = 0;
     spr->prevVariant = -1;
     spr->animSpeed = SPRITE_ANIM_SPEED(1.0);
-    spr->palId = sid;
-    spr->hitboxes[0].index = -1;
-    spr->frameFlags = SPRITE_FLAG(19, 1) | SPRITE_FLAG(18, 1) | SPRITE_FLAG_MASK_ROT_SCALE_ENABLE | SPRITE_FLAG_MASK_ROT_SCALE_DOUBLE_SIZE;
 
+    if ((GAME == GAME_SA1) && (gGameMode != 6)) {
+        spr->palId = gMultiplayerCharacters[sid];
+    } else {
+        spr->palId = sid;
+    }
+
+    spr->hitboxes[0].index = -1;
+    spr->frameFlags =
+#if (GAME == GAME_SA2)
+        SPRITE_FLAG(19, 1) |
+#endif
+        SPRITE_FLAG(18, 1) | SPRITE_FLAG_MASK_ROT_SCALE_ENABLE | SPRITE_FLAG_MASK_ROT_SCALE_DOUBLE_SIZE;
+
+#if (GAME == GAME_SA1)
+    spr->graphics.anim = SA1_ANIM_INDICATOR_SONIC;
+#elif (GAME == GAME_SA2)
     spr->graphics.anim = SA2_ANIM_INDICATOR_SONIC;
+#endif
     spr->variant = 0;
     transform->qScaleX = Q(1);
     transform->qScaleY = Q(1);
     transform->rotation = 0;
 }
 
+#if (GAME == GAME_SA2)
 void CreateSelfPositionIndicator(void)
 {
     struct Task *t;
@@ -241,13 +251,17 @@ void CreateSelfPositionIndicator(void)
     spr->hitboxes[0].index = -1;
     spr->frameFlags = SPRITE_FLAG(18, 1);
 
+#if (GAME == GAME_SA1)
+    spr->graphics.anim = SA1_ANIM_INDICATOR_SONIC;
+#elif (GAME == GAME_SA2)
     spr->graphics.anim = SA2_ANIM_INDICATOR_SONIC;
+#endif
     spr->variant = 0;
     UpdateSpriteAnimation(spr);
 }
+#endif
 
-#ifndef COLLECT_RINGS_ROM
-static void Task_801951C(void)
+static void SA2_LABEL(Task_801951C)(void)
 {
     OpponentIndicator *pi = TASK_DATA(gCurTask);
     struct Task *t = gMultiplayerPlayerTasks[pi->playerId];
@@ -264,9 +278,9 @@ static void Task_801951C(void)
 
     UPDATE_INDICATOR(opponentX2, opponentY2, spr, transform);
 }
-#endif
 
-static void Task_8019898(void)
+#if (GAME == GAME_SA2)
+static void Task_8019898()
 {
     OpponentIndicator *pi = TASK_DATA(gCurTask);
     struct Task *t = gMultiplayerPlayerTasks[pi->playerId];
@@ -278,7 +292,6 @@ static void Task_8019898(void)
     s16 opponentX, opponentY;
 
     RETURN_IF_PLAYER_ONSCREEN(mpp->pos.x, mpp->pos.y, gCamera.x, gCamera.y);
-    // _08019576
 
     opponentX = (unsigned)(mpp->pos.x - DISPLAY_CENTER_X - gCamera.x);
     opponentY = (unsigned)(mpp->pos.y - DISPLAY_CENTER_Y - gCamera.y);
@@ -311,5 +324,6 @@ static void Task_SelfPositionIndicator(void)
     Sprite *s = &pi->spr;
     UpdateSpriteAnimation(s);
 }
+#endif
 
-static void TaskDestructor_8019CC8(struct Task *t) { return; }
+static void TaskDestructor_OpponentPositionIndicator(struct Task *t) { }

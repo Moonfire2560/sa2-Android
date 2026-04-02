@@ -6,9 +6,9 @@
 
 #include "game/sa2/stage/mp_attack_1_effect.h"
 
-#include "game/multiplayer/multiplayer_event_mgr.h"
-#include "game/multiplayer/finish.h"
-#include "game/multiplayer/mp_player.h"
+#include "game/shared/stage/mp_event_mgr.h"
+#include "game/shared/stage/mp_finish.h"
+#include "game/shared/stage/mp_player.h"
 
 #include "lib/m4a/m4a.h"
 

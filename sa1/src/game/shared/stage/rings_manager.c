@@ -14,7 +14,7 @@
 #include "game/sa2/stage/player_super_sonic.h"
 #endif
 
-#include "game/multiplayer/mp_player.h"
+#include "game/shared/stage/mp_player.h"
 
 #include "game/assets/compressed/entities.h"
 

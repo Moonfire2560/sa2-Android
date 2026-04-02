@@ -3,7 +3,7 @@
 
 #include "game/globals.h"
 
-#include "game/multiplayer/mp_attack_2_effect.h"
+#include "game/sa2/stage/mp_attack_2_effect.h"
 
 #include "constants/zones.h"
 

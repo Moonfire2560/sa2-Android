@@ -11,7 +11,7 @@
 #include "game/shared/stage/terrain_collision.h"
 
 #if (GAME == GAME_SA1)
-#include "game/multiplayer/mp_player.h"
+#include "game/shared/stage/mp_player.h"
 #elif (GAME == GAME_SA2)
 #include "game/sa2/stage/player_super_sonic.h"
 #include "game/sa1/stage/background/dummy.h"

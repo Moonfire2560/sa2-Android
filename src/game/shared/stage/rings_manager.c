@@ -12,7 +12,7 @@
 #include "game/types/entity.h"
 #include "game/sa2/stage/player_super_sonic.h"
 
-#include "game/multiplayer/mp_player.h"
+#include "game/shared/stage/mp_player.h"
 
 #include "game/sa2/assets/compressed/entities.h"
 

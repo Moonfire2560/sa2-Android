@@ -5,7 +5,7 @@
 #include "data/ui_graphics.h"
 #include "game/gTask_03006240.h"
 #include "game/multiplayer/multipak_connection.h"
-#include "game/multiplayer/unk_1.h"
+#include "game/sa1/stage/mp_unk_1.h"
 #include "game/globals.h"
 #include "game/shared/stage/stage.h"
 #include "game/sa1/stage/stage_ui.h"

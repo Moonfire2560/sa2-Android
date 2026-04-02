@@ -10,7 +10,7 @@
 
 #include "game/sa2/stage/cheese.h"
 #include "game/types/entity.h"
-#include "game/multiplayer/multiplayer_event_mgr.h"
+#include "game/shared/stage/mp_event_mgr.h"
 #include "game/shared/stage/rings_scatter.h"
 #include "game/sa2/stage/trapped_animals.h"
 

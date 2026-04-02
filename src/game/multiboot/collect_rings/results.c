@@ -6,7 +6,7 @@
 #include "game/sa2/stage/tilemap_table.h"
 
 #include "game/multiboot/connection.h"
-#include "game/multiplayer/multipak_connection.h"
+#include "game/sa2/multiplayer/multipak_connection.h"
 #include "game/multiboot/collect_rings/results.h"
 #include "task.h"
 #include "sprite.h"
@@ -20,7 +20,7 @@
 #include "sio32_multi_load.h"
 
 #if COLLECT_RINGS_ROM
-#include "game/multiplayer/mp_player.h"
+#include "game/shared/stage/mp_player.h"
 #endif
 
 #include "data/collect_rings.h"

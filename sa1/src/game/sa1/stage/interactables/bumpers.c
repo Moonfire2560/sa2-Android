@@ -6,7 +6,7 @@
 #include "lib/m4a/m4a.h"
 #include "game/types/entity.h"
 #include "game/shared/stage/collision.h"
-#include "game/multiplayer/mp_player.h"
+#include "game/shared/stage/mp_player.h"
 #include "game/shared/stage/player.h"
 #include "game/sa1/stage/player_controls.h"
 #include "game/shared/stage/terrain_collision.h"

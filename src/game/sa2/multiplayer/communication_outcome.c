@@ -10,10 +10,10 @@
 #include "game/sa2/ui/character_select.h"
 #include "game/sa2/save.h"
 #include "game/sa2/title_screen.h"
-#include "game/multiplayer/communication_outcome.h"
-#include "game/multiplayer/multipak_connection.h"
+#include "game/sa2/multiplayer/communication_outcome.h"
+#include "game/sa2/multiplayer/multipak_connection.h"
 #if (GAME == GAME_SA1)
-#include "game/multiplayer/results.h"
+#include "game/sa2/multiplayer/results.h"
 #endif
 
 #include "game/sa2/stage/tilemap_table.h"
