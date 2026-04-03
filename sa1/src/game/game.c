@@ -33,10 +33,10 @@
 #endif
 
 #if TAS_TESTING
-#include "data/recordings.h"
+#include "data/sa1/recordings.h"
 #endif
 
-#include "data/sprite_tables.h"
+#include "data/sa1/sprite_tables.h"
 
 void CreateEmptySaveGame(void);
 

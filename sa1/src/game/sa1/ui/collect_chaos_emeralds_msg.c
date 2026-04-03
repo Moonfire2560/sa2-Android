@@ -5,7 +5,7 @@
 #include "game/sa1/menus/title_screen.h"
 #include "game/sa1/save.h"
 #include "game/sa1/stage/stage_ui.h"
-#include "data/ui_graphics.h"
+#include "data/sa1/ui_graphics.h"
 
 #include "constants/animations.h"
 

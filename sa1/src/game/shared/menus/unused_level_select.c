@@ -23,7 +23,7 @@
 #endif
 
 #include "animation_commands_bg.h"
-#include "data/tileset_debug_ascii.h"
+#include "data/sa1/tileset_debug_ascii.h"
 
 #include "constants/songs.h"
 

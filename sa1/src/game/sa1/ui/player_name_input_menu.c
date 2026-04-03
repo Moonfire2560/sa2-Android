@@ -6,7 +6,7 @@
 #include "game/sa1/ui/game_over.h"
 #include "game/gTask_03006240.h"
 #include "game/sa1/save.h"
-#include "data/ui_graphics.h"
+#include "data/sa1/ui_graphics.h"
 #include "game/sa1/menus/mp_mode_select.h"
 #include "game/sa1/stage/stage_ui.h"
 

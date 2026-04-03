@@ -4,7 +4,7 @@
 #include "bg_triangles.h"
 #include "malloc_vram.h"
 #include "lib/m4a/m4a.h"
-#include "data/ui_graphics.h"
+#include "data/sa1/ui_graphics.h"
 #include "game/gTask_03006240.h"
 #include "game/shared/multiplayer/communication_outcome.h"
 #include "game/globals.h"

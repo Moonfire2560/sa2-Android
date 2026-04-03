@@ -1,6 +1,6 @@
     .include "asm/macros/c_decl.inc"
 	.include "asm/macros/portable.inc"
-	.include "sound/MPlayDef.s"
+	.include "sound/sa1/MPlayDef.s"
 
 	mSectionRodata
 
