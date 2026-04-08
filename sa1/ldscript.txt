@@ -48,7 +48,7 @@ SECTIONS {
         
         sa2/src/game/sa1/save.o(.text);
 
-        src/game/shared/stage/unused_flash_task.o(.text);
+        sa2/src/game/shared/stage/unused_flash_task.o(.text);
         src/game/shared/stage/mp_player.o(.text);
         src/game/shared/stage/mp_indicators.o(.text);
         src/game/sa1/stage/enemies/bosses_egg_mobile.o(.text);
@@ -72,10 +72,10 @@ SECTIONS {
         /* prototype ? */
         src/game/sa1/stage/enemies/kiki.o(.text);
         src/game/sa1/stage/enemies/buzzer.o(.text);
-        src/game/shared/stage/collect_ring_effect.o(.text);
+        sa2/src/game/shared/stage/collect_ring_effect.o(.text);
         src/game/sa1/stage/itembox.o(.text);
         src/game/sa1/stage/interactables/stage_goal.o(.text);
-        src/game/shared/stage/dust_cloud.o(.text);
+        sa2/src/game/shared/stage/dust_cloud.o(.text);
         src/game/sa1/stage/interactables/spikes.o(.text);
         src/game/sa1/stage/interactables/checkpoint.o(.text);
         src/game/sa1/stage/interactables/spring.o(.text);
@@ -104,7 +104,7 @@ SECTIONS {
         src/game/sa1/stage/enemies/boss_x3_egg_x.o(.text);
 
         sa2/src/game/sa1/multiplayer/chao_message.o(.text);
-        src/game/shared/multiplayer/communication_outcome.o(.text);
+        sa2/src/game/shared/multiplayer/communication_outcome.o(.text);
 
         src/game/shared/stage/amy_attack_heart_effect.o(.text);
         src/game/shared/stage/music_manager.o(.text);
@@ -131,7 +131,7 @@ SECTIONS {
         src/game/sa1/stage/backgrounds/zone_6_hblank.o(.text);
         sa2/src/game/shared/stage/terrain_collision.o(.text);
         src/game/shared/stage/mp_sprite_task.o(.text);
-        src/game/shared/stage/dust_effect_braking.o(.text);
+        sa2/src/game/shared/stage/dust_effect_braking.o(.text);
         src/game/shared/stage/dust_effect_spindash.o(.text);
         src/game/shared/stage/grind_effect_1.o(.text);
         src/game/shared/stage/rings_scatter.o(.text);
@@ -327,7 +327,7 @@ SECTIONS {
         sa2/src/game/sa1/menus/time_attack.o(.rodata);
         sa2/src/game/sa1/menus/options.o(.rodata);
         sa2/src/game/sa1/menus/player_data.o(.rodata);
-        src/game/shared/stage/unused_flash_task.o(.rodata);
+        sa2/src/game/shared/stage/unused_flash_task.o(.rodata);
         data/sa1/data_0_1_2.o(.rodata);
         src/game/shared/stage/mp_event_mgr.o(.rodata);
         sa2/src/game/sa1/stage/mp_results_b.o(.rodata);
@@ -355,7 +355,7 @@ SECTIONS {
         data/sa1/data_0_3.o(.rodata);
         src/data/sa1/tilemap_data_2.o(.rodata);
         data/sa1/data_0_3_2.o(.rodata);
-        src/game/shared/multiplayer/communication_outcome.o(.rodata);
+        sa2/src/game/shared/multiplayer/communication_outcome.o(.rodata);
         src/game/shared/stage/amy_attack_heart_effect.o(.rodata);
         src/game/shared/stage/music_manager.o(.rodata);
         src/game/shared/stage/stage.o(.rodata);

@@ -241,6 +241,11 @@ SA2_C_FILES := \
 	src/game/shared/stage/palette_loader.c \
 	src/game/shared/stage/terrain_collision.c \
 	src/game/shared/stage/screen_shake.c \
+	src/game/shared/stage/dust_effect_braking.c \
+	src/game/shared/stage/dust_cloud.c \
+	src/game/shared/stage/collect_ring_effect.c \
+	src/game/shared/stage/unused_flash_task.c \
+	src/game/shared/multiplayer/communication_outcome.c \
 
 # Non matching
 # 	src/game/sa1/ui/game_2_0.c \

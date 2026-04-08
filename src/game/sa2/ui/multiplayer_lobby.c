@@ -378,7 +378,7 @@ static void Task_NotifyExit(void)
     LINK_HEARTBEAT();
 
     for (i = 1; i < MULTI_SIO_PLAYERS_MAX; i++) {
-        if CONNECTION_REGISTERED (i) {
+        if (CONNECTION_REGISTERED(i)) {
             if (CatchInvalidPacket(&gMultiSioRecv[i])) {
                 return;
             }

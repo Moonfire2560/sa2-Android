@@ -492,7 +492,7 @@ void SA2_LABEL(sub_808267C)(void)
     if ((gMultiSioStatusFlags & MULTI_SIO_TYPE) == MULTI_SIO_PARENT) {
         u8 i;
         for (i = 0; i < 4; i++) {
-            if CONNECTION_REGISTERED (i) {
+            if (CONNECTION_REGISTERED(i)) {
                 packet = &gMultiSioRecv[i];
                 if (packet->pat0.unk0 != COMM_DATA(0x51)) {
                     return;

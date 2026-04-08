@@ -616,7 +616,7 @@ static void sub_805D644(struct MultiplayerTeamPlayScreen *teamPlayScreen)
     Sprite *s;
 
     for (i = 0; i < 4; i++) {
-        if CONNECTION_REGISTERED (i) {
+        if (CONNECTION_REGISTERED(i)) {
             s = &teamPlayScreen->unk0[i];
             s->x = gUnknown_080D92B8[i & 1];
             s->y = i * 0x18 + 0x40;

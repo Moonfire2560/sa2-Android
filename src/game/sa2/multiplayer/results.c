@@ -193,7 +193,7 @@ void CreateMultiplayerResultsScreen(u8 mode)
 
     for (i = 0; i < MULTI_SIO_PLAYERS_MAX; i++) {
         s32 temp2 = (i + 4) * 0x800;
-        if CONNECTION_REGISTERED (i) {
+        if (CONNECTION_REGISTERED(i)) {
             s32 temp;
             s = &resultsScreen->resultRows[i];
             s->x = 200;
@@ -433,7 +433,7 @@ static void sub_805C69C(void)
     resultsScreen = TASK_DATA(gCurTask);
 
     for (i = 0; i < MULTI_SIO_PLAYERS_MAX; i++) {
-        if CONNECTION_REGISTERED (i) {
+        if (CONNECTION_REGISTERED(i)) {
             item = &resultsScreen->characterRows[i];
             DisplaySprite(item);
             if (resultsScreen->mode == MULTIPLAYER_RESULTS_MODE_COURSE_COMPLETE) {
