@@ -246,17 +246,15 @@ SA2_C_FILES := \
 	src/game/shared/stage/collect_ring_effect.c \
 	src/game/shared/stage/unused_flash_task.c \
 	src/game/shared/multiplayer/communication_outcome.c \
+	src/game/sa1/ui/game_2_0.c \
+	src/game/sa1/ui/game_2_1.c \
+	src/game/sa1/ui/stage_results.c \
+	src/game/sa1/menus/mp_mode_select_2.c \
+	src/game/sa1/special_stage/main.c \
+	src/game/sa1/stage/egg_rocket_transitions.c \
+	src/game/sa1/stage/temporary_sound_play_task.c \
 	src/game/dummy_task.c \
 	src/game/game.c \
-
-# Non matching
-# 	src/game/sa1/ui/game_2_0.c \
-# 	src/game/sa1/ui/game_2_1.c \
-#   src/game/sa1/ui/stage_results.c \
-# 	src/game/sa1/special_stage/main.c \
-# 	src/game/sa1/menus/mp_mode_select_2.c \
-# 	src/game/sa1/stage/egg_rocket_transitions.c \
-# 	src/game/sa1/stage/temporary_sound_play_task.c \
 
 # Can't build
 # 	src/game/sa1/stage/camera_destroy.c \
@@ -391,7 +389,6 @@ SA2_C_FILES := \
 # 	src/game/sa1/stage/interactables/bumpers.c \
 # 	src/game/sa1/stage/player_sonic.c \
 # 	src/game/sa1/stage/mp_chao.c \
-# 	src/game/sa1/ui/intro_animation.c \
 # 	src/game/sa1/menus/title_screen.c \
 #   src/game/sa1/stage/player_super_sonic.c \
 # 	src/game/sa1/stage/player_tails.c \
