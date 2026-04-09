@@ -7,6 +7,7 @@
 #include "game/shared/stage/entity.h"
 #include "game/shared/stage/player.h"
 #include "game/shared/stage/camera.h"
+
 #include "game/sa2/stage/interactables/hot_crater/floating_spring.h"
 
 #include "constants/sa2/animations.h"

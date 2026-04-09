@@ -279,7 +279,7 @@ typedef struct Player_ {
 #endif
 } Player;
 
-extern s32 sa2__sub_8022F58(u8 param0, Player *p);
+s32 SA2_LABEL(sub_8022F58)(u8 param0, Player *p);
 
 extern Player gPlayer;
 #if (GAME == GAME_SA1)

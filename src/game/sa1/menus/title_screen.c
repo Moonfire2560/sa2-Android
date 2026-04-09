@@ -20,6 +20,8 @@
 #include "game/sa1/menus/title_screen.h"
 #include "game/shared/stage/water_effects.h"
 
+#include "data/sa1/recordings.h"
+
 // LoadTinyChaoGarden
 #include "../chao_garden/include/program_params.h"
 #include "game/sa1/assets/compressed/roms.h"

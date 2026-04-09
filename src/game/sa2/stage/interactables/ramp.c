@@ -9,6 +9,7 @@
 #include "game/shared/stage/player.h"
 #include "game/shared/stage/camera.h"
 #include "game/shared/stage/entity.h"
+
 #include "game/sa2/stage/interactables/ramp.h"
 
 #include "constants/sa2/animations.h"

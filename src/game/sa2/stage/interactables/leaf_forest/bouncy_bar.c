@@ -3,7 +3,7 @@
 #include "game/shared/stage/entity.h"
 #include "game/shared/stage/player.h"
 #include "game/shared/stage/camera.h"
-#include "game/shared/stage/collision.h"
+
 #include "game/shared/stage/entities_manager.h"
 
 #include "lib/m4a/m4a.h"

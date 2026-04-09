@@ -1,9 +1,6 @@
 #include "global.h"
 #include "malloc_vram.h"
 
-#include "game/shared/stage/collision.h"
-
-#include "game/shared/stage/terrain_collision.h"
 #include "game/shared/stage/player.h"
 
 #include "game/shared/stage/entity.h"

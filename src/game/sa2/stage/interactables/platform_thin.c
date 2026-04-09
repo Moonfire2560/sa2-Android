@@ -5,7 +5,6 @@
 #include "malloc_vram.h"
 #include "lib/m4a/m4a.h"
 
-#include "game/shared/stage/collision.h"
 #include "game/sa2/stage/interactables/platform_thin.h"
 #include "game/shared/stage/entity.h"
 

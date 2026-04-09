@@ -9,7 +9,7 @@
 #include "game/shared/stage/camera.h"
 #include "game/sa2/stage/player_controls.h"
 #include "game/sa2/stage/interactables/leaf_forest/rotating_handle.h"
-#include "game/shared/stage/collision.h"
+
 #include "game/shared/stage/entities_manager.h"
 
 #include "malloc_vram.h"

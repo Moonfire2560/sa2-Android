@@ -383,7 +383,8 @@ static void sub_808E114(void)
         scene->unk70 = player->qWorldX - (gCamera.x * 256) - 0x4000;
     }
 
-    result = sub_801F100((scene->unk72 >> 8) + gCamera.y, (scene->unk70 >> 8) + gCamera.x + scene->unk7C, 1, 8, sub_801EC3C);
+    result = SA2_LABEL(sub_801F100)((scene->unk72 >> 8) + gCamera.y, (scene->unk70 >> 8) + gCamera.x + scene->unk7C, 1, 8,
+                                    SA2_LABEL(sub_801EC3C));
 
     if (result < 0) {
         scene->unk72 += result * 0x100;

@@ -227,7 +227,7 @@ static void Task_BouncingAnimal(void)
     if (animal->inAirTimer > 0) {
         animal->inAirTimer--;
     } else {
-        s32 clampedY = y + Q(sub_801F07C(I(animal->y), I(animal->x), 1, 8, NULL, sub_801EE64));
+        s32 clampedY = y + Q(SA2_LABEL(sub_801F07C)(I(animal->y), I(animal->x), 1, 8, NULL, SA2_LABEL(sub_801EE64)));
 
         // if hit floor
         if (clampedY <= animal->y) {
@@ -295,7 +295,7 @@ static void Task_StaticAnimalMain(void)
     if (animal->inAirTimer > 0) {
         animal->inAirTimer--;
     } else {
-        s32 clampedY = y + Q(sub_801F07C(I(animal->y), I(animal->x), 1, 8, NULL, sub_801EE64));
+        s32 clampedY = y + Q(SA2_LABEL(sub_801F07C)(I(animal->y), I(animal->x), 1, 8, NULL, SA2_LABEL(sub_801EE64)));
 
         // if collided with floor
         if (clampedY <= animal->y) {

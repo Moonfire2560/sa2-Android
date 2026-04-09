@@ -1037,7 +1037,7 @@ s32 sub_802195C(Player *p, u8 *rot, s32 *out)
         mask |= 0x80;
     }
 
-    r5 = sub_801E4E4(playerX2, playerY2, mask, -8, &anotherByte, sub_801ED24);
+    r5 = SA2_LABEL(sub_801E4E4)(playerX2, playerY2, mask, -8, &anotherByte, sub_801ED24);
 
     playerX = I(p->qWorldX) - (2 + p->spriteOffsetX);
     playerY = I(p->qWorldY) + (p->spriteOffsetY);
@@ -1047,7 +1047,7 @@ s32 sub_802195C(Player *p, u8 *rot, s32 *out)
         mask |= 0x80;
     }
 
-    r1 = sub_801E4E4(playerX, playerY, mask, -8, &anotherByte2, sub_801ED24);
+    r1 = SA2_LABEL(sub_801E4E4)(playerX, playerY, mask, -8, &anotherByte2, sub_801ED24);
 
     if (r5 < r1) {
         result = r5;
@@ -1087,7 +1087,7 @@ s32 sub_8021A34(Player *p, u8 *rot, s32 *out)
         mask |= 0x80;
     }
 
-    r5 = sub_801E4E4(playerX2, playerY2, mask, +8, &anotherByte, sub_801ED24);
+    r5 = SA2_LABEL(sub_801E4E4)(playerX2, playerY2, mask, +8, &anotherByte, sub_801ED24);
 
     playerX = I(p->qWorldX) + (2 + p->spriteOffsetX);
     playerY = I(p->qWorldY) + (p->spriteOffsetY);
@@ -1097,7 +1097,7 @@ s32 sub_8021A34(Player *p, u8 *rot, s32 *out)
         mask |= 0x80;
     }
 
-    r1 = sub_801E4E4(playerX, playerY, mask, +8, &anotherByte2, sub_801ED24);
+    r1 = SA2_LABEL(sub_801E4E4)(playerX, playerY, mask, +8, &anotherByte2, sub_801ED24);
 
     if (r5 < r1) {
         result = r5;
@@ -1137,7 +1137,7 @@ s32 sub_8021B08(Player *p, u8 *rot, s32 *out)
         mask |= 0x80;
     }
 
-    r5 = sub_801E4E4(playerY2, playerX2, mask, -8, &anotherByte, sub_801EE64);
+    r5 = SA2_LABEL(sub_801E4E4)(playerY2, playerX2, mask, -8, &anotherByte, SA2_LABEL(sub_801EE64));
 
     playerY = I(p->qWorldY) - (p->spriteOffsetY);
     playerX = I(p->qWorldX) + (2 + p->spriteOffsetX);
@@ -1147,7 +1147,7 @@ s32 sub_8021B08(Player *p, u8 *rot, s32 *out)
         mask |= 0x80;
     }
 
-    r1 = sub_801E4E4(playerY, playerX, mask, -8, &anotherByte2, sub_801EE64);
+    r1 = SA2_LABEL(sub_801E4E4)(playerY, playerX, mask, -8, &anotherByte2, SA2_LABEL(sub_801EE64));
 
     if (r5 < r1) {
         result = r5;
@@ -1203,7 +1203,7 @@ void sub_8021C4C(Player *p)
         mask |= mask2;
     }
 
-    result = sub_801E4E4(playerX, playerY, mask, -8, 0, sub_801ED24);
+    result = SA2_LABEL(sub_801E4E4)(playerX, playerY, mask, -8, 0, sub_801ED24);
 
     if (result <= 0) {
         p->qWorldX -= Q(result);
@@ -1218,7 +1218,7 @@ void sub_8021C4C(Player *p)
         mask |= 0x80;
     }
 
-    result = sub_801E4E4(playerX2, playerY2, mask, +8, 0, sub_801ED24);
+    result = SA2_LABEL(sub_801E4E4)(playerX2, playerY2, mask, +8, 0, sub_801ED24);
 
     if (result <= 0) {
         p->qWorldX += Q(result);
@@ -1304,7 +1304,7 @@ void sub_8021DB8(Player *p)
         mask |= mask2;
     }
 
-    result = sub_801E4E4(playerX, playerY, mask, -8, 0, sub_801ED24);
+    result = SA2_LABEL(sub_801E4E4)(playerX, playerY, mask, -8, 0, sub_801ED24);
 
     if (result <= 0) {
         p->qWorldX -= Q(result);
@@ -1319,7 +1319,7 @@ void sub_8021DB8(Player *p)
         mask |= 0x80;
     }
 
-    result = sub_801E4E4(playerX2, playerY2, mask, +8, 0, sub_801ED24);
+    result = SA2_LABEL(sub_801E4E4)(playerX2, playerY2, mask, +8, 0, sub_801ED24);
 
     if (result <= 0) {
         p->qWorldX += Q(result);
@@ -1383,7 +1383,7 @@ void sub_8021EE4(Player *p)
     if (gravity) {
         playerX = I(p->qWorldX) - (3 + p->spriteOffsetX);
         playerY = I(p->qWorldY);
-        result = sub_801E4E4(playerX, playerY, mask2, -8, NULL, sub_801ED24);
+        result = SA2_LABEL(sub_801E4E4)(playerX, playerY, mask2, -8, NULL, sub_801ED24);
     } else
 #endif
     {
@@ -1394,7 +1394,7 @@ void sub_8021EE4(Player *p)
         if (p->qSpeedAirY < Q(3.0)) {
             mask |= 0x80;
         }
-        result = sub_801E4E4(playerX2, playerY2, mask, -8, NULL, sub_801ED24);
+        result = SA2_LABEL(sub_801E4E4)(playerX2, playerY2, mask, -8, NULL, sub_801ED24);
     }
 
     if (result <= 0) {
@@ -1470,7 +1470,7 @@ void sub_802203C(Player *p)
     if (gravity) {
         playerX = I(p->qWorldX) + (3 + p->spriteOffsetX);
         playerY = I(p->qWorldY);
-        result = sub_801E4E4(playerX, playerY, mask2, +8, NULL, sub_801ED24);
+        result = SA2_LABEL(sub_801E4E4)(playerX, playerY, mask2, +8, NULL, sub_801ED24);
     } else
 #endif
     {
@@ -1481,7 +1481,7 @@ void sub_802203C(Player *p)
         if (p->qSpeedAirY < Q(3.0)) {
             mask |= 0x80;
         }
-        result = sub_801E4E4(playerX2, playerY2, mask, +8, NULL, sub_801ED24);
+        result = SA2_LABEL(sub_801E4E4)(playerX2, playerY2, mask, +8, NULL, sub_801ED24);
     }
 
     if (result <= 0) {
@@ -1747,7 +1747,7 @@ void sub_80223BC(Player *p)
         mask = 0x80;
         mask |= mask2;
     }
-    result = sub_801E4E4(playerX, playerY, mask, -8, NULL, sub_801ED24);
+    result = SA2_LABEL(sub_801E4E4)(playerX, playerY, mask, -8, NULL, sub_801ED24);
 
     if (result <= 0) {
         p->qWorldX -= Q(result);
@@ -1763,7 +1763,7 @@ void sub_80223BC(Player *p)
     if (p->qSpeedAirY < Q(3.0)) {
         mask |= 0x80;
     }
-    result = sub_801E4E4(playerX2, playerY2, mask, +8, NULL, sub_801ED24);
+    result = SA2_LABEL(sub_801E4E4)(playerX2, playerY2, mask, +8, NULL, sub_801ED24);
 
     if (result <= 0) {
         p->qWorldX += Q(result);
@@ -1812,7 +1812,7 @@ void sub_80224DC(Player *p)
         mask = 0x80;
         mask |= mask2;
     }
-    result = sub_801E4E4(playerX, playerY, mask, -8, NULL, sub_801ED24);
+    result = SA2_LABEL(sub_801E4E4)(playerX, playerY, mask, -8, NULL, sub_801ED24);
 
     if (result <= 0) {
         p->qWorldX -= Q(result);
@@ -1828,7 +1828,7 @@ void sub_80224DC(Player *p)
     if (p->qSpeedAirY < Q(3.0)) {
         mask |= 0x80;
     }
-    result = sub_801E4E4(playerX2, playerY2, mask, +8, NULL, sub_801ED24);
+    result = SA2_LABEL(sub_801E4E4)(playerX2, playerY2, mask, +8, NULL, sub_801ED24);
 
     if (result <= 0) {
         p->qWorldX += Q(result);
@@ -1873,7 +1873,7 @@ void sub_80225E8(Player *p)
     if (p->qSpeedAirY < Q(3.0)) {
         mask |= 0x80;
     }
-    result = sub_801E4E4(playerX, playerY, mask, -8, NULL, sub_801ED24);
+    result = SA2_LABEL(sub_801E4E4)(playerX, playerY, mask, -8, NULL, sub_801ED24);
 
     if (result <= 0) {
         p->qWorldX -= Q(result);
@@ -1941,7 +1941,7 @@ void sub_8022710(Player *p)
     if (p->qSpeedAirY < Q(3.0)) {
         mask |= 0x80;
     }
-    result = sub_801E4E4(playerX, playerY, mask, +8, NULL, sub_801ED24);
+    result = SA2_LABEL(sub_801E4E4)(playerX, playerY, mask, +8, NULL, sub_801ED24);
 
     if (result <= 0) {
         p->qWorldX += Q(result);
@@ -2046,14 +2046,14 @@ void sub_80228C0(Player *p)
     u32 mask = p->layer;
     s32 py = I(playerY);
 
-    resultA
-        = sub_801E4E4(py + p->spriteOffsetY, (playerX = I(playerX)) - (2 + p->spriteOffsetX), mask, 8, &p->SA2_LABEL(unk28), sub_801EE64);
+    resultA = SA2_LABEL(sub_801E4E4)(py + p->spriteOffsetY, (playerX = I(playerX)) - (2 + p->spriteOffsetX), mask, 8, &p->SA2_LABEL(unk28),
+                                     SA2_LABEL(sub_801EE64));
 
     py = py + (p->spriteOffsetY);
     playerX += 2;
     playerX += p->spriteOffsetX;
     p29 = &p->unk29;
-    resultB = sub_801E4E4(py, playerX, mask, 8, p29, sub_801EE64);
+    resultB = SA2_LABEL(sub_801E4E4)(py, playerX, mask, 8, p29, SA2_LABEL(sub_801EE64));
 
     val = resultB;
     if (resultB > resultA) {
@@ -2160,14 +2160,14 @@ void sub_80229EC(Player *p)
     mask = p->layer;
     py = I(playerY);
 
-    resultA
-        = sub_801E4E4(py - p->spriteOffsetY, (playerX = I(playerX)) + (2 + p->spriteOffsetX), mask, -8, &p->SA2_LABEL(unk28), sub_801EE64);
+    resultA = SA2_LABEL(sub_801E4E4)(py - p->spriteOffsetY, (playerX = I(playerX)) + (2 + p->spriteOffsetX), mask, -8, &p->SA2_LABEL(unk28),
+                                     SA2_LABEL(sub_801EE64));
 
     py = py - (p->spriteOffsetY);
     playerX -= 2;
     playerX -= p->spriteOffsetX;
     p29 = &p->unk29;
-    resultB = sub_801E4E4(py, playerX, mask, -8, p29, sub_801EE64);
+    resultB = SA2_LABEL(sub_801E4E4)(py, playerX, mask, -8, p29, SA2_LABEL(sub_801EE64));
 
     val = resultB;
     if (resultB > resultA) {
@@ -2274,14 +2274,14 @@ void sub_8022B18(Player *p)
     mask = p->layer;
     py = I(playerX);
 
-    resultA
-        = sub_801E4E4(py - p->spriteOffsetY, (playerY = I(playerY)) - (2 + p->spriteOffsetX), mask, -8, &p->SA2_LABEL(unk28), sub_801ED24);
+    resultA = SA2_LABEL(sub_801E4E4)(py - p->spriteOffsetY, (playerY = I(playerY)) - (2 + p->spriteOffsetX), mask, -8, &p->SA2_LABEL(unk28),
+                                     sub_801ED24);
 
     py = py - (p->spriteOffsetY);
     playerY += 2;
     playerY += p->spriteOffsetX;
     p29 = &p->unk29;
-    resultB = sub_801E4E4(py, playerY, mask, -8, p29, sub_801ED24);
+    resultB = SA2_LABEL(sub_801E4E4)(py, playerY, mask, -8, p29, sub_801ED24);
 
     val = resultB;
     if (resultB > resultA) {
@@ -2387,13 +2387,13 @@ void sub_8022C44(Player *p)
     mask = p->layer;
     py = I(playerX);
 
-    resultA
-        = sub_801E4E4(py + p->spriteOffsetY, (playerY = I(playerY)) + (2 + p->spriteOffsetX), mask, +8, &p->SA2_LABEL(unk28), sub_801ED24);
+    resultA = SA2_LABEL(sub_801E4E4)(py + p->spriteOffsetY, (playerY = I(playerY)) + (2 + p->spriteOffsetX), mask, +8, &p->SA2_LABEL(unk28),
+                                     sub_801ED24);
 
     py = py + (p->spriteOffsetY);
     playerY -= 2;
     playerY -= p->spriteOffsetX;
-    resultB = sub_801E4E4(py, playerY, mask, +8, &p->unk29, sub_801ED24);
+    resultB = SA2_LABEL(sub_801E4E4)(py, playerY, mask, +8, &p->unk29, sub_801ED24);
 
     val = resultB;
     if (resultB > resultA) {
@@ -2605,7 +2605,7 @@ void sub_8022D6C(Player *p)
 }
 
 // (100.00%) https://decomp.me/scratch/U0r54
-s32 sub_8022F58(u8 param0, Player *p)
+s32 SA2_LABEL(sub_8022F58)(u8 param0, Player *p)
 {
     u32 p0;
     s32 result = 0; // maybe u8?
@@ -2744,22 +2744,22 @@ s32 sub_802302C(u8 param0, Player *p)
     switch (param0 >> 6) {
         case 0: {
             s32 y = py + 2;
-            result = sub_801E4E4(y + p->spriteOffsetX, px, p->layer, +8, NULL, sub_801EE64);
+            result = SA2_LABEL(sub_801E4E4)(y + p->spriteOffsetX, px, p->layer, +8, NULL, SA2_LABEL(sub_801EE64));
         } break;
 
         case 2: {
             s32 y = py - 2;
-            result = sub_801E4E4(y - p->spriteOffsetX, px, p->layer, -8, NULL, sub_801EE64);
+            result = SA2_LABEL(sub_801E4E4)(y - p->spriteOffsetX, px, p->layer, -8, NULL, SA2_LABEL(sub_801EE64));
         } break;
 
         case 1: {
             s32 x = (px - 2);
-            result = sub_801E4E4(x - p->spriteOffsetX, py, p->layer, -8, NULL, sub_801ED24);
+            result = SA2_LABEL(sub_801E4E4)(x - p->spriteOffsetX, py, p->layer, -8, NULL, sub_801ED24);
         } break;
 
         case 3: {
             s32 x = (px + 2);
-            result = sub_801E4E4(x + p->spriteOffsetX, py, p->layer, +8, NULL, sub_801ED24);
+            result = SA2_LABEL(sub_801E4E4)(x + p->spriteOffsetX, py, p->layer, +8, NULL, sub_801ED24);
         } break;
 
         default: {
@@ -3938,7 +3938,7 @@ void sub_80246DC(Player *p)
             PLAYERFN_CHANGE_SHIFT_OFFSETS(p, 6, 9);
         } else {
             if ((p->qSpeedAirY > 0) && (p->variant == 1) && ((((u16)anim - 10) == 0) || (((u16)anim - 10) == 1))) {
-                s32 newY = sub_801E6D4(I(p->qWorldY) + p->spriteOffsetY, I(p->qWorldX), p->layer, 8, NULL, sub_801EE64);
+                s32 newY = sub_801E6D4(I(p->qWorldY) + p->spriteOffsetY, I(p->qWorldX), p->layer, 8, NULL, SA2_LABEL(sub_801EE64));
 
                 if (gGameMode != GAME_MODE_MULTI_PLAYER_COLLECT_RINGS) {
                     if (newY <= 32) {
@@ -5169,13 +5169,13 @@ void InitPlayerGrindGraphics(Player *p)
     p->itemEffect |= PLAYER_ITEM_EFFECT__TELEPORT;
 #ifndef COLLECT_RINGS_ROM
     if (GRAVITY_IS_INVERTED) {
-        newY = sub_801E6D4(I(p->qWorldY) - p->spriteOffsetY, I(p->qWorldX), p->layer, -8, NULL, sub_801EE64);
+        newY = sub_801E6D4(I(p->qWorldY) - p->spriteOffsetY, I(p->qWorldX), p->layer, -8, NULL, SA2_LABEL(sub_801EE64));
 
         p->qWorldY = p->qWorldY - Q(newY);
     } else
 #endif
     {
-        newY = sub_801E6D4(I(p->qWorldY) + p->spriteOffsetY, I(p->qWorldX), p->layer, 8, NULL, sub_801EE64);
+        newY = sub_801E6D4(I(p->qWorldY) + p->spriteOffsetY, I(p->qWorldX), p->layer, 8, NULL, SA2_LABEL(sub_801EE64));
 
         p->qWorldY = p->qWorldY + Q(newY);
     }
@@ -7164,7 +7164,7 @@ s32 sub_8029BB8(Player *p, u8 *rotation, s32 *out)
         mask |= 0x80;
     }
 
-    r5 = sub_801E4E4(playerY2, playerX2, mask, 8, &anotherByte, sub_801EE64);
+    r5 = SA2_LABEL(sub_801E4E4)(playerY2, playerX2, mask, 8, &anotherByte, SA2_LABEL(sub_801EE64));
 
     playerY = I(p->qWorldY) + p->spriteOffsetY;
     playerX = I(p->qWorldX) + (2 + p->spriteOffsetX);
@@ -7174,7 +7174,7 @@ s32 sub_8029BB8(Player *p, u8 *rotation, s32 *out)
         mask |= 0x80;
     }
 
-    r1 = sub_801E4E4(playerY, playerX, mask, 8, &anotherByte2, sub_801EE64);
+    r1 = SA2_LABEL(sub_801E4E4)(playerY, playerX, mask, 8, &anotherByte2, SA2_LABEL(sub_801EE64));
 
     if (r5 < r1) {
         result = r5;
@@ -7313,7 +7313,7 @@ bool32 Player_TryJump(Player *p)
         }
 #endif
 
-        if (sub_8022F58(rot + Q(0.5), p) > 3) {
+        if (SA2_LABEL(sub_8022F58)(rot + Q(0.5), p) > 3) {
             PLAYERFN_SET(Player_InitJump);
             return TRUE;
         }

@@ -5,7 +5,6 @@
 #include "lib/m4a/m4a.h"
 #include "malloc_vram.h"
 
-#include "game/shared/stage/collision.h"
 #include "game/globals.h"
 
 #include "game/shared/stage/entity.h"

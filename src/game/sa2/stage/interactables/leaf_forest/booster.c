@@ -4,7 +4,6 @@
 #include "task.h"
 #include "lib/m4a/m4a.h"
 
-#include "game/shared/stage/collision.h"
 #include "game/shared/stage/entities_manager.h"
 
 #include "game/shared/stage/entity.h"

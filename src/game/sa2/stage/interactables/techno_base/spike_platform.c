@@ -5,8 +5,6 @@
 #include "trig.h"
 #include "lib/m4a/m4a.h"
 
-#include "game/shared/stage/collision.h"
-
 #include "game/shared/stage/player.h"
 #include "game/shared/stage/camera.h"
 #include "game/shared/stage/entity.h"

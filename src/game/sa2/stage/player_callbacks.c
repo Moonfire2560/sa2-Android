@@ -1269,7 +1269,7 @@ void Player_Knuckles_Glide_MainUpdate(Player *p)
                             playerBottomX -= 1;
                             playerBottomX -= p->spriteOffsetX;
 
-                            if (sub_801E4E4(playerBottomY, playerBottomX, p->layer, -8, NULL, sub_801EE64) < 0) {
+                            if (SA2_LABEL(sub_801E4E4)(playerBottomY, playerBottomX, p->layer, -8, NULL, SA2_LABEL(sub_801EE64)) < 0) {
                                 PLAYERFN_SET(Player_Knuckles_FallAfterGlide);
                                 p->charState = CHARSTATE_KNUCKLES_GLIDE_FALL;
                                 p->spriteOffsetX = 6;
@@ -1287,7 +1287,7 @@ void Player_Knuckles_Glide_MainUpdate(Player *p)
                             playerBottomX -= 1;
                             playerBottomX -= p->spriteOffsetX;
 
-                            if (sub_801E4E4(playerBottomY, playerBottomX, p->layer, +8, NULL, sub_801EE64) < 0) {
+                            if (SA2_LABEL(sub_801E4E4)(playerBottomY, playerBottomX, p->layer, +8, NULL, SA2_LABEL(sub_801EE64)) < 0) {
                                 PLAYERFN_SET(Player_Knuckles_FallAfterGlide);
                                 p->charState = CHARSTATE_KNUCKLES_GLIDE_FALL;
                                 p->spriteOffsetX = 6;
@@ -1321,7 +1321,7 @@ void Player_Knuckles_Glide_MainUpdate(Player *p)
                             playerBottomX += 1;
                             playerBottomX += p->spriteOffsetX;
 
-                            if (sub_801E4E4(playerBottomY, playerBottomX, p->layer, +8, NULL, sub_801EE64) < 0) {
+                            if (SA2_LABEL(sub_801E4E4)(playerBottomY, playerBottomX, p->layer, +8, NULL, SA2_LABEL(sub_801EE64)) < 0) {
                                 PLAYERFN_SET(Player_Knuckles_FallAfterGlide);
                                 p->charState = CHARSTATE_KNUCKLES_GLIDE_FALL;
                                 p->spriteOffsetX = 6;
@@ -1494,7 +1494,7 @@ s32 sub_8013644(Player *p)
 
         pY = I(p->qWorldY);
 
-        result = sub_801E4E4(pX, pY, p->layer, -8, &rot, sub_801ED24);
+        result = SA2_LABEL(sub_801E4E4)(pX, pY, p->layer, -8, &rot, sub_801ED24);
 
         if (rot & 0x1) {
             p->rotation = Q(0.25);
@@ -1510,7 +1510,7 @@ s32 sub_8013644(Player *p)
 
         pY = I(p->qWorldY);
 
-        result = sub_801E4E4(pX, pY, p->layer, +8, &rot, sub_801ED24);
+        result = SA2_LABEL(sub_801E4E4)(pX, pY, p->layer, +8, &rot, sub_801ED24);
 
         if (!(rot & 0x1)) {
             p->rotation = rot;

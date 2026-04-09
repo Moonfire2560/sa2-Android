@@ -4,7 +4,6 @@
 #include "malloc_vram.h"
 
 #include "game/shared/stage/entity.h"
-
 #include "game/shared/stage/entities_manager.h"
 
 #include "constants/sa2/animations.h"

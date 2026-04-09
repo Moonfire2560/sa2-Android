@@ -5,7 +5,6 @@
 #include "trig.h"
 #include "malloc_vram.h"
 
-#include "game/shared/stage/collision.h"
 #include "game/sa2/stage/interactables/platform.h"
 #include "game/shared/stage/player.h"
 #include "game/shared/stage/camera.h"

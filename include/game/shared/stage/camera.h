@@ -14,8 +14,10 @@ typedef s32 CamCoord;
 #define TILE_WIDTH              8
 #define CAM_REGION_WIDTH        256
 #define TILES_PER_METATILE_AXIS 12
+#define METATILE_DIM            (TILES_PER_METATILE_AXIS * TILE_WIDTH)
 
-#define TO_WORLD_POS(pos, region) ((pos)*TILE_WIDTH + (region)*CAM_REGION_WIDTH)
+#define TO_WORLD_POS(pos, region)     ((pos)*TILE_WIDTH + (region)*CAM_REGION_WIDTH)
+#define TO_WORLD_POS_INV(pos, region) ((region)*CAM_REGION_WIDTH + (pos)*TILE_WIDTH)
 
 #define CAM_BOUND_X ((DISPLAY_WIDTH) + (CAM_REGION_WIDTH))
 #define CAM_BOUND_Y ((DISPLAY_HEIGHT) + ((CAM_REGION_WIDTH) / 2))

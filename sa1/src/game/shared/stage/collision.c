@@ -1480,7 +1480,7 @@ bool32 Coll_DamagePlayer(Player *p)
 
         p->layer ^= PLAYER_LAYER__MASK;
 
-        if (sa2__sub_8022F58(p->rotation + Q(0.5), p) < 4) {
+        if (SA2_LABEL(sub_8022F58)(p->rotation + Q(0.5), p) < 4) {
             p->layer ^= PLAYER_LAYER__MASK;
         } else {
             p->moveState &= ~MOVESTATE_1000000;

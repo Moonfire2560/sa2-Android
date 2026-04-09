@@ -33,7 +33,7 @@ SECTIONS {
         sa2/src/game/shared/stage/palette_loader.o(.text);
 
         /* Menus */
-        src/game/sa1/menus/title_screen.o(.text);
+        sa2/src/game/sa1/menus/title_screen.o(.text);
         src/game/shared/menus/unused_level_select.o(.text);
         sa2/src/game/sa1/menus/mp_mode_select.o(.text);
         sa2/src/game/sa1/menus/mp_mode_select_2.o(.text);
@@ -73,7 +73,7 @@ SECTIONS {
         src/game/sa1/stage/enemies/kiki.o(.text);
         src/game/sa1/stage/enemies/buzzer.o(.text);
         sa2/src/game/shared/stage/collect_ring_effect.o(.text);
-        src/game/sa1/stage/itembox.o(.text);
+        sa2/src/game/sa1/stage/itembox.o(.text);
         src/game/sa1/stage/interactables/stage_goal.o(.text);
         sa2/src/game/shared/stage/dust_cloud.o(.text);
         src/game/sa1/stage/interactables/spikes.o(.text);
@@ -320,8 +320,8 @@ SECTIONS {
         data/sa1/chao_garden.o(.rodata);
         src/data/sa1/entity_tables.o(.rodata);
         src/game/shared/stage/entities_manager.o(.rodata);
-        src/game/sa1/stage/itembox.o(.rodata);
-        src/game/sa1/menus/title_screen.o(.rodata);
+        sa2/src/game/sa1/stage/itembox.o(.rodata);
+        sa2/src/game/sa1/menus/title_screen.o(.rodata);
         src/game/shared/menus/unused_level_select.o(.rodata);
         sa2/src/game/sa1/menus/mp_mode_select.o(.rodata);
         sa2/src/game/sa1/menus/time_attack.o(.rodata);

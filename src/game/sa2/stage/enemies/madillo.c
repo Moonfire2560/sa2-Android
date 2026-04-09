@@ -63,10 +63,10 @@ static void Task_MadilloMain(void)
 
     // TODO: Merge with ENEMY_CLAMP_TO_GROUND macro
     {
-        s32 delta = ENEMY_CLAMP_TO_GROUND_INNER(madillo, madillo->clampParam, sub_801EC3C);
+        s32 delta = ENEMY_CLAMP_TO_GROUND_INNER(madillo, madillo->clampParam, SA2_LABEL(sub_801EC3C));
         if (delta < 0) {
             madillo->offsetY += Q(delta);
-            delta = ENEMY_CLAMP_TO_GROUND_INNER(madillo, madillo->clampParam, sub_801EC3C);
+            delta = ENEMY_CLAMP_TO_GROUND_INNER(madillo, madillo->clampParam, SA2_LABEL(sub_801EC3C));
         }
 
         if (delta > 0) {
