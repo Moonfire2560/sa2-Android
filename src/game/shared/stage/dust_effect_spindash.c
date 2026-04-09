@@ -56,7 +56,7 @@ void Task_SpindashDustEffect(void)
         DustEffect *sde = TASK_DATA(gCurTask);
         Sprite *s = &sde->s;
 
-        if (p->spindashAccel > Q(2.0)) {
+        if (p->qSpindashAccel > Q(2.0)) {
 #if (GAME == GAME_SA1)
             GET_SPRITE_ANIM(s) = SA1_ANIM_SPINDASH_DUST_EFFECT_BIG;
 #elif (GAME == GAME_SA2)
@@ -117,7 +117,7 @@ void Task_SpindashDustEffectBig(void)
         DustEffect *sde = TASK_DATA(gCurTask);
         Sprite *s = &sde->s;
 
-        if (p->spindashAccel <= Q(2.0)) {
+        if (p->qSpindashAccel <= Q(2.0)) {
 #if (GAME == GAME_SA1)
             GET_SPRITE_ANIM(s) = SA1_ANIM_SPINDASH_DUST_EFFECT;
 #elif (GAME == GAME_SA2)

@@ -693,8 +693,8 @@ bool32 sub_800DD54(Player *p)
     p->charState = SA2_CHAR_ANIM_20;
     PLAYERFN_CHANGE_SHIFT_OFFSETS(p, 6, 14);
 
-    p->unk61 = 0;
-    p->unk62 = 0;
+    p->SA2_LABEL(unk61) = 0;
+    p->SA2_LABEL(unk62) = 0;
 
     p->transition = 9;
 
@@ -756,8 +756,8 @@ bool32 sub_800DE44(Player *p)
     p->charState = SA2_CHAR_ANIM_20;
     PLAYERFN_CHANGE_SHIFT_OFFSETS(p, 6, 14);
 
-    p->unk61 = 0;
-    p->unk62 = 0;
+    p->SA2_LABEL(unk61) = 0;
+    p->SA2_LABEL(unk62) = 0;
 
     p->transition = 9;
 

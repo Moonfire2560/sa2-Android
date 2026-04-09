@@ -252,7 +252,7 @@ void sub_8081200(void)
     gPartner.spriteTask = NULL;
 #endif
     gCamera.movementTask = NULL;
-    gUnknown_0300543C = 0;
+    SA2_LABEL(gUnknown_0300543C) = 0;
 #ifndef COLLECT_RINGS_ROM
     gGameMode = GAME_MODE_MULTI_PLAYER_COLLECT_RINGS;
 #endif

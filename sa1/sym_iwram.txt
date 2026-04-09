@@ -49,7 +49,7 @@ src/game/sa1/stage/enemies/boss_6_egg_snake.o(COMMON);
 . = 0x00005890; gUnknown_03005890 = .;
 . = 0x000058A8;
 sa2/src/game/sa1/multiplayer/chao_message.o(.bss);
-src/game/dummy_task.o(.data);
+sa2/src/game/dummy_task.o(.data);
 
 . = 0x000058C0;
 src/game/shared/stage/stage.o(.data);

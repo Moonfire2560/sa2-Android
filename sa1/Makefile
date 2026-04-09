@@ -246,6 +246,8 @@ SA2_C_FILES := \
 	src/game/shared/stage/collect_ring_effect.c \
 	src/game/shared/stage/unused_flash_task.c \
 	src/game/shared/multiplayer/communication_outcome.c \
+	src/game/dummy_task.c \
+	src/game/game.c \
 
 # Non matching
 # 	src/game/sa1/ui/game_2_0.c \

@@ -25,7 +25,7 @@ static inline void sub_8047E94_inline(Player *p)
 {
     if (p->SA2_LABEL(unk62) == 0) {
         if ((gGameMode == GAME_MODE_MULTI_PLAYER_COLLECT_RINGS) || (Player_Tails_8047B04(p) == 0)) {
-            if (!Player_Spindash(p) && !Player_TryJump(p)) {
+            if (!Player_TrySpindash(p) && !Player_TryJump(p)) {
                 SA2_LABEL(sub_8029CA0)(p);
                 Player_8044F7C(p);
                 SA2_LABEL(sub_80232D0)(p);

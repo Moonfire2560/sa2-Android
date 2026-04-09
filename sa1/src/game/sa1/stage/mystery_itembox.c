@@ -371,7 +371,7 @@ void sub_801C130()
                     break;
                 case 2:
                     gPlayer.itemEffect |= 0x20;
-                    gPlayer.timer24 = 0x258;
+                    gPlayer.itemEffect20Timer = 0x258;
                     break;
             }
         } else {

@@ -187,7 +187,7 @@ static void StageGoalToggle_HandleMultiplayerFinish(void)
     u32 count = 0;
     MultiplayerPlayer *player = TASK_DATA(gMultiplayerPlayerTasks[SIO_MULTI_CNT->id]);
     gPlayer.itemEffect &= ~PLAYER_ITEM_EFFECT__CONFUSION;
-    gPlayer.confusionTimer = 0;
+    gPlayer.timerConfusion = 0;
 
     if (!(player->unk5C & 1)) {
         u32 j;
@@ -225,7 +225,7 @@ static UNUSED void StageGoalToggle_ForceMultiplayerFinish(void)
     u32 id = SIO_MULTI_CNT->id;
 
     gPlayer.itemEffect &= ~PLAYER_ITEM_EFFECT__CONFUSION;
-    gPlayer.confusionTimer = 0;
+    gPlayer.timerConfusion = 0;
 
     for (j = 0; j < ARRAY_COUNT(gMultiplayerPlayerTasks) && mpTasks[j] != NULL; j++) {
         if (!IS_SAME_TEAM(j, SIO_MULTI_CNT->id) && gMultiplayerRanks[j] == 0) {

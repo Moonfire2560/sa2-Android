@@ -46,7 +46,7 @@ static void Task_InclineRamp(void)
                 gPlayer.qSpeedGround = Q_8_8(17);
                 gPlayer.qSpeedAirX += Q_8_8(17);
 
-                sub_8023260(&gPlayer);
+                SA2_LABEL(sub_8023260)(&gPlayer);
                 Player_TransitionCancelFlyingAndBoost(&gPlayer);
                 PLAYERFN_CHANGE_SHIFT_OFFSETS(&gPlayer, 6, 14);
 
@@ -68,7 +68,7 @@ static void Task_InclineRamp(void)
                 gPlayer.qSpeedGround = Q_8_8(-17);
                 gPlayer.qSpeedAirX += Q_8_8(-17);
 
-                sub_8023260(&gPlayer);
+                SA2_LABEL(sub_8023260)(&gPlayer);
                 Player_TransitionCancelFlyingAndBoost(&gPlayer);
                 PLAYERFN_CHANGE_SHIFT_OFFSETS(&gPlayer, 6, 14);
 
