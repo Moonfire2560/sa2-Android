@@ -36,5 +36,6 @@ extern Water gWater;
 void InitWaterPalettes(void);
 void CreateRunOnWaterEffect(void);
 struct Task *CreateWaterfallSurfaceHitEffect(s32 x, s32 y);
+void LoadPalette423Anim(void);
 
 #endif // GUARD_WATER_EFFECT_H

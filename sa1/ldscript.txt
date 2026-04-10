@@ -65,7 +65,7 @@ SECTIONS {
         src/game/shared/stage/pause_menu.o(.text);
         src/game/shared/collect_rings/results.o(.text);
         sa2/src/game/sa1/stage/mp_hud.o(.text);
-        src/game/sa1/stage/mystery_itembox.o(.text);
+        sa2/src/game/sa1/stage/mystery_itembox.o(.text);
         sa2/src/game/sa1/stage/mp_unk_0.o(.text);
         sa2/src/game/sa1/stage/mp_unk_1.o(.text);
         
@@ -163,9 +163,9 @@ SECTIONS {
         sa2/src/game/sa1/stage/enemies/boss_xtra_super_egg_robot.o(.text);
         
         sa2/src/game/sa1/stage/ui_rendering.o(.text);
-        src/game/sa1/stage/stage_ui.o(.text);
-        src/game/sa1/stage/trapped_animals.o(.text);
-        src/game/sa1/stage/stage_ui_z.o(.text);
+        sa2/src/game/sa1/stage/stage_ui.o(.text);
+        sa2/src/game/sa1/stage/trapped_animals.o(.text);
+        sa2/src/game/sa1/stage/stage_ui_z.o(.text);
 
         /* game/sa1/ui */
         sa2/src/game/sa1/ui/game_over.o(.text);
@@ -181,7 +181,7 @@ SECTIONS {
         sa2/src/game/sa1/ui/time_attack_record.o(.text);
         sa2/src/game/sa1/ui/course_select.o(.text);
         sa2/src/game/sa1/ui/game_2_3.o(.text);
-        src/game/sa1/ui/intro_animation.o(.text);
+        sa2/src/game/sa1/ui/intro_animation.o(.text);
         sa2/src/game/sa1/ui/extra_stage_results.o(.text);
         sa2/src/game/sa1/ui/special_stage_intro.o(.text);
         sa2/src/game/sa1/ui/collect_chaos_emeralds_msg.o(.text);
@@ -334,7 +334,7 @@ SECTIONS {
         sa2/src/game/sa1/stage/mp_results.o(.rodata);
         src/game/shared/stage/mp_finish.o(.rodata);
         sa2/src/game/sa1/stage/mp_hud.o(.rodata);
-        src/game/sa1/stage/mystery_itembox.o(.rodata);
+        sa2/src/game/sa1/stage/mystery_itembox.o(.rodata);
         sa2/src/game/sa1/stage/interactables/spring.o(.rodata);
         sa2/src/game/sa1/stage/interactables/platform_thin.o(.rodata);
         sa2/src/game/sa1/stage/interactables/platform_crumbling.o(.rodata);
@@ -370,7 +370,7 @@ SECTIONS {
         src/data/sa1/ui_graphics_data.o(.rodata);
         data/sa1/data_0_5.o(.rodata);
         src/data/sa1/ui_graphics_table.o(.rodata);
-        src/game/sa1/stage/trapped_animals.o(.rodata);
+        sa2/src/game/sa1/stage/trapped_animals.o(.rodata);
         data/sa1/data_0_5_2.o(.rodata);
         sa2/src/game/sa1/ui/character_select.o(.rodata);
         sa2/src/game/sa1/ui/game_2_0.o(.rodata);
@@ -382,7 +382,7 @@ SECTIONS {
         data/sa1/data_0_6.o(.rodata);
         sa2/src/game/sa1/ui/course_select.o(.rodata);
         sa2/src/game/sa1/ui/game_2_3.o(.rodata);
-        src/game/sa1/ui/intro_animation.o(.rodata);
+        sa2/src/game/sa1/ui/intro_animation.o(.rodata);
         data/sa1/data_0_6_0.o(.rodata);
         sa2/src/game/sa1/ui/time_attack_results.o(.rodata);
         data/sa1/data_0_6_1.o(.rodata);

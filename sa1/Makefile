@@ -386,16 +386,11 @@ SA2_C_FILES := \
 	src/game/sa1/stage/backgrounds/zone_1.c \
 	src/game/sa1/stage/backgrounds/zone_7_act_2_init.c \
 	src/game/sa1/stage/backgrounds/zone_5.c \
-# 	src/game/sa1/stage/trapped_animals.c \
-# 	src/game/sa1/stage/stage_ui_z.c \
-# 	src/game/sa1/stage/stage_ui.c \
-# 	src/game/sa1/stage/mystery_itembox.c \
-
-
-
-# Nonmatching
-
-# Can't build
+	src/game/sa1/stage/trapped_animals.c \
+	src/game/sa1/stage/stage_ui_z.c \
+	src/game/sa1/stage/stage_ui.c \
+	src/game/sa1/stage/mystery_itembox.c \
+	src/game/sa1/ui/intro_animation.c \
 
 SA2_C_ASM_FILES := \
 	src/rom_header.s \
