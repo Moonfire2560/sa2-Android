@@ -62,7 +62,7 @@ SECTIONS {
         sa2/src/game/sa1/stage/mp_results_b.o(.text);
         src/game/shared/stage/mp_finish.o(.text);
     
-        src/game/shared/stage/pause_menu.o(.text);
+        sa2/src/game/shared/stage/pause_menu.o(.text);
         src/game/shared/collect_rings/results.o(.text);
         sa2/src/game/sa1/stage/mp_hud.o(.text);
         sa2/src/game/sa1/stage/mystery_itembox.o(.text);
