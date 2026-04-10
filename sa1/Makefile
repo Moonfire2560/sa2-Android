@@ -204,6 +204,8 @@ SA2_C_FILES := \
 	src/input_recorder.c \
 	src/background.c \
 	src/game/globals.c \
+	src/game/dummy_task.c \
+	src/game/game.c \
 	src/game/sa1/ui/time_attack_record.c \
 	src/game/sa1/ui/multiplayer_continue_screen.c \
 	src/game/sa1/ui/vs_record.c \
@@ -255,18 +257,14 @@ SA2_C_FILES := \
 	src/game/sa1/stage/temporary_sound_play_task.c \
 	src/game/sa1/stage/itembox.c \
 	src/game/sa1/menus/title_screen.c \
-	src/game/dummy_task.c \
-	src/game/game.c \
-
-# Non matching
-# 	src/game/sa1/stage/interactables/special_spring.c \
-# 	src/game/sa1/stage/interactables/toggle_gravity.c \
-# 	src/game/sa1/stage/interactables/half_pipe.c \
-# 	src/game/sa1/stage/interactables/conveyor_belt_movement.c \
-# 	src/game/sa1/stage/interactables/track.c \
-# 	src/game/sa1/stage/interactables/water_bridge_splash.c \
-# 	src/game/sa1/stage/interactables/updraft.c \
-# 	src/game/sa1/stage/interactables/bounce_block.c \
+	src/game/sa1/stage/interactables/special_spring.c \
+	src/game/sa1/stage/interactables/toggle_gravity.c \
+	src/game/sa1/stage/interactables/half_pipe.c \
+	src/game/sa1/stage/interactables/conveyor_belt_movement.c \
+	src/game/sa1/stage/interactables/track.c \
+	src/game/sa1/stage/interactables/water_bridge_splash.c \
+	src/game/sa1/stage/interactables/updraft.c \
+	src/game/sa1/stage/interactables/bounce_block.c \
 # 	src/game/sa1/stage/interactables/pipe.c \
 # 	src/game/sa1/stage/interactables/wall_bumper.c \
 # 	src/game/sa1/stage/interactables/flippers.c \
@@ -335,6 +333,9 @@ SA2_C_FILES := \
 # 	src/game/sa1/stage/interactables/carousel.c \
 # 	src/game/sa1/stage/interactables/swing_rope.c \
 # 	src/game/sa1/stage/interactables/bumpers.c \
+
+# None matching
+
 
 # Can't build
 # 	src/game/sa1/stage/camera_destroy.c \
