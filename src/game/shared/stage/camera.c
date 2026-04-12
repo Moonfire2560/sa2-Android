@@ -532,7 +532,7 @@ void InitCamera(u32 level)
 
     camera->unk8 = 0x1000;
     camera->unkC = 0xc;
-    camera->unk56 = 0;
+    camera->SA2_LABEL(unk56) = 0;
     camera->shiftX = 0;
     camera->shiftY = 0;
     camera->unk20 = 0;
@@ -660,8 +660,8 @@ void UpdateCamera(void)
             if (!(camera->unk50 & 1)) {
                 s16 airSpeedX = player->qSpeedAirX;
                 camera->unk10 = I(player->qWorldX) + camera->shiftX - DISPLAY_CENTER_X;
-                camera->unk56 = (airSpeedX + (camera->unk56 * 15)) >> 4;
-                camera->unk10 += (camera->unk56 >> 5);
+                camera->SA2_LABEL(unk56) = (airSpeedX + (camera->SA2_LABEL(unk56) * 15)) >> 4;
+                camera->unk10 += (camera->SA2_LABEL(unk56) >> 5);
             }
             if (!(camera->unk50 & 2)) {
                 s32 unk64 = camera->unk64;
