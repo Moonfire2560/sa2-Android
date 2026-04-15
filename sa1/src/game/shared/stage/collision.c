@@ -1113,13 +1113,7 @@ NONMATCH("asm/non_matching/game/shared/stage/collision__sub_800D0A0.inc",
 END_NONMATCH
 #endif // MATCH
 
-// (99.96%) https://decomp.me/scratch/BOoFv
-#if (GAME == GAME_SA1)
-NONMATCH("asm/non_matching/game/shared/stage/collision__sa2__sub_800DA4C.inc",
-         u32 SA2_LABEL(sub_800DA4C)(Sprite *opponent, s16 qOppX, s16 qOppY, UNUSED s32 param3, UNUSED s32 param4, u8 layer))
-#else
 u32 SA2_LABEL(sub_800DA4C)(Sprite *opponent, s16 qOppX, s16 qOppY, UNUSED s32 param3, UNUSED s32 param4, u8 layer)
-#endif
 {
     MultiplayerPlayer *mpp;
     Sprite *mpPlayerSprite;
@@ -1163,6 +1157,9 @@ u32 SA2_LABEL(sub_800DA4C)(Sprite *opponent, s16 qOppX, s16 qOppY, UNUSED s32 pa
         // _0800DC66
 
         if (mpp->pos.y > qOppY) {
+#if (GAME == GAME_SA1) && !defined(NON_MATCHING)
+            qOppY = qOppY;
+#endif
             result |= COLL_FLAG_10000;
         } else {
             result |= COLL_FLAG_100000;
@@ -1176,7 +1173,6 @@ u32 SA2_LABEL(sub_800DA4C)(Sprite *opponent, s16 qOppX, s16 qOppY, UNUSED s32 pa
 
     return result;
 }
-END_NONMATCH
 
 u32 Coll_Player_Entity_RectIntersection(Sprite *s, CamCoord sx, CamCoord sy, Player *p, Rect8 *rectPlayer)
 {
