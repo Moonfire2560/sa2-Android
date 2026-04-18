@@ -411,8 +411,6 @@ void sub_0200DBE0(Player *p);
 #endif
 
 #if (GAME == GAME_SA1)
-extern s16 gUnknown_084ADF78[NUM_LEVEL_IDS][2];
-extern s16 gUnknown_084ADFC0[NUM_LEVEL_IDS][2];
 extern s16 gUnknown_084AE188[9];
 extern s16 gUnknown_084AE19A[9];
 #endif
@@ -3438,13 +3436,14 @@ void SA2_LABEL(sub_80232D0)(Player *p)
     s32 ix, iy;
     s32 ox, oy;
 #ifndef COLLECT_RINGS_ROM
-    if (p->playerID == 0) {
+    if (p->playerID == PLAYER_1) {
+#if (GAME == GAME_SA2)
         if (IS_BOSS_STAGE(gCurrentLevel)) {
             if (gCurrentLevel & 0x2) {
-                ox = gUnknown_080D650C[gCurrentLevel].x;
+                ox = gUnknown_080D650C[gCurrentLevel][0];
                 if ((ox >= 0) && (qPX >= Q(ox))) {
-                    ix = gUnknown_080D661C[gCurrentLevel].x;
-                    iy = gUnknown_080D661C[gCurrentLevel].y;
+                    ix = gUnknown_080D661C[gCurrentLevel][0];
+                    iy = gUnknown_080D661C[gCurrentLevel][1];
 
                     qPX += Q(ix);
                     qPY += Q(iy);
@@ -3469,13 +3468,15 @@ void SA2_LABEL(sub_80232D0)(Player *p)
                     cam->unk14 += iy;
                 }
             }
-        } else if ((gPlayer.moveState & MOVESTATE_GOAL_REACHED) && (gSpecialRingCount >= SPECIAL_STAGE_REQUIRED_SP_RING_COUNT)) {
-            ox = gUnknown_080D650C[gCurrentLevel].x;
+        } else if ((gPlayer.moveState & MOVESTATE_GOAL_REACHED) && (gSpecialRingCount >= SPECIAL_STAGE_REQUIRED_SP_RING_COUNT))
+#endif
+        {
+            ox = gUnknown_080D650C[gCurrentLevel][0];
             if ((ox >= 0) && (qPX >= Q(ox)) && (cam->unk8 != 0)) {
                 if (!(cam->unk50 & 0x1)) {
                     s32 ix;
 
-                    ix = gUnknown_080D661C[gCurrentLevel].x;
+                    ix = gUnknown_080D661C[gCurrentLevel][0];
                     qPX += Q(ix);
                     cam->x += ix;
                     cam->unk20 += ix;
@@ -3487,12 +3488,12 @@ void SA2_LABEL(sub_80232D0)(Player *p)
                 }
             }
 
-            oy = gUnknown_080D650C[gCurrentLevel].y;
+            oy = gUnknown_080D650C[gCurrentLevel][1];
             if ((oy >= 0) && (qPY >= Q(oy)) && (cam->unkC != 0)) {
                 if (!(cam->unk50 & 0x2)) {
                     s32 iy;
 
-                    iy = gUnknown_080D661C[gCurrentLevel].y;
+                    iy = gUnknown_080D661C[gCurrentLevel][1];
                     qPY += Q(iy << 8);
                     cam->y += Q(iy);
                     cam->unk24 += Q(iy);
@@ -3506,53 +3507,53 @@ void SA2_LABEL(sub_80232D0)(Player *p)
     }
 #endif
     if ((p->moveState & (MOVESTATE_80000000 | MOVESTATE_DEAD)) != MOVESTATE_DEAD) {
-        s32 r2, r3;
+        s32 qNoclipWorldX, qNoclipWorldY;
         struct Camera *cam2 = &gCamera;
-        r3 = p->qWorldY;
+        s32 qPlayerY = p->qWorldY;
 
-        if ((s32)p->moveState >= 0) {
-            s32 r1;
+        if (!(p->moveState & MOVESTATE_80000000)) {
+            bool32 outOfBounds;
 
 #ifndef COLLECT_RINGS_ROM
             if (GRAVITY_IS_INVERTED) {
-                if (p->qWorldY > Q(gCamera.minY)) {
+                if (qPlayerY > Q(gCamera.minY)) {
                     goto lbl0;
                 } else {
-                    r1 = 1;
+                    outOfBounds = TRUE;
                 }
             } else {
                 s32 qMaxY = Q(cam2->maxY) - 1;
 
-                r1 = 1;
+                outOfBounds = 1;
 
-                if (p->qWorldY < qMaxY) {
+                if (qPlayerY < qMaxY) {
                 lbl0:
-                    r1 = 0;
+                    outOfBounds = FALSE;
                 }
             }
 #else
             {
                 s32 qMaxY = Q(cam2->maxY) - 1;
 
-                r1 = 0;
+                outOfBounds = FALSE;
 
-                if (p->qWorldY >= qMaxY) {
+                if (qPlayerY >= qMaxY) {
                 lbl0:
-                    r1 = 1;
+                    outOfBounds = TRUE;
                 }
             }
 #endif
 
-            if (r1 != 0) {
+            if (outOfBounds) {
                 p->moveState |= MOVESTATE_DEAD;
 
 #ifndef COLLECT_RINGS_ROM
                 if (p->moveState & MOVESTATE_IN_WATER) {
-                    p->qSpeedAirY = -Q(2.625);
+                    p->qSpeedAirY = -Q(PLAYER_JUMP_HEIGHT_UNDER_WATER);
                 } else
 #endif
                 {
-                    p->qSpeedAirY = -Q(4.875);
+                    p->qSpeedAirY = -Q(PLAYER_JUMP_HEIGHT);
                 }
 
 #ifndef COLLECT_RINGS_ROM
@@ -3564,11 +3565,11 @@ void SA2_LABEL(sub_80232D0)(Player *p)
         }
 
         if (IS_BOSS_STAGE(gCurrentLevel)) {
-            r2 = gBossCameraClampYLower;
-            r3 = gBossCameraClampYUpper;
+            qNoclipWorldX = gBossCameraClampYLower;
+            qNoclipWorldY = gBossCameraClampYUpper;
         } else {
-            r2 = cam->minY;
-            r3 = cam->maxY;
+            qNoclipWorldX = cam->minY;
+            qNoclipWorldY = cam->maxY;
         }
 
         {
@@ -3577,7 +3578,7 @@ void SA2_LABEL(sub_80232D0)(Player *p)
             s32 qMinX = Q(cam->minX);
 
             qPX = CLAMP_32(qPX, qMinX, Q(cam->maxX) - 1);
-            qPY = CLAMP_32(qPY, Q(r2), Q(r3) - 1);
+            qPY = CLAMP_32(qPY, Q(qNoclipWorldX), Q(qNoclipWorldY) - 1);
 
             if (qPX != oldQPX) {
                 p->qSpeedAirX = 0;
@@ -3611,6 +3612,265 @@ void SA2_LABEL(sub_80232D0)(Player *p)
         }
     }
 }
+
+#if (GAME == GAME_SA1)
+bool32 Player_TrySpindash(Player *p)
+{
+    if (!(p->moveState & MOVESTATE_SPINDASH)) {
+        if ((p->charState != CHARSTATE_CROUCH) || !(p->frameInput & gPlayerControls.jump)) {
+            return FALSE;
+        }
+
+        p->charState = CHARSTATE_SPINDASH;
+        m4aSongNumStart(SE_SPIN_ATTACK);
+        CreateSpindashDustEffect();
+
+        p->moveState |= MOVESTATE_SPINDASH;
+
+        {
+#ifndef NON_MATCHING
+            s16 qInitialAccel;
+            asm("mov %0, #0\n" : "=r"(qInitialAccel));
+            p->qSpindashAccel = qInitialAccel;
+#else
+            p->qSpindashAccel = Q(0);
+#endif
+        }
+
+        PLAYERFN_CHANGE_SHIFT_OFFSETS(p, 6, 9);
+    } else {
+        if (!(p->heldInput & DPAD_DOWN)) {
+            s32 qNewSpeed;
+
+            p->moveState &= ~MOVESTATE_SPINDASH;
+
+            qNewSpeed = !(p->moveState & MOVESTATE_2000) //
+                ? gUnknown_084AE188[I(p->qSpindashAccel)]
+                : gUnknown_084AE19A[I(p->qSpindashAccel)];
+
+            if (p->playerID == PLAYER_1) {
+                gCamera.SA2_LABEL(unk40) = 10;
+            }
+
+            if (p->moveState & MOVESTATE_FACING_LEFT) {
+                qNewSpeed = -qNewSpeed;
+            }
+
+            p->qSpeedGround = qNewSpeed;
+            p->moveState |= MOVESTATE_SPIN_ATTACK;
+
+            m4aSongNumStart(SE_SPINDASH_RELEASE);
+            p->charState = CHARSTATE_SPINATTACK;
+        } else {
+            s16 qNewAccel = p->qSpindashAccel;
+
+            s16 qNewAccel2 = qNewAccel;
+            if (qNewAccel2 != Q(0)) {
+                qNewAccel = qNewAccel2 - (I(qNewAccel << 3));
+
+                if (qNewAccel <= Q(0)) {
+                    qNewAccel = Q(0);
+                }
+            }
+
+            if (p->charState != CHARSTATE_7) {
+                p->charState = CHARSTATE_SPINDASH;
+            }
+
+            if (p->frameInput & gPlayerControls.jump) {
+                struct MP2KPlayerState *mPlayerInfo;
+                m4aSongNumStart(SE_SPIN_ATTACK);
+
+                mPlayerInfo = gMPlayTable[gSongTable[SE_SPIN_ATTACK].ms].info;
+                m4aMPlayImmInit(mPlayerInfo);
+                m4aMPlayPitchControl(mPlayerInfo, 0xFFFF, (qNewAccel & ~0x7F));
+
+                if (gGameMode != GAME_MODE_MULTI_PLAYER_COLLECT_RINGS) {
+                    if ((p->character == CHARACTER_SONIC) || (p->character == CHARACTER_KNUCKLES)) {
+                        p->charState = CHARSTATE_7;
+                    }
+                }
+
+                qNewAccel += Q(2.0);
+                qNewAccel = MAX(qNewAccel, Q(8.0));
+            }
+            p->qSpindashAccel = qNewAccel;
+        }
+
+        Player_804726C(p);
+        Player_8047280(p);
+    }
+
+    SA2_LABEL(sub_80232D0)(p);
+    SA2_LABEL(sub_8022D6C)(p);
+
+    return TRUE;
+}
+
+bool32 Player_TryJump(Player *p)
+{
+    u8 rot = p->rotation;
+    s32 r5 = 0;
+    s32 theta;
+
+    if (!(p->frameInput & gPlayerControls.jump)) {
+        return FALSE;
+    }
+
+    if (GRAVITY_IS_INVERTED) {
+        rot += Q(0.25);
+        rot = -rot;
+        rot -= Q(0.25);
+    }
+
+    if (SA2_LABEL(sub_8022F58)(rot + Q(0.50), p) < 4) {
+        return FALSE;
+    }
+
+    p->moveState |= MOVESTATE_IN_AIR;
+    p->moveState &= ~(MOVESTATE_1000000 | MOVESTATE_20);
+    p->moveState |= MOVESTATE_100;
+    p->moveState &= ~(MOVESTATE_ICE_SLIDE);
+
+    switch (p->character) {
+        case CHARACTER_SONIC:
+        case CHARACTER_TAILS:
+        case CHARACTER_KNUCKLES: {
+            p->charState = CHARSTATE_SPINATTACK;
+            if (p->moveState & MOVESTATE_IN_WATER) {
+                r5 = 0x2A0;
+            } else {
+                r5 = 0x4E0;
+            }
+        } break;
+
+        case CHARACTER_AMY: {
+            if (!(p->heldInput & DPAD_DOWN)) {
+                p->charState = CHARSTATE_85;
+                if (p->moveState & MOVESTATE_IN_WATER) {
+                    r5 = 0x2A0;
+                } else {
+                    r5 = 0x4E0;
+                }
+            } else {
+                s32 r2;
+                p->charState = CHARSTATE_91;
+                p->moveState &= ~MOVESTATE_2000000;
+                p->moveState |= MOVESTATE_4000000;
+                p->moveState &= ~MOVESTATE_100;
+                p->w.af.flags = 2;
+                if (p->moveState & MOVESTATE_IN_WATER) {
+                    r2 = Q(2.50);
+                    r5 = Q(0.75);
+                } else {
+                    r2 = Q(4.00);
+                    r5 = Q(1.25);
+                }
+                if (p->moveState & MOVESTATE_FACING_LEFT) {
+                    p->qSpeedAirX = Q_MUL_NEG(r2, COS_24_8(p->rotation * 4));
+                    p->qSpeedAirY = Q_MUL_NEG(r2, SIN_24_8(p->rotation * 4));
+                } else {
+                    p->qSpeedAirX = +Q_MUL(r2, COS_24_8(p->rotation * 4));
+                    p->qSpeedAirY = +Q_MUL(r2, SIN_24_8(p->rotation * 4));
+                }
+            }
+        } break;
+    }
+
+    rot = p->rotation - Q(0.25);
+    p->qSpeedAirX += Q_MUL(r5, COS_24_8(rot * 4));
+    p->qSpeedAirY += Q_MUL(r5, SIN_24_8(rot * 4));
+
+    m4aSongNumStart(SE_JUMP);
+
+    if (p->character != CHARACTER_AMY) {
+        if (!(p->moveState & MOVESTATE_SPIN_ATTACK)) {
+            p->moveState |= MOVESTATE_SPIN_ATTACK;
+            PLAYERFN_CHANGE_SHIFT_OFFSETS(p, 6, 9);
+        } else {
+            p->moveState |= MOVESTATE_FLIP_WITH_MOVE_DIR;
+        }
+    }
+
+    return TRUE;
+}
+
+// (98.55%) https://decomp.me/scratch/lAHT0
+NONMATCH("asm/non_matching/game/sa1/stage/Player__sub_8044434.inc", bool32 sub_8044434(Player *p))
+{
+    u8 rot = p->rotation;
+    s32 r2 = 0;
+
+    if (!(p->frameInput & gPlayerControls.jump)) {
+        return FALSE;
+    }
+
+    if (GRAVITY_IS_INVERTED) {
+        rot += Q(0.25);
+        rot = -rot;
+        rot -= Q(0.25);
+    }
+
+    p->layer ^= 1;
+
+    if (SA2_LABEL(sub_8022F58)(rot + Q(0.50), p) < 4) {
+        p->layer ^= 1;
+        return FALSE;
+    }
+
+    if (gPlayer.character == CHARACTER_AMY) {
+        m4aSongNumStop(SE_AMY_GRINDING);
+    } else {
+        m4aSongNumStop(SE_GRINDING);
+    }
+
+    p->moveState |= MOVESTATE_IN_AIR;
+    p->moveState &= ~(MOVESTATE_1000000 | MOVESTATE_20);
+    p->moveState |= MOVESTATE_100;
+    p->moveState &= ~(MOVESTATE_ICE_SLIDE);
+
+    gPlayer.itemEffect &= ~PLAYER_ITEM_EFFECT__TELEPORT;
+
+    switch (p->character) {
+        case CHARACTER_SONIC:
+        case CHARACTER_TAILS:
+        case CHARACTER_KNUCKLES: {
+            p->charState = CHARSTATE_SPINATTACK;
+        } break;
+
+        case CHARACTER_AMY: {
+            p->charState = CHARSTATE_85;
+        } break;
+    }
+
+    if (p->moveState & MOVESTATE_IN_WATER) {
+        r2 = Q(2.625);
+    } else {
+        r2 = Q(4.875);
+    }
+
+    rot = p->rotation - Q(0.25);
+    p->qSpeedAirY = Q_MUL(r2, SIN_24_8(rot * 4));
+    m4aSongNumStart(SE_JUMP);
+
+    SPRITE_FLAG_CLEAR(&p->spriteInfoBody->s, PRIORITY);
+    SPRITE_FLAG_SET_VALUE(&p->spriteInfoBody->s, PRIORITY, 2);
+    SPRITE_FLAG_CLEAR(&p->spriteInfoLimbs->s, PRIORITY);
+    SPRITE_FLAG_SET_VALUE(&p->spriteInfoLimbs->s, PRIORITY, 2);
+
+    if (p->character != CHARACTER_AMY) {
+        if (!(p->moveState & MOVESTATE_SPIN_ATTACK)) {
+            p->moveState |= MOVESTATE_SPIN_ATTACK;
+            PLAYERFN_CHANGE_SHIFT_OFFSETS(p, 6, 9);
+        } else {
+            p->moveState |= MOVESTATE_FLIP_WITH_MOVE_DIR;
+        }
+    }
+
+    return TRUE;
+}
+END_NONMATCH
+#endif // (GAME == GAME_SA1)
 
 void Player_AirInputControls(Player *p)
 {
@@ -3661,6 +3921,234 @@ void Player_AirInputControls(Player *p)
     }
 }
 
+#if (GAME == GAME_SA1)
+void Player_8044670(Player *p)
+{
+    s16 r4 = (!(p->moveState & MOVESTATE_IN_WATER)) ? -Q(3.0) : -Q(1.5);
+
+    if (p->moveState & MOVESTATE_100) {
+        if (p->qSpeedAirY < r4) {
+            if (!(p->heldInput & gPlayerControls.jump)) {
+                p->qSpeedAirY = r4;
+            }
+        } else {
+            // Init mid-air action, if Jump button pressed
+            if ((gGameMode != GAME_MODE_MULTI_PLAYER_COLLECT_RINGS) && (p->SA2_LABEL(unk61) == 0) && (p->frameInput & gPlayerControls.jump)
+                && (p->charState != CHARSTATE_HIT_AIR)) {
+                p->moveState &= ~MOVESTATE_FLIP_WITH_MOVE_DIR;
+                p->SA2_LABEL(unk61) = 1;
+
+                switch (p->character) {
+                    case CHARACTER_SONIC: {
+                        Player_Sonic_InitInstaShield(p);
+                    } break;
+
+                    case CHARACTER_TAILS: {
+                        Player_Tails_InitFlying(p);
+                    } break;
+
+                    case CHARACTER_KNUCKLES: {
+                        Player_Knuckles_GlideInit(p);
+                    } break;
+
+                    case CHARACTER_AMY: {
+                        ;
+                    } break;
+                }
+            }
+        }
+    } else if (!(p->moveState & MOVESTATE_200)) {
+        if (p->qSpeedAirY < -Q(11.8125)) {
+            p->qSpeedAirY = -Q(11.8125);
+        }
+    }
+}
+
+void Player_8044750(Player *p)
+{
+    Camera *cam = &gCamera;
+
+    if ((p->SA2_LABEL(unk25) == 0) || (--p->SA2_LABEL(unk25) == 0)) {
+        if (p->playerID == PLAYER_1) {
+            if (!(gStageFlags & STAGE_FLAG__GRAVITY_INVERTED)) {
+                if (cam->SA2_LABEL(unk4C) + cam->shiftY > -72) {
+                    cam->SA2_LABEL(unk4C) -= 2;
+                }
+            } else {
+                if (cam->SA2_LABEL(unk4C) + cam->shiftY < 72) {
+                    cam->SA2_LABEL(unk4C) += 2;
+                }
+            }
+        }
+    } else if (p->playerID == PLAYER_1) {
+        if (cam->SA2_LABEL(unk4C) > 0) {
+            cam->SA2_LABEL(unk4C) -= 2;
+        } else if (cam->SA2_LABEL(unk4C) < 0) {
+            cam->SA2_LABEL(unk4C) += 2;
+        }
+    }
+}
+
+// TODO: Look up|down function?
+// (98.79%) https://decomp.me/scratch/yy7rw
+NONMATCH("asm/non_matching/game/sa1/stage/Player__Player_80447D8.inc", void Player_80447D8(Player *p))
+{
+    Camera *cam = &gCamera;
+
+    p->charState = CHARSTATE_CROUCH;
+
+    if (p->qSpeedGround == 0) {
+        if ((p->SA2_LABEL(unk25) == 0) || (--p->SA2_LABEL(unk25) == 0)) {
+            if (p->playerID == PLAYER_1) {
+                if (!(gStageFlags & STAGE_FLAG__GRAVITY_INVERTED)) {
+                    if (cam->SA2_LABEL(unk4C) + cam->shiftY < +60) {
+                        cam->SA2_LABEL(unk4C) += 2;
+                    }
+                } else {
+                    if (cam->SA2_LABEL(unk4C) + cam->shiftY > -60) {
+                        cam->SA2_LABEL(unk4C) -= 2;
+                    }
+                }
+            }
+        } else if (p->playerID == PLAYER_1) {
+            if (cam->SA2_LABEL(unk4C) > 0) {
+                cam->SA2_LABEL(unk4C) -= 2;
+            } else if (cam->SA2_LABEL(unk4C) < 0) {
+                cam->SA2_LABEL(unk4C) += 2;
+            }
+        }
+    } else if (p->character != CHARACTER_AMY) {
+        m4aSongNumStart(SE_SPIN_ATTACK);
+        p->moveState |= MOVESTATE_SPIN_ATTACK;
+        PLAYERFN_CHANGE_SHIFT_OFFSETS(p, 6, 9);
+        p->charState = CHARSTATE_SPINATTACK;
+
+        if (p->playerID == PLAYER_1) {
+            // TODO: Is this entire code block a macro?
+            //       (also twice in sub_80448D0)
+            p->SA2_LABEL(unk25) = 120;
+
+            if (p->playerID == PLAYER_1) {
+                if (cam->SA2_LABEL(unk4C) > 0) {
+                    cam->SA2_LABEL(unk4C) -= 2;
+                    asm("");
+                } else if (cam->SA2_LABEL(unk4C) < 0) {
+                    cam->SA2_LABEL(unk4C) += 2;
+                }
+            }
+        }
+    }
+}
+END_NONMATCH
+
+void sub_80448D0(Player *p)
+{
+    if (p->charState == CHARSTATE_12 || p->charState == CHARSTATE_13) {
+        if (p->playerID == PLAYER_1) {
+            // TODO: Is this entire code block a macro?
+            //       (also in Player_80447D8)
+            p->SA2_LABEL(unk25) = 120;
+
+            if (p->playerID == PLAYER_1) {
+                if (gCamera.SA2_LABEL(unk4C) > 0) {
+                    gCamera.SA2_LABEL(unk4C) -= 2;
+                } else if (gCamera.SA2_LABEL(unk4C) < 0) {
+                    gCamera.SA2_LABEL(unk4C) += 2;
+                }
+            }
+        }
+    } else {
+        switch (p->heldInput & DPAD_VERTICAL) {
+            case 0: {
+                if (p->playerID == PLAYER_1) {
+                    p->SA2_LABEL(unk25) = 120;
+
+                    if (p->playerID == PLAYER_1) {
+                        if (gCamera.SA2_LABEL(unk4C) > 0) {
+                            gCamera.SA2_LABEL(unk4C) -= 2;
+                        } else if (gCamera.SA2_LABEL(unk4C) < 0) {
+                            gCamera.SA2_LABEL(unk4C) += 2;
+                        }
+                    }
+                }
+
+                if (p->charState == CHARSTATE_CROUCH) {
+                    p->charState = CHARSTATE_3;
+                } else if (p->charState == CHARSTATE_LOOK_UP) {
+                    p->charState = CHARSTATE_11;
+                }
+            } break;
+
+            case DPAD_UP: {
+                // _0804497C
+                if (p->qSpeedGround == 0) {
+                    p->charState = CHARSTATE_LOOK_UP;
+                    Player_8044750(p);
+
+                } else if (p->playerID == PLAYER_1) {
+                    // _08044990
+                    p->SA2_LABEL(unk25) = 120;
+
+                    if (p->playerID == PLAYER_1) {
+                        if (gCamera.SA2_LABEL(unk4C) > 0) {
+                            gCamera.SA2_LABEL(unk4C) -= 2;
+                        } else if (gCamera.SA2_LABEL(unk4C) < 0) {
+                            gCamera.SA2_LABEL(unk4C) += 2;
+                        }
+                    }
+                }
+            } break;
+
+            case DPAD_DOWN: {
+                Player_80447D8(p);
+            } break;
+        }
+    }
+}
+
+void sub_80449D8(Player *p)
+{
+    s32 qSpeedGround;
+    s32 rot;
+    s32 qMin;
+
+    // TODO: Down | Right? Is this a bug?
+    if (p->heldInput & (DPAD_DOWN | DPAD_RIGHT)) {
+        if (((p->rotation + Q(0.375)) & 0xFF) < Q(0.75)) {
+            p->qSpeedGround += (SIN_24_8(p->rotation * 4) * 5) >> 5;
+        }
+    }
+
+    qSpeedGround = p->qSpeedGround;
+
+    if (p->heldInput & DPAD_LEFT) {
+        qSpeedGround -= Q(8. / 256.);
+
+        qMin = Q(0.75);
+        if (qSpeedGround < qMin) {
+            qSpeedGround = qMin;
+        }
+    }
+
+    qSpeedGround -= Q(8. / 256.);
+
+    qMin = Q(0.75);
+    if (qSpeedGround < qMin) {
+        qSpeedGround = qMin;
+    }
+
+    p->qSpeedGround = qSpeedGround;
+
+    p->charState = CHARSTATE_16;
+
+    qSpeedGround = p->qSpeedGround;
+    rot = p->rotation;
+    p->qSpeedAirX = Q_MUL(p->qSpeedGround, COS_24_8(rot * 4));
+    p->qSpeedAirY = Q_MUL(p->qSpeedGround, SIN_24_8(rot * 4));
+}
+#endif
+
+#if (GAME == GAME_SA2)
 void sub_80236C8(Player *p)
 {
     s16 airX;
@@ -3758,7 +4246,10 @@ void sub_8023748(Player *p)
         gWinRegs[WINREG_WINOUT] = WINOUT_WIN01_ALL;
     }
 }
+#endif
+#endif
 
+#ifndef COLLECT_RINGS_ROM
 void Player_HandleWater(Player *p)
 {
 #if (GAME == GAME_SA1) && !defined(BUG_FIX)

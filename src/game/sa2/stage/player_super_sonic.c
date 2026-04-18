@@ -360,13 +360,13 @@ NONMATCH("asm/non_matching/game/super_sonic__sub_802BCCC.inc", void sub_802BCCC(
     }
     // _0802BD0E
 
-    ssx2 = Q(gUnknown_080D650C[gCurrentLevel].x);
+    ssx2 = Q(gUnknown_080D650C[gCurrentLevel][0]);
     id = &sonic->unk128;
 
     if (ssx >= ssx2) {
         s32 someX, someY;
-        someX = (gUnknown_080D661C[gCurrentLevel].x);
-        someY = (gUnknown_080D661C[gCurrentLevel].y);
+        someX = (gUnknown_080D661C[gCurrentLevel][0]);
+        someY = (gUnknown_080D661C[gCurrentLevel][1]);
 
         ssx += Q(someX);
         TrueArea53BossMove(Q(someX), Q(someY));

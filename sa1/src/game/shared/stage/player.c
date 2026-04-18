@@ -411,8 +411,6 @@ void sub_0200DBE0(Player *p);
 #endif
 
 #if (GAME == GAME_SA1)
-extern s16 gUnknown_084ADF78[NUM_LEVEL_IDS][2];
-extern s16 gUnknown_084ADFC0[NUM_LEVEL_IDS][2];
 extern s16 gUnknown_084AE188[9];
 extern s16 gUnknown_084AE19A[9];
 #endif
@@ -3430,20 +3428,18 @@ void SA2_LABEL(sub_8023260)(Player *p)
 #endif
 
 // ALIGNED UP TO HERE
-// TODO: Check how this differs from SA2 func sub_80232D0!
-// (98.94%) https://decomp.me/scratch/KZphy
-NONMATCH("asm/non_matching/game/sa1/stage/Player__Player_8043EC0.inc", void SA2_LABEL(sub_80232D0)(Player *p))
+void SA2_LABEL(sub_80232D0)(Player *p)
 {
     Camera *cam = &gCamera;
     s32 qWorldX = p->qWorldX;
     s32 qWorldY = p->qWorldY;
 
     if (p->playerID == PLAYER_1) {
-        s32 unkX = gUnknown_084ADF78[gCurrentLevel][0];
+        s32 unkX = SA2_LABEL(gUnknown_080D650C)[gCurrentLevel][0];
         s32 unkY;
 
         if ((unkX >= 0) && (qWorldX >= Q(unkX)) && (cam->SA2_LABEL(unk8) != 0) && !(cam->SA2_LABEL(unk50) & 0x1)) {
-            s32 r3 = gUnknown_084ADFC0[gCurrentLevel][0];
+            s32 r3 = SA2_LABEL(gUnknown_080D661C)[gCurrentLevel][0];
             s32 r2 = Q(r3);
             qWorldX += r2;
 
@@ -3456,10 +3452,10 @@ NONMATCH("asm/non_matching/game/sa1/stage/Player__Player_8043EC0.inc", void SA2_
         }
         // _08043F3E
 
-        unkY = gUnknown_084ADF78[gCurrentLevel][1];
+        unkY = SA2_LABEL(gUnknown_080D650C)[gCurrentLevel][1];
 
         if ((unkY >= 0) && (qWorldY >= Q(unkY)) && (cam->SA2_LABEL(unkC) != 0) && !(cam->SA2_LABEL(unk50) & 0x2)) {
-            s32 r3 = gUnknown_084ADFC0[gCurrentLevel][1] << 8;
+            s32 r3 = SA2_LABEL(gUnknown_080D661C)[gCurrentLevel][1] << 8;
             qWorldY += Q(r3);
 
             if (gNumSingleplayerCharacters == NUM_SINGLEPLAYER_CHARS_MAX) {
@@ -3475,24 +3471,25 @@ NONMATCH("asm/non_matching/game/sa1/stage/Player__Player_8043EC0.inc", void SA2_
     if ((p->moveState & (MOVESTATE_80000000 | MOVESTATE_DEAD)) != MOVESTATE_DEAD) {
         // _08043F9C + 0xC
         s32 qNoclipWorldX, qNoclipWorldY;
-        bool32 outOfBounds;
+        Camera *cam2 = &gCamera;
         s32 qPlayerY = p->qWorldY;
 
         if (!(p->moveState & MOVESTATE_80000000)) {
+            bool32 outOfBounds;
             if (!(gStageFlags & STAGE_FLAG__GRAVITY_INVERTED)) {
-                if (qPlayerY >= Q(gCamera.maxY) - 1) {
+                if (qPlayerY >= Q(cam2->maxY) - 1) {
                     outOfBounds = TRUE;
-                } else {
-                    outOfBounds = FALSE;
+                    goto lab;
                 }
-            } else {
-                if (qPlayerY > Q(gCamera.minY)) {
-                    outOfBounds = FALSE;
-                } else {
+            } else if ((gStageFlags & STAGE_FLAG__GRAVITY_INVERTED)) {
+                if (qPlayerY <= Q(cam2->minY)) {
                     outOfBounds = TRUE;
+                    goto lab;
                 }
             }
 
+            outOfBounds = FALSE;
+        lab:
             if (outOfBounds) {
                 // _08044004
                 s32 qSpeedY;
@@ -3534,7 +3531,6 @@ NONMATCH("asm/non_matching/game/sa1/stage/Player__Player_8043EC0.inc", void SA2_
         p->qWorldY = qWorldY;
     }
 }
-END_NONMATCH
 
 #if (GAME == GAME_SA1)
 bool32 Player_TrySpindash(Player *p)
@@ -3629,7 +3625,6 @@ bool32 Player_TrySpindash(Player *p)
 
     return TRUE;
 }
-#endif // (GAME == GAME_SA1)
 
 bool32 Player_TryJump(Player *p)
 {
@@ -3794,6 +3789,7 @@ NONMATCH("asm/non_matching/game/sa1/stage/Player__sub_8044434.inc", bool32 sub_8
     return TRUE;
 }
 END_NONMATCH
+#endif // (GAME == GAME_SA1)
 
 // (91.12%) https://decomp.me/scratch/hJuDa
 NONMATCH("asm/non_matching/game/sa1/stage/Player__Player_AirInputControls.inc", void Player_AirInputControls(Player *p))
@@ -3868,6 +3864,7 @@ NONMATCH("asm/non_matching/game/sa1/stage/Player__Player_AirInputControls.inc", 
 }
 END_NONMATCH
 
+#if (GAME == GAME_SA1)
 void Player_8044670(Player *p)
 {
     s16 r4 = (!(p->moveState & MOVESTATE_IN_WATER)) ? -Q(3.0) : -Q(1.5);
@@ -4092,8 +4089,111 @@ void sub_80449D8(Player *p)
     p->qSpeedAirX = Q_MUL(p->qSpeedGround, COS_24_8(rot * 4));
     p->qSpeedAirY = Q_MUL(p->qSpeedGround, SIN_24_8(rot * 4));
 }
+#endif
 
-void SA2_LABEL(sub_8023878)(Player *p)
+#if (GAME == GAME_SA2)
+void sub_80236C8(Player *p)
+{
+    s16 airX;
+    s16 airX2;
+
+    // TODO: This doesn't seem right...
+    // TODO: Once fixed here, it should be fixed in sub_8023708() as well
+    // https://decomp.me/scratch/UjBCm
+    if ((u16)p->qSpeedAirY < (u16)Q(189))
+        return;
+
+    airX = p->qSpeedAirX;
+    airX2 = (airX >> 5);
+
+    if (airX2 < 0) {
+        airX = (airX - airX2);
+        if (airX > 0) {
+            airX = 0;
+        }
+        p->qSpeedAirX = airX;
+    } else if (airX2 > 0) {
+        airX = (airX - airX2);
+
+        if (airX < 0) {
+            airX = 0;
+        }
+
+        p->qSpeedAirX = airX;
+    }
+}
+
+void sub_8023708(Player *p)
+{
+    s16 airX;
+    s16 airX2;
+
+    if ((u16)p->qSpeedAirY < (u16)Q(189))
+        return;
+
+    airX = p->qSpeedAirX;
+    airX2 = (airX >> 6);
+
+    if (airX2 < 0) {
+        airX = (airX - airX2);
+        if (airX > 0) {
+            airX = 0;
+        }
+        p->qSpeedAirX = airX;
+    } else if (airX2 > 0) {
+        airX = (airX - airX2);
+
+        if (airX < 0) {
+            airX = 0;
+        }
+
+        p->qSpeedAirX = airX;
+    }
+}
+
+#ifndef COLLECT_RINGS_ROM
+
+void sub_8023748(Player *p)
+{
+    if (p->itemEffect == PLAYER_ITEM_EFFECT__NONE)
+        return;
+
+    if ((p->itemEffect & PLAYER_ITEM_EFFECT__SPEED_UP) && (--p->timerSpeedup == 0)) {
+        m4aMPlayTempoControl(&gMPlayInfo_BGM, 0x100);
+        p->itemEffect &= ~PLAYER_ITEM_EFFECT__SPEED_UP;
+    }
+
+    if ((p->itemEffect & PLAYER_ITEM_EFFECT__MP_SLOW_DOWN) && (--p->timerSpeedup == 0)) {
+        m4aMPlayTempoControl(&gMPlayInfo_BGM, 0x100);
+        p->itemEffect &= ~PLAYER_ITEM_EFFECT__MP_SLOW_DOWN;
+    }
+
+    if ((p->itemEffect & PLAYER_ITEM_EFFECT__INVINCIBILITY) && (--p->timerInvincibility == 0)) {
+        p->itemEffect &= ~PLAYER_ITEM_EFFECT__INVINCIBILITY;
+
+        if (p->itemEffect & PLAYER_ITEM_EFFECT__SHIELD_NORMAL) {
+            CreateItemTask_Shield_Normal(gPlayer.playerID);
+        } else if (p->itemEffect & PLAYER_ITEM_EFFECT__SHIELD_MAGNETIC) {
+            CreateItemTask_Shield_Magnetic(gPlayer.playerID);
+        }
+
+        // TODO: This could be a macro: IS_ACTICE_SONG(id)
+        if (gMPlayTable[0].info->songHeader == gSongTable[MUS_INVINCIBILITY].header) {
+            m4aSongNumStartOrContinue(gLevelSongs[gCurrentLevel]);
+        }
+    }
+
+    if ((p->itemEffect & PLAYER_ITEM_EFFECT__20) && (--p->itemEffect20Timer == 0)) {
+        p->itemEffect &= ~PLAYER_ITEM_EFFECT__20;
+        gDispCnt &= ~DISPCNT_OBJWIN_ON;
+        gWinRegs[WINREG_WINOUT] = WINOUT_WIN01_ALL;
+    }
+}
+#endif
+#endif
+
+#ifndef COLLECT_RINGS_ROM
+void Player_HandleWater(Player *p)
 {
 #if (GAME == GAME_SA1)
 #define WATER_ACTIVE_CHECK 1
@@ -4223,6 +4323,7 @@ void SA2_LABEL(sub_8023878)(Player *p)
         p->framesUntilWaterSurfaceEffect--;
     }
 }
+#endif
 
 void Player_8044D74(Player *p)
 {
@@ -4759,7 +4860,7 @@ void Task_PlayerMain(void)
     } else {
 #if (GAME == GAME_SA1)
         Player_HandleInputs(p);
-        SA2_LABEL(sub_8023878)(p);
+        Player_HandleWater(p);
 
         if (!(p->moveState & 0x400000)) {
             switch (p->character) {
@@ -5018,7 +5119,7 @@ void Task_8045AD8(void)
 {
     Player *partner = &gPartner;
 
-    SA2_LABEL(sub_8023878)(partner);
+    Player_HandleWater(partner);
 
     if (gPartner.character == CHARACTER_TAILS) {
         Player_Tails_804571C(partner);
@@ -5067,7 +5168,7 @@ void Task_8045B38(void)
         }
     } else {
         sub_8045DF0(partner);
-        SA2_LABEL(sub_8023878)(partner);
+        Player_HandleWater(partner);
 
         if ((I(partner->qWorldX) < gCamera.x - CAM_REGION_WIDTH) || (I(partner->qWorldX) > gCamera.x + DISPLAY_WIDTH + CAM_REGION_WIDTH)
             || (I(partner->qWorldY) < gCamera.y - CAM_REGION_WIDTH)
