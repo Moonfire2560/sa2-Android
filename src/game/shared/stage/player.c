@@ -6490,7 +6490,6 @@ top:
     (((anim == SA2_CHAR_ANIM_JUMP_1 || anim == SA2_CHAR_ANIM_JUMP_2) && variant == 1)                                                      \
      || (anim == SA2_CHAR_ANIM_SPIN_ATTACK && variant == 0) || (anim == SA2_CHAR_ANIM_70 && variant == 0))
 
-// ALIGNED UP TO HERE
 void SA2_LABEL(sub_8024F74)(Player *p, PlayerSpriteInfo *inPsi)
 {
     struct MultiSioData_0_4 *recv;
@@ -6514,7 +6513,7 @@ void SA2_LABEL(sub_8024F74)(Player *p, PlayerSpriteInfo *inPsi)
 
     s->animSpeed = SPRITE_ANIM_SPEED(1.0);
     if (p->moveState & MOVESTATE_IN_WATER) {
-        s->animSpeed = 8;
+        s->animSpeed = SPRITE_ANIM_SPEED(0.5);
     }
 
     switch (p->character) {
@@ -6522,14 +6521,14 @@ void SA2_LABEL(sub_8024F74)(Player *p, PlayerSpriteInfo *inPsi)
         case CHARACTER_KNUCKLES:
         case CHARACTER_SONIC:
             break;
-
+#if (GAME == GAME_SA2)
         case CHARACTER_CREAM: {
             u16 anim = p->anim;
             u16 variant = p->variant;
             anim = anim - gPlayerCharacterIdleAnims[p->character];
             if (MACRO_8024F74_ANIM_CHECK(anim, variant)) {
                 u8 rotation = p->rotation;
-                p->w.cf.SA2_LABEL(unkB0) = rotation;
+                p->w.cf.unkB0 = rotation;
                 psi->transform.rotation = rotation << 2;
                 s->frameFlags &= ~SPRITE_FLAG_MASK_ROT_SCALE;
                 s->frameFlags |= gOamMatrixIndex++ | SPRITE_FLAG_MASK_ROT_SCALE_ENABLE;
@@ -6544,6 +6543,7 @@ void SA2_LABEL(sub_8024F74)(Player *p, PlayerSpriteInfo *inPsi)
             }
             break;
         }
+#endif
         case CHARACTER_TAILS: {
             s32 asx = p->qSpeedAirX;
             s32 asy = p->qSpeedAirY;
@@ -6551,7 +6551,10 @@ void SA2_LABEL(sub_8024F74)(Player *p, PlayerSpriteInfo *inPsi)
             u16 anim = p->anim;
             u16 variant = p->variant;
             anim = anim - gPlayerCharacterIdleAnims[p->character];
-            if (MACRO_8024F74_ANIM_CHECK(anim, variant)) {
+#if (GAME == GAME_SA2)
+            if (MACRO_8024F74_ANIM_CHECK(anim, variant))
+#endif
+            {
                 u8 shift;
                 if (asx != 0 || asy != 0) {
                     shift = (I(ArcTan2(asx, asy)) + 0x40);
@@ -6560,16 +6563,21 @@ void SA2_LABEL(sub_8024F74)(Player *p, PlayerSpriteInfo *inPsi)
                 }
                 p->w.tf.shift = shift;
 
-                psi->transform.rotation = shift << 2;
-                s->frameFlags &= ~SPRITE_FLAG_MASK_ROT_SCALE;
-                s->frameFlags |= gOamMatrixIndex++ | SPRITE_FLAG_MASK_ROT_SCALE_ENABLE;
+#if (GAME == GAME_SA1)
+                if (p->charState == CHARSTATE_SPINATTACK)
+#endif
+                {
+                    psi->transform.rotation = shift << 2;
+                    s->frameFlags &= ~SPRITE_FLAG_MASK_ROT_SCALE;
+                    s->frameFlags |= gOamMatrixIndex++ | SPRITE_FLAG_MASK_ROT_SCALE_ENABLE;
 
-                MACRO_8024B10_PSI_UPDATE(p, psi);
-                TransformSprite(s, &psi->transform);
+                    MACRO_8024B10_PSI_UPDATE(p, psi);
+                    TransformSprite(s, &psi->transform);
 
-                if (p->moveState & MOVESTATE_DEAD
-                    || (!(p->moveState & MOVESTATE_100000) && (p->timerInvulnerability == 0 || (gStageTime & 2) == 0))) {
-                    DisplaySprite(s);
+                    if (p->moveState & MOVESTATE_DEAD
+                        || (!(p->moveState & MOVESTATE_100000) && (p->timerInvulnerability == 0 || (gStageTime & 2) == 0))) {
+                        DisplaySprite(s);
+                    }
                 }
             }
             break;
@@ -9163,6 +9171,7 @@ void Player_HandleWalkAnim(Player *p)
 }
 #endif
 
+// ALIGNED UP TO HERE
 void CallSetStageSpawnPos(u32 character, u32 level, u32 playerID, Player *p) { SetStageSpawnPos(character, level, playerID, p); }
 
 #if (GAME == GAME_SA2)
@@ -9212,6 +9221,30 @@ void DestroyPlayerTasks(Player *p)
 // functions were defined here but agbcc requires it be defined above
 UNUSED void sub_020111F4(Player *p) { Player_TransitionCancelBoost(p); }
 UNUSED void sub_0201121C(Player *p) { SA2_LABEL(sub_8022190)(p); }
+#endif
+
+#if (GAME == GAME_SA1)
+// Not sure why it's defined here
+void Player_TransitionCancelFlyingAndBoost(Player *p)
+{
+    p->moveState &= ~MOVESTATE_20;
+    p->moveState &= ~MOVESTATE_100;
+    p->moveState &= ~MOVESTATE_SPINDASH;
+
+    p->SA2_LABEL(unk61) = 0;
+    p->SA2_LABEL(unk62) = 0;
+    p->SA2_LABEL(unk63) = 0;
+
+    p->moveState &= ~MOVESTATE_8000;
+
+    if (p->character == CHARACTER_TAILS) {
+        m4aSongNumStop(SE_TAILS_PROPELLER_FLYING);
+    }
+
+    if (p->character == CHARACTER_AMY) {
+        p->moveState &= ~(MOVESTATE_4000000 | MOVESTATE_2000000);
+    }
+}
 #endif
 
 s32 SA2_LABEL(sub_8029A28)(Player *p, u8 *rot, s32 *out)
@@ -9341,7 +9374,7 @@ s32 SA2_LABEL(sub_8029B0C)(Player *p, u8 *ret_rotation, s32 *out)
     return result;
 }
 
-s32 sub_8029B58(Player *p, u8 *rot, s32 *out)
+s32 SA2_LABEL(sub_8029B58)(Player *p, u8 *rot, s32 *out)
 {
     s32 result;
 #ifndef COLLECT_RINGS_ROM
@@ -9421,21 +9454,33 @@ s32 SA2_LABEL(sub_8029BB8)(Player *p, u8 *rotation, s32 *out)
     return result;
 }
 
+#if (GAME == GAME_SA2)
 #ifndef COLLECT_RINGS_ROM
-void sub_8029C84(Player *p)
+void SA2_LABEL(sub_8029C84)(Player *p)
 {
-    s32 rot = p->rotation + DEG_TO_TURNS(90);
+    s32 rot = p->rotation + Q(0.25);
 
-    if ((rot & (DEG_TO_TURNS(360) - 1)) >= DEG_TO_TURNS(180))
+    if ((rot & UINT8_MAX) > INT8_MAX)
         p->qSpeedGround = 0;
 }
+#endif
 #endif
 
 void SA2_LABEL(sub_8029CA0)(Player *p)
 {
+#if (GAME == GAME_SA1)
+    s32 rot;
+    if (((p->rotation + Q(0.375)) & 0xFF) < Q(0.75))
+#else
     s32 rot = p->rotation;
-    if (((rot + DEG_TO_TURNS(135)) & (DEG_TO_TURNS(360) - 1)) < DEG_TO_TURNS(270)) {
+    if (((rot + Q(0.375)) & 0xFF) < Q(0.75))
+#endif
+    {
+#if (GAME == GAME_SA1)
+        rot = GET_ROTATED_ACCEL(p->rotation);
+#else
         rot = GET_ROTATED_ACCEL(rot);
+#endif
 
         if (p->qSpeedGround != 0) {
             p->qSpeedGround += rot;
@@ -9443,17 +9488,21 @@ void SA2_LABEL(sub_8029CA0)(Player *p)
     }
 }
 
-void sub_8029CE0(Player *p)
+void SA2_LABEL(sub_8029CE0)(Player *p)
 {
-    s32 rot = p->rotation;
-    if (((rot + DEG_TO_TURNS(135)) & (DEG_TO_TURNS(360) - 1)) < DEG_TO_TURNS(270)) {
-        s32 other = GET_ROTATED_ACCEL_2(rot);
+    if (((p->rotation + DEG_TO_TURNS(135)) & (DEG_TO_TURNS(360) - 1)) < DEG_TO_TURNS(270)) {
+#if (GAME == GAME_SA1)
+        s8 rot;
+#elif (GAME == GAME_SA2)
+        s32 rot;
+#endif
+        rot = GET_ROTATED_ACCEL_2(p->rotation);
 
-        p->qSpeedGround += other;
+        p->qSpeedGround += rot;
     }
 }
 
-void sub_8029D14(Player *p)
+void SA2_LABEL(sub_8029D14)(Player *p)
 {
 #ifndef NON_MATCHING
     register s32 grndSpeed asm("r2") = p->qSpeedGround;
@@ -9478,16 +9527,72 @@ void sub_8029D14(Player *p)
     }
 }
 
+#if (GAME == GAME_SA1)
+// Code part of SA2_LABEL(sub_802A660)
+// They merged Player_8047064 and Player_8047088 into one!
+void Player_8047064(Player *p)
+{
+    s32 qSpeed = p->qSpeedGround;
+    if (qSpeed <= Q(0)) {
+        p->moveState |= MOVESTATE_FACING_LEFT;
+    } else if (qSpeed - Q(24. / 256.) < Q(0)) {
+        qSpeed = Q(96. / 256.);
+        p->qSpeedGround = -qSpeed;
+    } else {
+        p->qSpeedGround = qSpeed - Q(24. / 256.);
+    }
+}
+
+// Code part of SA2_LABEL(sub_802A660)
+// They merged Player_8047064 and Player_8047088 into one!
+void Player_8047088(Player *p)
+{
+    s32 qSpeed = p->qSpeedGround;
+    if (qSpeed >= Q(0)) {
+        p->moveState &= ~MOVESTATE_FACING_LEFT;
+    } else if (qSpeed + Q(24. / 256.) > Q(0)) {
+        qSpeed = Q(96. / 256.);
+        p->qSpeedGround = +qSpeed;
+    } else {
+        p->qSpeedGround = qSpeed + Q(24. / 256.);
+    }
+}
+
+void Player_80470AC(Player *p)
+{
+    s32 qSpeed = p->qSpeedGround;
+    u32 rot;
+#ifndef NON_MATCHING
+    const s16 *sinTbl = &gSineTable[0];
+    asm("" ::"r"(sinTbl));
+#endif
+    rot = p->rotation;
+
+    p->qSpeedAirX = Q_MUL(qSpeed, COS_24_8(rot * 4));
+    p->qSpeedAirY = Q_MUL(qSpeed, SIN_24_8(rot * 4));
+}
+#endif
+
 void Player_UpdatePosition(Player *p) { PLAYERFN_UPDATE_POSITION(p); }
 
 void PlayerFn_Cmd_UpdateAirFallSpeed(Player *p) { PLAYERFN_UPDATE_AIR_FALL_SPEED(p); }
 
-bool32 sub_8029DE8(Player *p)
+bool32 SA2_LABEL(sub_8029DE8)(Player *p)
 {
     struct Camera *cam = &gCamera;
     s32 playerY = p->qWorldY;
+
 #ifndef COLLECT_RINGS_ROM
     if (!(p->moveState & MOVESTATE_80000000)) {
+#if (GAME == GAME_SA1)
+        if (!GRAVITY_IS_INVERTED) {
+            if (playerY >= Q(cam->maxY) - 1)
+                return TRUE;
+        } else {
+            if (playerY <= Q(cam->minY))
+                return TRUE;
+        }
+#elif (GAME == GAME_SA2)
         if (GRAVITY_IS_INVERTED) {
             if (playerY <= Q(cam->minY))
                 return TRUE;
@@ -9495,6 +9600,7 @@ bool32 sub_8029DE8(Player *p)
             if (playerY >= Q(cam->maxY) - 1)
                 return TRUE;
         }
+#endif
     }
     return FALSE;
 #else
@@ -9511,8 +9617,18 @@ UNUSED bool32 DeadPlayerLeftScreen_UnusedCopy(Player *p)
 {
     struct Camera *cam = &gCamera;
     s32 playerY = p->qWorldY;
+
 #ifndef COLLECT_RINGS_ROM
     if (!(p->moveState & MOVESTATE_80000000)) {
+#if (GAME == GAME_SA1)
+        if (!GRAVITY_IS_INVERTED) {
+            if (playerY >= Q(cam->y) + Q(DISPLAY_HEIGHT + 80) - 1)
+                return TRUE;
+        } else {
+            if (playerY <= Q(cam->y - 80))
+                return TRUE;
+        }
+#elif (GAME == GAME_SA2)
         if (GRAVITY_IS_INVERTED) {
             if (playerY <= Q(cam->y - 80))
                 return TRUE;
@@ -9520,6 +9636,7 @@ UNUSED bool32 DeadPlayerLeftScreen_UnusedCopy(Player *p)
             if (playerY >= Q(cam->y) + Q(DISPLAY_HEIGHT + 80) - 1)
                 return TRUE;
         }
+#endif
     }
 
     return FALSE;
@@ -9532,6 +9649,7 @@ UNUSED bool32 DeadPlayerLeftScreen_UnusedCopy(Player *p)
 #endif
 }
 
+#if (GAME == GAME_SA2)
 bool32 Player_TryJump(Player *p)
 {
     u8 rot = p->rotation;
@@ -9553,9 +9671,20 @@ bool32 Player_TryJump(Player *p)
 
     return FALSE;
 }
+#endif
 
-void sub_8029ED8(Player *p) { PLAYERFN_UPDATE_UNK2A(p); }
+void SA2_LABEL(sub_8029ED8)(Player *p)
+{
+#if (GAME == GAME_SA1)
+    // TODO: Is this part of the macro in SA1?
+    if (!(p->moveState & MOVESTATE_ICE_SLIDE))
+#endif
+    {
+        PLAYERFN_UPDATE_UNK2A(p);
+    }
+}
 
+#if (GAME == GAME_SA2)
 void sub_8029F20(Player *p) { PLAYERFN_UPDATE_ROTATION(p); }
 
 #ifndef COLLECT_RINGS_ROM
@@ -9611,22 +9740,114 @@ void Player_DisableInputAndBossTimer_FinalBoss(void)
     }
 }
 #endif
+#endif
+
+#if (GAME == GAME_SA1)
+void Player_8047224(Player *p)
+{
+    s32 rot = (s8)p->rotation;
+
+    if (p->charState == CHARSTATE_BOUNCE) {
+        if (p->moveState & MOVESTATE_FACING_LEFT) {
+            p->rotation -= Q(4. / 256.);
+        } else {
+            p->rotation += Q(4. / 256.);
+        }
+    } else {
+        if (rot < 0) {
+            if (rot + 2 > 0) {
+                rot = 0;
+            } else {
+                rot += 2;
+            }
+        } else if (rot > 0) {
+            if (rot - 2 < 0) {
+                rot = 0;
+            } else {
+                rot -= 2;
+            }
+        }
+
+        p->rotation = rot;
+    }
+}
+
+void Player_804726C(Player *p)
+{
+    if (p->playerID == PLAYER_1) {
+        p->SA2_LABEL(unk25) = 120;
+    }
+}
+
+void Player_8047280(Player *p)
+{
+    if (p->playerID == PLAYER_1) {
+        if (gCamera.SA2_LABEL(unk4C) > 0) {
+            gCamera.SA2_LABEL(unk4C) -= 2;
+        } else if (gCamera.SA2_LABEL(unk4C) < 0) {
+            gCamera.SA2_LABEL(unk4C) += 2;
+        }
+    }
+}
+
+void sub_80472AC(Player *p) { p->SA2_LABEL(unk72) = TIME(0, 6); }
+
+void sub_80472B8(Player *p)
+{
+    if (!sub_8044434(p)) {
+        sub_80449D8(p);
+        SA2_LABEL(sub_80232D0)(p);
+
+        PLAYERFN_UPDATE_POSITION(p);
+
+        SA2_LABEL(sub_8022D6C)(p);
+    }
+}
+
+void Player_InitializeDrowning(Player *p)
+{
+    p->framesUntilDrownCountDecrement = 60;
+    p->secondsUntilDrown = 30;
+
+#if (GAME == GAME_SA1)
+    if (p->playerID == PLAYER_1) {
+        m4aSongNumStop(MUS_DROWNING);
+    }
+#endif
+}
+#endif
 
 void TaskDestructor_Player(struct Task *t)
 {
-    gPlayer.spriteTask = NULL;
+    player_0_Task *gt = TASK_DATA(t);
+    Player *p;
+#if (GAME == GAME_SA1)
+    if (gt->pid != PLAYER_1) {
+        p = &gPartner;
+    } else
+#endif
+    {
+        p = &gPlayer;
+    }
 
-    if (gPlayer.playerID) {
-        VramFree(gPlayer.spriteInfoBody->s.graphics.dest);
+    p->spriteTask = NULL;
+
+    if (p->playerID != PLAYER_1) {
+        VramFree(p->spriteInfoBody->s.graphics.dest);
     }
 
 #ifndef COLLECT_RINGS_ROM
-    if (gPlayer.character == CHARACTER_CREAM || gPlayer.character == CHARACTER_TAILS) {
-        VramFree(gPlayer.spriteInfoLimbs->s.graphics.dest);
+    if (
+#if (GAME == GAME_SA2)
+        p->character == CHARACTER_CREAM ||
+#endif
+        p->character == CHARACTER_TAILS) {
+        VramFree(p->spriteInfoLimbs->s.graphics.dest);
     }
 #endif
 }
 
+#if (GAME == GAME_SA2)
 #if COLLECT_RINGS_ROM
 void SetStageSpawnPos(u32 character, u32 level, u32 playerID, Player *p)
 {
@@ -9999,4 +10220,5 @@ void Player_InitAttack(Player *p)
         } break;
     }
 }
+#endif
 #endif

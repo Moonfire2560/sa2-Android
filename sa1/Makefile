@@ -266,6 +266,7 @@ SA2_C_FILES := \
 	src/game/shared/stage/mp_event_mgr.c \
 	src/game/shared/stage/mp_player.c \
 	src/game/shared/stage/rings_scatter.c \
+	src/game/shared/stage/player.c \
 	src/game/sa1/ui/game_2_0.c \
 	src/game/sa1/ui/game_2_1.c \
 	src/game/sa1/ui/stage_results.c \
