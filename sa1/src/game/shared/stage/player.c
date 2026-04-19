@@ -4372,7 +4372,7 @@ void Player_HandleWater(Player *p)
         if (--p->framesUntilDrownCountDecrement < 1) {
             switch (p->secondsUntilDrown--) {
                 case 11:
-                    if (p->playerID == 0) {
+                    if (p->playerID == PLAYER_1) {
                         gMusicManagerState.unk4 = 16;
                     }
                     break;
@@ -4667,7 +4667,6 @@ void Player_8044F7C(Player *p)
 }
 #endif
 
-// ALIGNED UP TO HERE
 void Player_HandleSpriteYOffsetChange(Player *p, s32 spriteOffsetY)
 {
     u8 rot;
@@ -4676,11 +4675,13 @@ void Player_HandleSpriteYOffsetChange(Player *p, s32 spriteOffsetY)
     }
 
     rot = p->rotation;
+#ifndef COLLECT_RINGS_ROM
     if (GRAVITY_IS_INVERTED) {
         rot += Q(1. / 4.);
         rot = -rot;
         rot -= Q(1. / 4.);
     }
+#endif
 
     if ((s32)(rot + Q(1. / 8.)) > 0) {
         if (rot != 0) {
@@ -4716,6 +4717,7 @@ void Player_HandleSpriteYOffsetChange(Player *p, s32 spriteOffsetY)
     }
 }
 
+#ifndef COLLECT_RINGS_ROM
 void Player_Debug_TestRingScatter(Player *p)
 {
     if (p->moveState & MOVESTATE_80000000) {
@@ -4762,12 +4764,14 @@ void Player_Debug_TestRingScatter(Player *p)
         }
     }
 }
+#endif
 
 void Task_PlayerHandleDeath(void)
 {
     player_0_Task *gt = TASK_DATA(gCurTask);
     u32 val = gt->unk4;
     if (val == 0) {
+#ifndef COLLECT_RINGS_ROM
         if (IS_SINGLE_PLAYER) {
             TaskDestroy(gCurTask);
 
@@ -4785,7 +4789,9 @@ void Task_PlayerHandleDeath(void)
 #endif
                 HandleLifeLost();
             }
-        } else {
+        } else
+#endif
+        {
 #if (GAME == GAME_SA1)
             if (gGameMode != GAME_MODE_CHAO_HUNT && gGameMode != GAME_MODE_TEAM_PLAY)
 #endif
@@ -4794,9 +4800,11 @@ void Task_PlayerHandleDeath(void)
             }
 
 #if (GAME == GAME_SA2)
+#ifndef COLLECT_RINGS_ROM
             if (gGameMode == GAME_MODE_MULTI_PLAYER) {
                 gRingCount = 1;
             }
+#endif
 #endif
 
 #if (GAME == GAME_SA2)
@@ -4817,14 +4825,18 @@ void Task_PlayerHandleDeath(void)
             gCamera.SA2_LABEL(unk50) &= ~0x3;
 
 #if (GAME == GAME_SA2)
+#ifndef COLLECT_RINGS_ROM
             if (gPlayer.character == CHARACTER_CREAM && gCheese != NULL) {
                 gCheese->posX = gPlayer.qWorldX;
                 gCheese->posY = gPlayer.qWorldY;
             }
 #endif
+#endif
 
             gCurTask->main = Task_PlayerMain;
-            // gPlayer.callback = Player_TouchGround;
+#if (GAME == GAME_SA2)
+            gPlayer.callback = Player_TouchGround;
+#endif
         }
     } else {
         val--;
@@ -4848,11 +4860,14 @@ static inline bool32 DeadPlayerLeftScreen(Player *p, struct Camera *cam, s32 pla
         }
     }
 #elif (GAME == GAME_SA2)
+#ifndef COLLECT_RINGS_ROM
     if (GRAVITY_IS_INVERTED) {
         if (playerY <= Q(cam->y - 80)) {
             return TRUE;
         }
-    } else {
+    } else
+#endif
+    {
         if (playerY >= Q(cam->y) + Q(DISPLAY_HEIGHT + 80) - 1) {
             return TRUE;
         }
@@ -4890,7 +4905,9 @@ void Task_PlayerDied(void)
 #endif
     SA2_LABEL(sub_802486C)(p, psi1);
     SA2_LABEL(sub_8024B10)(p, psi1);
+#ifndef COLLECT_RINGS_ROM
     SA2_LABEL(sub_8024F74)(p, psi2);
+#endif
 }
 
 void Task_PlayerMain(void)
@@ -4899,15 +4916,17 @@ void Task_PlayerMain(void)
 
 #if (GAME == GAME_SA2)
     Player_HandleBoostThreshold(p);
-    sub_80298DC(p);
+    Player_HandleBoostState(p);
     Player_ApplyBoostPhysics(p);
     Player_HandleWalkAnim(p);
 
     gWorldSpeedX = 0;
     gWorldSpeedY = 0;
-    sub_802460C(p);
-    sub_800DF8C(p);
-    sub_8023878(p);
+    Player_HandleInputs(p);
+#ifndef COLLECT_RINGS_ROM
+    InputBuffer_HandleFrameInput(p);
+    Player_HandleWater(p);
+#endif
     CallPlayerTransition(p);
 
     if (!(p->moveState & MOVESTATE_IA_OVERRIDE)) {
@@ -4916,29 +4935,34 @@ void Task_PlayerMain(void)
         SA2_LABEL(sub_80232D0)(p);
     }
 
-    sub_802486C(p, p->spriteInfoBody);
-    sub_8024B10(p, p->spriteInfoBody);
-    sub_8024F74(p, p->spriteInfoLimbs);
+    SA2_LABEL(sub_802486C)(p, p->spriteInfoBody);
+    SA2_LABEL(sub_8024B10)(p, p->spriteInfoBody);
+#ifndef COLLECT_RINGS_ROM
+    SA2_LABEL(sub_8024F74)(p, p->spriteInfoLimbs);
+#endif
 
     if (p->charState != CHARSTATE_HIT_AIR && p->timerInvulnerability > 0) {
         p->timerInvulnerability--;
     }
-
+#ifndef COLLECT_RINGS_ROM
     if (p->disableTrickTimer != 0) {
         p->disableTrickTimer--;
     }
+#endif
 
+#ifndef COLLECT_RINGS_ROM
     sub_8023748(p);
 
     // from boost_effect.c
-    sub_8015790();
-    sub_80156D0();
+    BoostEffect_StorePlayerPos();
+    BoostEffect_StorePlayerState();
 
     p->moveState &= ~MOVESTATE_ICE_SLIDE;
     gHomingTarget.squarePlayerDistance = SQUARE(128);
     gHomingTarget.angle = 0;
     gCheeseTarget.squarePlayerDistance = SQUARE(CHEESE_DISTANCE_MAX);
     gCheeseTarget.task = NULL;
+#endif
 #endif
 
     if (p->moveState & MOVESTATE_DEAD) {
@@ -4961,16 +4985,17 @@ void Task_PlayerMain(void)
         p->moveState &= ~MOVESTATE_STOOD_ON_OBJ;
         p->stoodObj = NULL;
         cam->SA2_LABEL(unk50) |= 3;
-
+#ifndef COLLECT_RINGS_ROM
         if (IS_SINGLE_PLAYER) {
             gStageFlags |= STAGE_FLAG__ACT_START;
         }
+#endif
 
         p->spriteInfoBody->s.frameFlags &= ~SPRITE_FLAG_MASK_PRIORITY;
         p->spriteInfoBody->s.frameFlags |= SPRITE_FLAG(PRIORITY, 1);
         p->SA2_LABEL(unk80) = 0x100;
         p->SA2_LABEL(unk82) = 0x100;
-
+#ifndef COLLECT_RINGS_ROM
 #if (GAME == GAME_SA1)
         m4aSongNumStop(28);
         m4aSongNumStop(27);
@@ -4996,12 +5021,14 @@ void Task_PlayerMain(void)
 #endif
 
         if (p->secondsUntilDrown < 0) {
-            m4aSongNumStart(192);
+            m4aSongNumStart(SE_DROWNED);
         } else {
             m4aSongNumStart(SE_LIFE_LOST);
         }
-    } else {
+#endif
+    }
 #if (GAME == GAME_SA1)
+    else {
         Player_HandleInputs(p);
         Player_HandleWater(p);
 
@@ -5024,8 +5051,8 @@ void Task_PlayerMain(void)
                 } break;
             }
         }
-#endif
     }
+#endif
     // 124
 #if (GAME == GAME_SA1)
     SA2_LABEL(sub_802486C)(p, p->spriteInfoBody);
@@ -5377,6 +5404,186 @@ void Task_8045B38(void)
 }
 #endif
 
+#if (GAME == GAME_SA2)
+void CallPlayerTransition(Player *p)
+{
+    if (p->transition) {
+        switch (p->transition - 1) {
+            case PLTRANS_TOUCH_GROUND - 1: {
+                PLAYERFN_SET(Player_TouchGround);
+            } break;
+            case PLTRANS_CORKSCREW_END - 1: {
+                PLAYERFN_SET(Player_SpinAttack);
+            } break;
+            case PLTRANS_INIT_JUMP - 1: {
+                p->moveState &= ~(MOVESTATE_IA_OVERRIDE | MOVESTATE_IGNORE_INPUT);
+                PLAYERFN_SET(Player_InitJump);
+            } break;
+#ifndef COLLECT_RINGS_ROM
+            case PLTRANS_PT4 - 1: {
+                p->moveState &= ~(MOVESTATE_IA_OVERRIDE | MOVESTATE_IGNORE_INPUT);
+                PLAYERFN_SET(Player_8025F84);
+            } break;
+#endif
+
+            case PLTRANS_PT7
+                - 1:
+#ifndef COLLECT_RINGS_ROM
+            {
+                PLAYERFN_SET(Player_8028D74);
+            } break;
+#endif
+            case PLTRANS_PT6
+                - 1:
+#ifndef COLLECT_RINGS_ROM
+            {
+                p->moveState |= MOVESTATE_100;
+                PLAYERFN_SET(Player_8026060);
+            } break;
+#endif
+            case PLTRANS_UNCURL - 1: {
+                p->moveState |= MOVESTATE_100;
+                PLAYERFN_SET(Player_InitUncurl);
+            } break;
+#ifndef COLLECT_RINGS_ROM
+            case PLTRANS_HOMING_ATTACK_RECOIL - 1: {
+                PLAYERFN_SET(Player_InitHomingAttackRecoil);
+            } break;
+#endif
+            case PLTRANS_HURT - 1: {
+                PLAYERFN_SET(Player_InitHurt);
+            } break;
+#ifndef COLLECT_RINGS_ROM
+            case PLTRANS_REACHED_GOAL - 1: {
+                if (gGameMode == GAME_MODE_TIME_ATTACK) {
+                    gStageFlags |= STAGE_FLAG__TURN_OFF_TIMER;
+                }
+
+                if (p->moveState
+                    & (MOVESTATE_SOME_ATTACK | MOVESTATE_10000000 | MOVESTATE_2000 | MOVESTATE_STOOD_ON_OBJ | MOVESTATE_IN_AIR)) {
+                    p->moveState |= (MOVESTATE_GOAL_REACHED | MOVESTATE_IGNORE_INPUT);
+                    p->heldInput = 0;
+                    p->frameInput = 0;
+                } else {
+                    p->moveState |= MOVESTATE_GOAL_REACHED;
+                    PLAYERFN_SET(Player_InitReachedGoal);
+                }
+            } break;
+#endif
+            case PLTRANS_SPRING_UP - 1: {
+#ifndef COLLECT_RINGS_ROM
+                // NOTE: Set to 0 or 3 in floating_spring.c
+                if (GRAVITY_IS_INVERTED) {
+                    p->unk6E |= 0x10;
+                }
+#endif
+                PLAYERFN_SET(Player_TouchNormalSpring);
+            } break;
+            case PLTRANS_SPRING_DOWN - 1: {
+#ifndef COLLECT_RINGS_ROM
+                if (!GRAVITY_IS_INVERTED)
+#endif
+                {
+                    p->unk6E |= 0x10;
+                }
+
+                PLAYERFN_SET(Player_TouchNormalSpring);
+            } break;
+            case PLTRANS_SPRING_LEFT - 1: {
+                p->unk6E |= 0x20;
+                PLAYERFN_SET(Player_TouchNormalSpring);
+            } break;
+            case PLTRANS_SPRING_RIGHT - 1: {
+                p->unk6E |= 0x30;
+                PLAYERFN_SET(Player_TouchNormalSpring);
+            } break;
+            case PLTRANS_SPRING_UP_LEFT - 1: {
+#ifndef COLLECT_RINGS_ROM
+                if (GRAVITY_IS_INVERTED) {
+                    p->unk6E |= 0x60;
+                } else
+#endif
+                {
+                    p->unk6E |= 0x40;
+                }
+                PLAYERFN_SET(Player_TouchNormalSpring);
+            } break;
+            case PLTRANS_SPRING_UP_RIGHT - 1: {
+#ifndef COLLECT_RINGS_ROM
+                if (GRAVITY_IS_INVERTED) {
+                    p->unk6E |= 0x70;
+                } else
+#endif
+                {
+                    p->unk6E |= 0x50;
+                }
+                PLAYERFN_SET(Player_TouchNormalSpring);
+            } break;
+            case PLTRANS_SPRING_DOWN_LEFT - 1: {
+#ifndef COLLECT_RINGS_ROM
+                if (GRAVITY_IS_INVERTED) {
+                    p->unk6E |= 0x40;
+                } else
+#endif
+                {
+                    p->unk6E |= 0x60;
+                }
+                PLAYERFN_SET(Player_TouchNormalSpring);
+            } break;
+            case PLTRANS_SPRING_DOWN_RIGHT - 1: {
+#ifndef COLLECT_RINGS_ROM
+                if (GRAVITY_IS_INVERTED) {
+                    p->unk6E |= 0x50;
+                } else
+#endif
+                {
+                    p->unk6E |= 0x70;
+                }
+                PLAYERFN_SET(Player_TouchNormalSpring);
+            } break;
+            case PLTRANS_RAMP_AND_DASHRING - 1: {
+                PLAYERFN_SET(Player_InitRampOrDashRing);
+            } break;
+#ifndef COLLECT_RINGS_ROM
+            case PLTRANS_DASHRING - 1: {
+                PLAYERFN_SET(Player_InitDashRing);
+            } break;
+#endif
+            case PLTRANS_GRINDING - 1: {
+                PLAYERFN_SET(Player_InitGrinding);
+            } break;
+            case PLTRANS_GRIND_RAIL_END_GROUND - 1: {
+                PLAYERFN_SET(Player_InitGrindRailEndGround);
+            } break;
+            case PLTRANS_GRIND_RAIL_END_AIR - 1: {
+                PLAYERFN_SET(Player_GrindRailEndAir);
+            } break;
+            case PLTRANS_PT23 - 1: {
+                PLAYERFN_SET(Player_802A258);
+            } break;
+#ifndef COLLECT_RINGS_ROM
+            case PLTRANS_PIPE_ENTRY - 1: {
+                PLAYERFN_SET(Player_InitPipeEntry);
+            } break;
+            case PLTRANS_PIPE_EXIT - 1: {
+                PLAYERFN_SET(Player_InitPipeExit);
+            } break;
+            case PLTRANS_PROPELLER_SPRING - 1: {
+                PLAYERFN_SET(Player_InitPropellorSpring);
+            } break;
+            case PLTRANS_CORKSCREW - 1: {
+                PLAYERFN_SET(Player_InitCorkscrew);
+            } break;
+#endif
+        }
+    }
+
+    p->prevTransition = p->transition;
+    p->transition = 0;
+}
+#endif
+
+// ALIGNED UP TO HERE
 // Confusion state related
 void Player_HandleInputs(Player *p)
 {

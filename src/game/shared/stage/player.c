@@ -4667,7 +4667,6 @@ void Player_8044F7C(Player *p)
 }
 #endif
 
-// ALIGNED UP TO HERE
 void Player_HandleSpriteYOffsetChange(Player *p, s32 spriteOffsetY)
 {
     u8 rot;
@@ -4719,7 +4718,6 @@ void Player_HandleSpriteYOffsetChange(Player *p, s32 spriteOffsetY)
 }
 
 #ifndef COLLECT_RINGS_ROM
-// 0x08023C10
 void Player_Debug_TestRingScatter(Player *p)
 {
     if (p->moveState & MOVESTATE_80000000) {
@@ -4779,25 +4777,39 @@ void Task_PlayerHandleDeath(void)
 
             if ((!LOADED_SAVE->timeLimitDisabled
                  && (gCourseTime > MAX_COURSE_TIME || (gStageFlags & STAGE_FLAG__TIMER_REVERSED && gCourseTime == 0)))
-                || ((gGameMode == GAME_MODE_TIME_ATTACK || gGameMode == GAME_MODE_BOSS_TIME_ATTACK) && gCourseTime > MAX_COURSE_TIME)) {
+#if (GAME == GAME_SA2)
+                || ((gGameMode == GAME_MODE_TIME_ATTACK || gGameMode == GAME_MODE_BOSS_TIME_ATTACK) && gCourseTime > MAX_COURSE_TIME)
+#endif
+            ) {
                 HandleDeath();
             } else {
                 gRingCount = 0;
+#if (GAME == GAME_SA2)
                 gSpecialRingCount = 0;
+#endif
                 HandleLifeLost();
             }
         } else
 #endif
         {
+#if (GAME == GAME_SA1)
+            if (gGameMode != GAME_MODE_CHAO_HUNT && gGameMode != GAME_MODE_TEAM_PLAY)
+#endif
+            {
+                gRingCount = 0;
+            }
 
-            gRingCount = 0;
+#if (GAME == GAME_SA2)
 #ifndef COLLECT_RINGS_ROM
             if (gGameMode == GAME_MODE_MULTI_PLAYER) {
                 gRingCount = 1;
             }
 #endif
+#endif
 
+#if (GAME == GAME_SA2)
             gSpecialRingCount = 0;
+#endif
             InitializePlayer(&gPlayer);
             gCamera.x = I(gPlayer.qWorldX) + gCamera.shiftX - DISPLAY_CENTER_X;
             gCamera.y = I(gPlayer.qWorldY) + gCamera.shiftY - DISPLAY_CENTER_Y;
@@ -4811,15 +4823,20 @@ void Task_PlayerHandleDeath(void)
             gPlayer.spriteInfoLimbs->s.frameFlags |= SPRITE_FLAG(PRIORITY, 2);
 
             gCamera.SA2_LABEL(unk50) &= ~0x3;
+
+#if (GAME == GAME_SA2)
 #ifndef COLLECT_RINGS_ROM
             if (gPlayer.character == CHARACTER_CREAM && gCheese != NULL) {
                 gCheese->posX = gPlayer.qWorldX;
                 gCheese->posY = gPlayer.qWorldY;
             }
 #endif
+#endif
 
             gCurTask->main = Task_PlayerMain;
+#if (GAME == GAME_SA2)
             gPlayer.callback = Player_TouchGround;
+#endif
         }
     } else {
         val--;
@@ -4832,7 +4849,17 @@ static inline bool32 DeadPlayerLeftScreen(Player *p, struct Camera *cam, s32 pla
     if (p->moveState & MOVESTATE_80000000) {
         return FALSE;
     }
-
+#if (GAME == GAME_SA1)
+    if (!GRAVITY_IS_INVERTED) {
+        if (playerY >= Q(cam->y) + Q(DISPLAY_HEIGHT + 80) - 1) {
+            return TRUE;
+        }
+    } else {
+        if (playerY <= Q(cam->y - 80)) {
+            return TRUE;
+        }
+    }
+#elif (GAME == GAME_SA2)
 #ifndef COLLECT_RINGS_ROM
     if (GRAVITY_IS_INVERTED) {
         if (playerY <= Q(cam->y - 80)) {
@@ -4845,6 +4872,7 @@ static inline bool32 DeadPlayerLeftScreen(Player *p, struct Camera *cam, s32 pla
             return TRUE;
         }
     }
+#endif
     return FALSE;
 }
 
@@ -4858,16 +4886,23 @@ void Task_PlayerDied(void)
     if (DeadPlayerLeftScreen(&gPlayer, &gCamera, gPlayer.qWorldY)) {
         player_0_Task *gt = TASK_DATA(gCurTask);
         gt->unk4 = TIME(0, 1);
+#if (GAME == GAME_SA2)
         gPlayer.moveState |= MOVESTATE_100000;
         if (IS_MULTI_PLAYER) {
-            SA2_LABEL(sub_8024B10)(p, psi1);
+            sub_8024B10(p, psi1);
         }
+#endif
         gCurTask->main = Task_PlayerHandleDeath;
         return;
     }
 
+#if (GAME == GAME_SA1)
+    PLAYERFN_UPDATE_POSITION(p);
+    PLAYERFN_UPDATE_AIR_FALL_SPEED(p);
+#elif (GAME == GAME_SA2)
     PLAYERFN_UPDATE_AIR_FALL_SPEED(p);
     PLAYERFN_UPDATE_POSITION(p);
+#endif
     SA2_LABEL(sub_802486C)(p, psi1);
     SA2_LABEL(sub_8024B10)(p, psi1);
 #ifndef COLLECT_RINGS_ROM
@@ -4878,6 +4913,8 @@ void Task_PlayerDied(void)
 void Task_PlayerMain(void)
 {
     Player *p = &gPlayer;
+
+#if (GAME == GAME_SA2)
     Player_HandleBoostThreshold(p);
     Player_HandleBoostState(p);
     Player_ApplyBoostPhysics(p);
@@ -4926,6 +4963,7 @@ void Task_PlayerMain(void)
     gCheeseTarget.squarePlayerDistance = SQUARE(CHEESE_DISTANCE_MAX);
     gCheeseTarget.task = NULL;
 #endif
+#endif
 
     if (p->moveState & MOVESTATE_DEAD) {
         struct Camera *cam = &gCamera;
@@ -4933,11 +4971,13 @@ void Task_PlayerMain(void)
         p->charState = CHARSTATE_DEAD;
         p->qSpeedAirX = 0;
 
+#if (GAME == GAME_SA2)
         if (p->qSpeedAirY < -Q(4)) {
             p->qSpeedAirY = -Q(2);
         } else if (p->qSpeedAirY > 0) {
             p->qSpeedAirY = 0;
         }
+#endif
 
         p->timerInvulnerability = 2;
         p->itemEffect = 0;
@@ -4956,6 +4996,11 @@ void Task_PlayerMain(void)
         p->SA2_LABEL(unk80) = 0x100;
         p->SA2_LABEL(unk82) = 0x100;
 #ifndef COLLECT_RINGS_ROM
+#if (GAME == GAME_SA1)
+        m4aSongNumStop(28);
+        m4aSongNumStop(27);
+        m4aSongNumStop(SE_TAILS_PROPELLER_FLYING);
+#elif (GAME == GAME_SA2)
         // TODO: macro IS_SONG_PLAYING(...)
         if (gMPlayTable[0].info->songHeader == gSongTable[MUS_DROWNING].header) {
             m4aSongNumStartOrContinue(gLevelSongs[gCurrentLevel]);
@@ -4973,16 +5018,393 @@ void Task_PlayerMain(void)
         if (p->character == CHARACTER_CREAM) {
             m4aSongNumStop(SE_CREAM_FLYING);
         }
+#endif
 
         if (p->secondsUntilDrown < 0) {
-            m4aSongNumStart(SE_157);
+            m4aSongNumStart(SE_DROWNED);
         } else {
             m4aSongNumStart(SE_LIFE_LOST);
         }
 #endif
     }
+#if (GAME == GAME_SA1)
+    else {
+        Player_HandleInputs(p);
+        Player_HandleWater(p);
+
+        if (!(p->moveState & 0x400000)) {
+            switch (p->character) {
+                case CHARACTER_SONIC: {
+                    Player_Sonic_80473AC(p);
+                } break;
+
+                case CHARACTER_TAILS: {
+                    Player_Tails_8047BA0(p);
+                } break;
+
+                case CHARACTER_KNUCKLES: {
+                    Player_Knuckles_8049000(p);
+                } break;
+
+                case CHARACTER_AMY: {
+                    Player_Amy_80497AC(p);
+                } break;
+            }
+        }
+    }
+#endif
+    // 124
+#if (GAME == GAME_SA1)
+    SA2_LABEL(sub_802486C)(p, p->spriteInfoBody);
+    SA2_LABEL(sub_8024B10)(p, p->spriteInfoBody);
+    SA2_LABEL(sub_8024F74)(p, p->spriteInfoLimbs);
+
+    if ((p->charState != CHARSTATE_HIT_AIR) && (p->timerInvulnerability > 0)) {
+        p->timerInvulnerability--;
+    }
+
+    if (p->itemEffect != 0) {
+        if ((p->itemEffect & PLAYER_ITEM_EFFECT__SPEED_UP) && (--p->timerSpeedup == 0)) {
+            m4aMPlayTempoControl(&gMPlayInfo_BGM, Q(1.0));
+            p->itemEffect &= ~PLAYER_ITEM_EFFECT__SPEED_UP;
+        }
+
+        if ((p->itemEffect & PLAYER_ITEM_EFFECT__MP_SLOW_DOWN) && (--p->timerSpeedup == 0)) {
+            m4aMPlayTempoControl(&gMPlayInfo_BGM, Q(1.0));
+            p->itemEffect &= ~PLAYER_ITEM_EFFECT__MP_SLOW_DOWN;
+        }
+
+        if ((p->itemEffect & PLAYER_ITEM_EFFECT__INVINCIBILITY) && (--p->timerInvincibility == 0)) {
+            p->itemEffect &= ~PLAYER_ITEM_EFFECT__INVINCIBILITY;
+            m4aSongNumStop(28);
+        }
+
+        if ((p->itemEffect & PLAYER_ITEM_EFFECT__20) && (--p->itemEffect20Timer == 0)) {
+            p->itemEffect &= ~PLAYER_ITEM_EFFECT__20;
+
+            gDispCnt &= ~0x8000;
+            gWinRegs[5] = 0x3F;
+        }
+    }
+#endif
 }
 
+#if (GAME == GAME_SA1)
+// Partner handlers
+// TODO(Jace): Could this be exclusively for the CPU Tails?
+//             I didn't find a way to trigger this procedure yet.
+// (93.14%) https://decomp.me/scratch/CpseV
+NONMATCH("asm/non_matching/game/sa1/stage/Player__Player_Tails_804571C.inc", void Player_Tails_804571C(Player *p))
+{
+    u16 gravityFlag = (gStageFlags & STAGE_FLAG__GRAVITY_INVERTED);
+
+    p->layer = gPlayer.layer;
+
+    if (gPlayer.moveState & MOVESTATE_1000000) {
+        gPlayer.layer ^= 0x1;
+    }
+
+    if (p->moveState & MOVESTATE_IN_WATER) {
+        p->charState = CHARSTATE_SWIMMING;
+    } else {
+        p->charState = CHARSTATE_FLYING;
+    }
+
+    if (I(p->qWorldX) < gCamera.x - CAM_REGION_WIDTH) {
+        p->qWorldX = Q(gCamera.x - CAM_REGION_WIDTH);
+    }
+
+    if (I(p->qWorldX) > gCamera.x + DISPLAY_WIDTH + CAM_REGION_WIDTH) {
+        p->qWorldX = Q(gCamera.x + DISPLAY_WIDTH + CAM_REGION_WIDTH);
+    }
+
+    if (I(p->qWorldY) < gCamera.y - CAM_REGION_WIDTH) {
+        p->qWorldY = Q(gCamera.y - CAM_REGION_WIDTH);
+    }
+
+    if (I(p->qWorldY) > gCamera.y + DISPLAY_HEIGHT + CAM_REGION_WIDTH) {
+        p->qWorldY = Q(gCamera.y + DISPLAY_HEIGHT + CAM_REGION_WIDTH);
+    }
+    // _080457CE
+
+    if (((I(p->qWorldX) - 32) < I(gPlayer.qWorldX)) && ((I(p->qWorldX) + 32) > I(gPlayer.qWorldX))
+        && ((!gravityFlag && ((I(p->qWorldY) - 32) < I(gPlayer.qWorldY) - 48) && ((I(p->qWorldY) + 32) > I(gPlayer.qWorldY) - 48))
+            || (gravityFlag && ((I(p->qWorldY) - 32) < I(gPlayer.qWorldY) + 48) && ((I(p->qWorldY) + 32) > I(gPlayer.qWorldY) + 48)))
+        && (SA2_LABEL(sub_8022F58)(0, p) >= 0)) {
+        // _08045834 + 0xA
+        p->moveState &= ~MOVESTATE_20;
+        p->moveState &= ~MOVESTATE_100;
+        p->moveState &= ~MOVESTATE_SPINDASH;
+        p->SA2_LABEL(unk61) = 0;
+        p->SA2_LABEL(unk62) = 0;
+        p->SA2_LABEL(unk63) = 0;
+        p->moveState &= ~MOVESTATE_8000;
+
+        if (p->character == CHARACTER_TAILS) {
+            m4aSongNumStop(SE_TAILS_PROPELLER_FLYING);
+        }
+
+        if (p->character == CHARACTER_AMY) {
+            p->moveState &= ~(MOVESTATE_2000000 | MOVESTATE_4000000);
+        }
+
+        p->qSpeedGround = Q(0);
+        p->qSpeedAirX = Q(0);
+        p->qSpeedAirY = Q(0);
+
+        p->charState = CHARSTATE_56;
+        p->moveState &= ~MOVESTATE_SPIN_ATTACK;
+        p->moveState &= ~MOVESTATE_FLIP_WITH_MOVE_DIR;
+        p->moveState &= ~MOVESTATE_200;
+        p->moveState &= ~MOVESTATE_100000;
+        p->moveState &= ~MOVESTATE_800000;
+        p->moveState &= ~MOVESTATE_DEAD;
+        p->moveState &= ~MOVESTATE_IGNORE_INPUT;
+        p->moveState &= ~MOVESTATE_IA_OVERRIDE;
+        p->moveState &= ~MOVESTATE_STOOD_ON_OBJ;
+        p->stoodObj = NULL;
+
+        gCurTask->main = Task_8045B38;
+    } else {
+        s32 r2;
+        s32 qWorld;
+        s32 qDelta;
+        s32 world;
+        // _080458F8
+        if ((I(p->qWorldX) + 1) < I(gPlayer.qWorldX)) {
+            p->qWorldX += Q(2);
+            p->moveState &= ~MOVESTATE_FACING_LEFT;
+        } else if (I(gPlayer.qWorldX) < (I(p->qWorldX) - 1)) {
+            p->qWorldX -= Q(2);
+            p->moveState |= MOVESTATE_FACING_LEFT;
+        }
+        // _08045934
+
+        world = I(p->qWorldY);
+        qDelta = p->qWorldY;
+
+        if (!gravityFlag) {
+            r2 = I(gPlayer.qWorldY) - 48;
+        } else {
+            r2 = I(gPlayer.qWorldY) + 48;
+        }
+
+        if (world < r2) {
+            qDelta = +Q(1);
+        } else if (r2 < world) {
+            qDelta = -Q(1);
+        } else {
+            return;
+        }
+
+        p->qWorldY += qDelta;
+    }
+}
+END_NONMATCH
+
+// (90.78%) https://decomp.me/scratch/SwkK7
+NONMATCH("asm/non_matching/game/sa1/stage/Player__Task_804597C.inc", void Task_804597C(void))
+{
+    PlayerSpriteInfo *psiPartnerBody = gPartner.spriteInfoBody;
+    PlayerSpriteInfo *psiPartnerLimbs = gPartner.spriteInfoLimbs;
+    s32 qPartnerWorldY = gPartner.qWorldY;
+    u32 qPartnerMovestate = gPartner.moveState;
+    Camera *cam = &gCamera;
+    s32 qWorld;
+
+    if (!(qPartnerMovestate & MOVESTATE_80000000)) {
+        s32 r1;
+
+        if (!GRAVITY_IS_INVERTED) {
+            if (qPartnerWorldY >= Q(cam->y) + Q(DISPLAY_WIDTH) - 1) {
+                r1 = 1;
+            } else {
+                r1 = 0;
+            }
+        } else {
+            if (qPartnerWorldY > Q(cam->y - DISPLAY_CENTER_Y)) {
+                r1 = 0;
+            } else {
+                r1 = 1;
+            }
+        }
+
+        if (r1) {
+            // _080459D8
+
+            gPartner.qWorldX = Q(cam->x - 256);
+            gPartner.qWorldY = Q(cam->y - 256);
+            gPartner.spriteInfoBody->s.frameFlags &= ~SPRITE_FLAG_MASK_PRIORITY;
+            gPartner.spriteInfoBody->s.frameFlags |= SPRITE_FLAG(PRIORITY, 2);
+            gPartner.moveState &= ~MOVESTATE_20;
+            gPartner.moveState &= ~MOVESTATE_DEAD;
+
+            if (gPartner.moveState & MOVESTATE_IN_WATER) {
+                gPartner.charState = CHARSTATE_SWIMMING;
+            } else {
+                gPartner.charState = CHARSTATE_FLYING;
+            }
+
+            // Inline of Player_InitializeDrowning?
+            gPartner.framesUntilDrownCountDecrement = TIME(0, 1);
+            gPartner.secondsUntilDrown = 30;
+
+            if (gPartner.playerID == 0) {
+                m4aSongNumStop(MUS_DROWNING);
+            }
+            // _08045A4E
+
+            gCurTask->main = Task_8045AD8;
+            return;
+        }
+    }
+    // _08045A60
+
+    gPartner.qWorldX += gPartner.qSpeedAirX;
+
+    if ((gStageFlags ^ gPrevStageFlags) & STAGE_FLAG__GRAVITY_INVERTED) {
+        gPartner.qSpeedAirY = -gPartner.qSpeedAirY;
+    }
+    // _08045A80
+
+    if (gStageFlags & STAGE_FLAG__GRAVITY_INVERTED) {
+        qWorld = gPartner.qWorldY - gPartner.qSpeedAirY;
+    } else {
+        qWorld = gPartner.qWorldY + gPartner.qSpeedAirY;
+    }
+
+    gPartner.qWorldY = qWorld;
+
+    if (!(gPartner.moveState & MOVESTATE_IN_WATER)) {
+        gPartner.qSpeedAirY += Q(42. / 256.);
+    } else {
+        gPartner.qSpeedAirY += Q(12. / 256.);
+    }
+
+    SA2_LABEL(sub_802486C)(&gPartner, psiPartnerBody);
+    SA2_LABEL(sub_8024B10)(&gPartner, psiPartnerBody);
+    SA2_LABEL(sub_8024F74)(&gPartner, psiPartnerLimbs);
+}
+END_NONMATCH
+
+void Task_8045AD8(void)
+{
+    Player *partner = &gPartner;
+
+    Player_HandleWater(partner);
+
+    if (gPartner.character == CHARACTER_TAILS) {
+        Player_Tails_804571C(partner);
+    }
+
+    SA2_LABEL(sub_802486C)(partner, gPartner.spriteInfoBody);
+    SA2_LABEL(sub_8024B10)(partner, gPartner.spriteInfoBody);
+    SA2_LABEL(sub_8024F74)(partner, gPartner.spriteInfoLimbs);
+
+    if (gPartner.charState != CHARSTATE_HIT_AIR) {
+        if (gPartner.timerInvulnerability > 0) {
+            gPartner.timerInvulnerability--;
+        }
+    }
+
+    partner->SA2_LABEL(unk25) = 120;
+}
+
+void Task_8045B38(void)
+{
+    Player *partner = &gPartner;
+    PlayerSpriteInfo *psiBody;
+
+    if (!IS_ALIVE(partner)) {
+        gCurTask->main = Task_804597C;
+
+        partner->charState = CHARSTATE_DEAD;
+        partner->qSpeedAirX = Q(0);
+        partner->timerInvulnerability = 2;
+        partner->itemEffect = 0;
+        partner->moveState &= ~MOVESTATE_20;
+        partner->moveState &= ~MOVESTATE_STOOD_ON_OBJ;
+        partner->stoodObj = NULL;
+        psiBody = partner->spriteInfoBody;
+        psiBody->s.frameFlags &= ~SPRITE_FLAG_MASK_PRIORITY;
+        psiBody->s.frameFlags |= SPRITE_FLAG(PRIORITY, 1);
+        partner->SA2_LABEL(unk80) = Q(1.0);
+        partner->SA2_LABEL(unk82) = Q(1.0);
+
+        m4aSongNumStop(SE_TAILS_PROPELLER_FLYING);
+
+        if (partner->secondsUntilDrown < 0) {
+            m4aSongNumStart(SE_DROWNED);
+        } else {
+            m4aSongNumStart(SE_LIFE_LOST);
+        }
+    } else {
+        sub_8045DF0(partner);
+        Player_HandleWater(partner);
+
+        if ((I(partner->qWorldX) < gCamera.x - CAM_REGION_WIDTH) || (I(partner->qWorldX) > gCamera.x + DISPLAY_WIDTH + CAM_REGION_WIDTH)
+            || (I(partner->qWorldY) < gCamera.y - CAM_REGION_WIDTH)
+            || (I(partner->qWorldY) > gCamera.y + DISPLAY_HEIGHT + CAM_REGION_WIDTH)) {
+            if (partner->character == CHARACTER_TAILS) {
+                if (partner->moveState & MOVESTATE_IN_WATER) {
+                    partner->charState = CHARSTATE_SWIMMING;
+                } else {
+                    partner->charState = CHARSTATE_FLYING;
+                }
+            }
+
+            partner->moveState |= MOVESTATE_DEAD;
+            partner->moveState &= ~MOVESTATE_20;
+
+            // Inline of Player_InitializeDrowning?
+            partner->framesUntilDrownCountDecrement = TIME(0, 1);
+            partner->secondsUntilDrown = 30;
+
+            if (partner->playerID == PLAYER_1) {
+                m4aSongNumStop(MUS_DROWNING);
+            }
+
+            gCurTask->main = Task_8045AD8;
+        } else if (!(partner->moveState & MOVESTATE_IA_OVERRIDE)) {
+            // TODO: This might be a macro.
+            //       Task_8045B38 explicitly loads the partner data
+            //       and that can only be Tails.
+            //       (Unless gPartner is also used in MP matches?)
+            switch (partner->character) {
+                case CHARACTER_SONIC: {
+                    Player_Sonic_80473AC(partner);
+                } break;
+
+                case CHARACTER_TAILS: {
+                    Player_Tails_8047BA0(partner);
+                } break;
+
+                case CHARACTER_KNUCKLES: {
+                    Player_Knuckles_8049000(partner);
+                } break;
+
+                case CHARACTER_AMY: {
+                    Player_Amy_80497AC(partner);
+                } break;
+            }
+        }
+    }
+
+    SA2_LABEL(sub_802486C)(partner, partner->spriteInfoBody);
+    SA2_LABEL(sub_8024B10)(partner, partner->spriteInfoBody);
+    SA2_LABEL(sub_8024F74)(partner, partner->spriteInfoLimbs);
+
+    if (partner->charState != CHARSTATE_HIT_AIR) {
+        if (partner->timerInvulnerability > 0) {
+            partner->timerInvulnerability--;
+        }
+    }
+
+    partner->SA2_LABEL(unk25) = 120;
+}
+#endif
+
+#if (GAME == GAME_SA2)
 void CallPlayerTransition(Player *p)
 {
     if (p->transition) {
@@ -5159,7 +5581,9 @@ void CallPlayerTransition(Player *p)
     p->prevTransition = p->transition;
     p->transition = 0;
 }
+#endif
 
+// ALIGNED UP TO HERE
 // Confusion state related
 void Player_HandleInputs(Player *p)
 {
