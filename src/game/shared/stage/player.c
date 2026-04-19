@@ -3427,26 +3427,25 @@ void SA2_LABEL(sub_8023260)(Player *p)
 }
 #endif
 
-// ALIGNED UP TO HERE
 void SA2_LABEL(sub_80232D0)(Player *p)
 {
-    struct Camera *cam = &gCamera;
-    s32 qPX = p->qWorldX;
-    s32 qPY = p->qWorldY;
-    s32 ix, iy;
-    s32 ox, oy;
+    Camera *cam = &gCamera;
+    s32 qWorldX = p->qWorldX;
+    s32 qWorldY = p->qWorldY;
+    s32 unkX, unkY;
+
 #ifndef COLLECT_RINGS_ROM
     if (p->playerID == PLAYER_1) {
 #if (GAME == GAME_SA2)
         if (IS_BOSS_STAGE(gCurrentLevel)) {
             if (gCurrentLevel & 0x2) {
-                ox = gUnknown_080D650C[gCurrentLevel][0];
-                if ((ox >= 0) && (qPX >= Q(ox))) {
-                    ix = gUnknown_080D661C[gCurrentLevel][0];
-                    iy = gUnknown_080D661C[gCurrentLevel][1];
+                unkX = SA2_LABEL(gUnknown_080D650C)[gCurrentLevel][0];
+                if ((unkX >= 0) && (qWorldX >= Q(unkX))) {
+                    s32 ix = SA2_LABEL(gUnknown_080D661C)[gCurrentLevel][0];
+                    s32 iy = SA2_LABEL(gUnknown_080D661C)[gCurrentLevel][1];
 
-                    qPX += Q(ix);
-                    qPY += Q(iy);
+                    qWorldX += Q(ix);
+                    qWorldY += Q(iy);
 
                     if (gCheese != NULL) {
                         gCheese->posX += Q(ix);
@@ -3461,59 +3460,91 @@ void SA2_LABEL(sub_80232D0)(Player *p)
                     gBossRingsShallRespawn = TRUE;
 
                     cam->x += ix;
-                    cam->unk20 += ix;
-                    cam->unk10 += ix;
+                    cam->SA2_LABEL(unk20) += ix;
+                    cam->SA2_LABEL(unk10) += ix;
                     cam->y += iy;
-                    cam->unk24 += iy;
+                    cam->SA2_LABEL(unk24) += iy;
                     cam->unk14 += iy;
                 }
             }
         } else if ((gPlayer.moveState & MOVESTATE_GOAL_REACHED) && (gSpecialRingCount >= SPECIAL_STAGE_REQUIRED_SP_RING_COUNT))
 #endif
         {
-            ox = gUnknown_080D650C[gCurrentLevel][0];
-            if ((ox >= 0) && (qPX >= Q(ox)) && (cam->unk8 != 0)) {
-                if (!(cam->unk50 & 0x1)) {
-                    s32 ix;
+            unkX = SA2_LABEL(gUnknown_080D650C)[gCurrentLevel][0];
+            if ((unkX >= 0) && (qWorldX >= Q(unkX)) && (cam->SA2_LABEL(unk8) != 0) && !(cam->SA2_LABEL(unk50) & 0x1)) {
+                s32 ix = SA2_LABEL(gUnknown_080D661C)[gCurrentLevel][0];
+                qWorldX += Q(ix);
 
-                    ix = gUnknown_080D661C[gCurrentLevel][0];
-                    qPX += Q(ix);
-                    cam->x += ix;
-                    cam->unk20 += ix;
-                    cam->unk10 += ix;
-
-                    if (gCheese != NULL) {
-                        gCheese->posX += Q(ix);
-                    }
+#if (GAME == GAME_SA1)
+                if (gNumSingleplayerCharacters == NUM_SINGLEPLAYER_CHARS_MAX) {
+                    gPartner.qWorldX += Q(ix);
                 }
+#endif
+                cam->x += ix;
+                cam->SA2_LABEL(unk20) += ix;
+#if (GAME == GAME_SA2)
+                cam->SA2_LABEL(unk10) += ix;
+                if (gCheese != NULL) {
+                    gCheese->posX += Q(ix);
+                }
+#endif
             }
 
-            oy = gUnknown_080D650C[gCurrentLevel][1];
-            if ((oy >= 0) && (qPY >= Q(oy)) && (cam->unkC != 0)) {
-                if (!(cam->unk50 & 0x2)) {
-                    s32 iy;
+            unkY = SA2_LABEL(gUnknown_080D650C)[gCurrentLevel][1];
+            if ((unkY >= 0) && (qWorldY >= Q(unkY)) && (cam->SA2_LABEL(unkC) != 0) && !(cam->SA2_LABEL(unk50) & 0x2)) {
+                s32 iy = SA2_LABEL(gUnknown_080D661C)[gCurrentLevel][1];
+                s32 worldY = iy * CAM_REGION_WIDTH;
+                qWorldY += Q(worldY);
 
-                    iy = gUnknown_080D661C[gCurrentLevel][1];
-                    qPY += Q(iy << 8);
-                    cam->y += Q(iy);
-                    cam->unk24 += Q(iy);
-
-                    if (gCheese != NULL) {
-                        gCheese->posY += Q(iy << 8);
-                    }
+#if (GAME == GAME_SA1)
+                if (gNumSingleplayerCharacters == NUM_SINGLEPLAYER_CHARS_MAX) {
+                    gPartner.qWorldY += Q(worldY);
                 }
+#endif
+
+#if (GAME == GAME_SA1)
+                // TODO: look at the data and determine if using `worldY` in sa1 was a bug
+                cam->y += worldY;
+                cam->SA2_LABEL(unk24) += worldY;
+#elif (GAME == GAME_SA2)
+                cam->y += Q(iy);
+                cam->SA2_LABEL(unk24) += Q(iy);
+                if (gCheese != NULL) {
+                    gCheese->posY += Q(worldY);
+                }
+#endif
             }
         }
     }
 #endif
     if ((p->moveState & (MOVESTATE_80000000 | MOVESTATE_DEAD)) != MOVESTATE_DEAD) {
+#if (GAME == GAME_SA2)
+        s32 camMinY, camMaxY;
+#endif
         s32 qNoclipWorldX, qNoclipWorldY;
-        struct Camera *cam2 = &gCamera;
+        Camera *cam2 = &gCamera;
         s32 qPlayerY = p->qWorldY;
 
         if (!(p->moveState & MOVESTATE_80000000)) {
             bool32 outOfBounds;
+            // These blocks are basically the same but the gravity check was swapped in SA2
+            // TODO: match without gotos
+#if (GAME == GAME_SA1)
+            if (!(gStageFlags & STAGE_FLAG__GRAVITY_INVERTED)) {
+                if (qPlayerY >= Q(cam2->maxY) - 1) {
+                    outOfBounds = TRUE;
+                    goto lab;
+                }
+            } else if ((gStageFlags & STAGE_FLAG__GRAVITY_INVERTED)) {
+                if (qPlayerY <= Q(cam2->minY)) {
+                    outOfBounds = TRUE;
+                    goto lab;
+                }
+            }
 
+            outOfBounds = FALSE;
+        lab:
+#elif (GAME == GAME_SA2)
 #ifndef COLLECT_RINGS_ROM
             if (GRAVITY_IS_INVERTED) {
                 if (qPlayerY > Q(gCamera.minY)) {
@@ -3543,7 +3574,7 @@ void SA2_LABEL(sub_80232D0)(Player *p)
                 }
             }
 #endif
-
+#endif
             if (outOfBounds) {
                 p->moveState |= MOVESTATE_DEAD;
 
@@ -3555,61 +3586,72 @@ void SA2_LABEL(sub_80232D0)(Player *p)
                 {
                     p->qSpeedAirY = -Q(PLAYER_JUMP_HEIGHT);
                 }
-
-#ifndef COLLECT_RINGS_ROM
-                qPY = GRAVITY_IS_INVERTED ? Q(cam->minY) : Q(cam->maxY) - 1;
-#else
-                qPY = Q(cam->maxY) - 1;
-#endif
-            }
-        }
-
-        if (IS_BOSS_STAGE(gCurrentLevel)) {
-            qNoclipWorldX = gBossCameraClampYLower;
-            qNoclipWorldY = gBossCameraClampYUpper;
-        } else {
-            qNoclipWorldX = cam->minY;
-            qNoclipWorldY = cam->maxY;
-        }
-
-        {
-            s32 oldQPX = qPX;
-            s32 oldQPY = qPY;
-            s32 qMinX = Q(cam->minX);
-
-            qPX = CLAMP_32(qPX, qMinX, Q(cam->maxX) - 1);
-            qPY = CLAMP_32(qPY, Q(qNoclipWorldX), Q(qNoclipWorldY) - 1);
-
-            if (qPX != oldQPX) {
-                p->qSpeedAirX = 0;
-                p->qSpeedGround = 0;
-            }
-
-            if (qPY != oldQPY) {
-                p->qSpeedAirY = 0;
-                p->qSpeedGround = 0;
-            }
-
-#ifndef COLLECT_RINGS_ROM
-            if (IS_BOSS_STAGE(gCurrentLevel)) {
-                s32 qPXMin = (Q(cam->unk10));
-                if (qPX < qPXMin + Q(8.0)) {
-                    qPX = qPXMin + Q(8.0);
-                    p->qSpeedGround = BOSS_VELOCITY_X;
-                    p->qSpeedAirX = BOSS_VELOCITY_X;
-
-                    p->moveState &= ~MOVESTATE_FACING_LEFT;
-                } else if (qPX > (qPXMin + Q(312.0))) {
-                    qPX = (qPXMin + Q(312.0));
-                    p->qSpeedGround = BOSS_VELOCITY_X;
-                    p->qSpeedAirX = BOSS_VELOCITY_X;
+#if (GAME == GAME_SA1)
+                if (!(gStageFlags & STAGE_FLAG__GRAVITY_INVERTED)) {
+                    qWorldY = Q(cam->maxY) - 1;
+                } else {
+                    qWorldY = Q(cam->minY);
                 }
+#elif (GAME == GAME_SA2)
+#ifndef COLLECT_RINGS_ROM
+                qWorldY = GRAVITY_IS_INVERTED ? Q(cam->minY) : Q(cam->maxY) - 1;
+#else
+                qWorldY = Q(cam->maxY) - 1;
+#endif
+#endif
             }
+        }
+
+#if (GAME == GAME_SA2)
+        if (IS_BOSS_STAGE(gCurrentLevel)) {
+            camMinY = gBossCameraClampYLower;
+            camMaxY = gBossCameraClampYUpper;
+        } else {
+            camMinY = cam->minY;
+            camMaxY = cam->maxY;
+        }
 #endif
 
-            p->qWorldX = qPX;
-            p->qWorldY = qPY;
+        qNoclipWorldX = qWorldX;
+        qNoclipWorldY = qWorldY;
+
+        qWorldX = CLAMP(qWorldX, Q(cam->minX), Q(cam->maxX) - 1);
+#if (GAME == GAME_SA1)
+        qWorldY = CLAMP(qWorldY, Q(cam->minY), Q(cam->maxY) - 1);
+#elif (GAME == GAME_SA2)
+        qWorldY = CLAMP(qWorldY, Q(camMinY), Q(camMaxY) - 1);
+#endif
+        if (qWorldX != qNoclipWorldX) {
+            p->qSpeedAirX = Q(0);
+            p->qSpeedGround = Q(0);
         }
+
+        if (qWorldY != qNoclipWorldY) {
+            p->qSpeedAirY = Q(0);
+            p->qSpeedGround = Q(0);
+        }
+
+#if (GAME == GAME_SA2)
+#ifndef COLLECT_RINGS_ROM
+        if (IS_BOSS_STAGE(gCurrentLevel)) {
+            s32 qPXMin = (Q(cam->SA2_LABEL(unk10)));
+            if (qWorldX < qPXMin + Q(8.0)) {
+                qWorldX = qPXMin + Q(8.0);
+                p->qSpeedGround = BOSS_VELOCITY_X;
+                p->qSpeedAirX = BOSS_VELOCITY_X;
+
+                p->moveState &= ~MOVESTATE_FACING_LEFT;
+            } else if (qWorldX > (qPXMin + Q(312.0))) {
+                qWorldX = (qPXMin + Q(312.0));
+                p->qSpeedGround = BOSS_VELOCITY_X;
+                p->qSpeedAirX = BOSS_VELOCITY_X;
+            }
+        }
+#endif
+#endif
+
+        p->qWorldX = qWorldX;
+        p->qWorldY = qWorldY;
     }
 }
 
@@ -3872,6 +3914,7 @@ NONMATCH("asm/non_matching/game/sa1/stage/Player__sub_8044434.inc", bool32 sub_8
 END_NONMATCH
 #endif // (GAME == GAME_SA1)
 
+// ALIGNED UP TO HERE
 void Player_AirInputControls(Player *p)
 {
     s32 r5 = p->acceleration * 2;
@@ -3882,6 +3925,9 @@ void Player_AirInputControls(Player *p)
         u16 qAirSpeedU = p->qSpeedAirX;
 
         if (p->heldInput & DPAD_LEFT) {
+#if (GAME == GAME_SA1) && !defined(NON_MATCHING)
+            qAirSpeedS = qAirSpeedU;
+#endif
             if ((p->charState != CHARSTATE_WALK_B) && !(p->moveState & MOVESTATE_2000)) {
                 p->moveState |= MOVESTATE_FACING_LEFT;
             }
@@ -3916,9 +3962,35 @@ void Player_AirInputControls(Player *p)
                 }
             }
         }
-
+#if (GAME == GAME_SA1) && !defined(NON_MATCHING)
+        p->qSpeedAirX = (r5 = qAirSpeedU);
+#else
         p->qSpeedAirX = qAirSpeedU;
+#endif
     }
+
+#if (GAME == GAME_SA1)
+    if ((u16)p->qSpeedAirY > (u16)(-Q(67) - 1)) {
+        s16 qSpeedAirX = p->qSpeedAirX;
+        s16 qSpeedAirXFrac = p->qSpeedAirX >> 5;
+        if (qSpeedAirXFrac < 0) {
+            qSpeedAirX -= qSpeedAirXFrac;
+            if (qSpeedAirX > 0) {
+                qSpeedAirX = 0;
+            }
+
+            p->qSpeedAirX = qSpeedAirX;
+        } else if (qSpeedAirXFrac > 0) {
+            qSpeedAirX -= qSpeedAirXFrac;
+
+            if (qSpeedAirX < 0)
+                qSpeedAirX = 0;
+
+            p->qSpeedAirX = qSpeedAirX;
+        }
+    }
+}
+#endif
 }
 
 #if (GAME == GAME_SA1)
@@ -4523,7 +4595,7 @@ void Task_PlayerHandleDeath(void)
             gPlayer.spriteInfoLimbs->s.frameFlags &= ~SPRITE_FLAG_MASK_PRIORITY;
             gPlayer.spriteInfoLimbs->s.frameFlags |= SPRITE_FLAG(PRIORITY, 2);
 
-            gCamera.unk50 &= ~0x3;
+            gCamera.SA2_LABEL(unk50) &= ~0x3;
 #ifndef COLLECT_RINGS_ROM
             if (gPlayer.character == CHARACTER_CREAM && gCheese != NULL) {
                 gCheese->posX = gPlayer.qWorldX;
@@ -4657,7 +4729,7 @@ void Task_PlayerMain(void)
         p->moveState &= ~MOVESTATE_20;
         p->moveState &= ~MOVESTATE_STOOD_ON_OBJ;
         p->stoodObj = NULL;
-        cam->unk50 |= 3;
+        cam->SA2_LABEL(unk50) |= 3;
 #ifndef COLLECT_RINGS_ROM
         if (IS_SINGLE_PLAYER) {
             gStageFlags |= STAGE_FLAG__ACT_START;
@@ -6971,7 +7043,7 @@ void Player_8027B98(Player *p)
 
     PLAYERFN_UPDATE_UNK2A(p);
 
-    gCamera.unk8 -= 56;
+    gCamera.SA2_LABEL(unk8) -= 56;
 }
 
 void Player_8027C5C(Player *p)
@@ -7943,7 +8015,7 @@ void Player_HandleBoostState(Player *p)
         if ((!(p->moveState & MOVESTATE_IN_AIR)) && ((ABS(p->qSpeedGround) >= p->topSpeed))) {
             if (p->boostSpeed >= playerBoostThresholdTable[p->boostThreshold]) {
                 p->isBoosting = TRUE;
-                gCamera.unk8 = 0x400;
+                gCamera.SA2_LABEL(unk8) = 0x400;
 #ifndef COLLECT_RINGS_ROM
                 CreateBoostModeParticles();
                 m4aSongNumStart(SE_221);

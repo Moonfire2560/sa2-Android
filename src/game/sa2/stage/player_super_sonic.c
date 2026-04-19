@@ -378,19 +378,19 @@ NONMATCH("asm/non_matching/game/super_sonic__sub_802BCCC.inc", void sub_802BCCC(
 
         gBossRingsShallRespawn = TRUE;
         gCamera.x += someX;
-        gCamera.unk20 += someX;
-        gCamera.unk10 += someX;
+        gCamera.SA2_LABEL(unk20) += someX;
+        gCamera.SA2_LABEL(unk10) += someX;
         gCamera.y += someY;
-        gCamera.unk24 += someY;
+        gCamera.SA2_LABEL(unk24) += someY;
         gCamera.unk14 += someY;
     }
     // _0802BDAA
 
     if (sonic->func24 != sub_802C8A0) {
-        if (ssx < (Q(gCamera.unk10) + Q(8))) {
-            ssx = Q(gCamera.unk10) + Q(8);
-        } else if (ssx > (Q(gCamera.unk10) + Q(312))) {
-            ssx = Q(gCamera.unk10) + Q(312);
+        if (ssx < (Q(gCamera.SA2_LABEL(unk10)) + Q(8))) {
+            ssx = Q(gCamera.SA2_LABEL(unk10)) + Q(8);
+        } else if (ssx > (Q(gCamera.SA2_LABEL(unk10)) + Q(312))) {
+            ssx = Q(gCamera.SA2_LABEL(unk10)) + Q(312);
         }
     }
     sonic->worldX = ssx;
