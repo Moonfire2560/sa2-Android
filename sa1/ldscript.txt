@@ -33,7 +33,7 @@ SECTIONS {
 
         /* Menus */
         sa2/src/game/sa1/menus/title_screen.o(.text);
-        src/game/shared/menus/unused_level_select.o(.text);
+        sa2/src/game/shared/menus/unused_level_select.o(.text);
         sa2/src/game/sa1/menus/mp_mode_select.o(.text);
         sa2/src/game/sa1/menus/mp_mode_select_2.o(.text);
         sa2/src/game/sa1/menus/time_attack.o(.text);
@@ -321,7 +321,7 @@ SECTIONS {
         src/game/shared/stage/entities_manager.o(.rodata);
         sa2/src/game/sa1/stage/itembox.o(.rodata);
         sa2/src/game/sa1/menus/title_screen.o(.rodata);
-        src/game/shared/menus/unused_level_select.o(.rodata);
+        sa2/src/game/shared/menus/unused_level_select.o(.rodata);
         sa2/src/game/sa1/menus/mp_mode_select.o(.rodata);
         sa2/src/game/sa1/menus/time_attack.o(.rodata);
         sa2/src/game/sa1/menus/options.o(.rodata);
