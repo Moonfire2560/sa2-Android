@@ -78,7 +78,6 @@ u32 Coll_Player_Platform(Sprite *, CamCoord x, CamCoord y, Player *);
 bool32 Coll_AmyHammer_Spring(Sprite *s, CamCoord worldX, CamCoord worldY, Player *p);
 #endif
 
-u32 sub_800CE94(Sprite *s, s32 sx, s32 sy, Rect8 *param3, Player *p);
 bool32 SA2_LABEL(sub_800DD54)(Player *p);
 bool32 SA2_LABEL(sub_800DE44)(Player *p);
 u32 SA2_LABEL(sub_800D0A0)(Sprite *s, s16 worldX, s16 worldY, s16 qSpeedX, s16 qSpeedY, u8 layer, u32 arg6);

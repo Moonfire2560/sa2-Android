@@ -15,6 +15,10 @@
 #include "constants/sa2/char_states.h"
 #endif
 
+#if (GAME == GAME_SA2)
+static u32 sub_800CE94(Sprite *s, s32 sx, s32 sy, Rect8 *inRect, Player *p);
+#endif
+
 // COLLISION 1
 
 u32 Coll_Player_Platform(Sprite *s, CamCoord x, CamCoord y, Player *p)
@@ -125,7 +129,7 @@ u32 Coll_Player_Interactable(Sprite *s, s32 sx, s32 sy, Player *p)
 
 // Looks like each byte in the result is one value
 // TODO: Remove gotos
-u32 sub_800CE94(Sprite *s, s32 sx, s32 sy, Rect8 *inRect, Player *p)
+static u32 sub_800CE94(Sprite *s, s32 sx, s32 sy, Rect8 *inRect, Player *p)
 {
     s32 px = I(p->qWorldX);
     s32 py = I(p->qWorldY);
