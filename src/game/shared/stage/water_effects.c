@@ -84,6 +84,17 @@ static inline void MaskPaletteWithUnderwaterColor_inline(u32 *dst, u32 *src, u32
     }
 }
 
+#if (GAME == GAME_SA1)
+void sub_804C40C(void)
+{
+    Water *water = &gWater;
+
+    MaskPaletteWithUnderwaterColor_inline((u32 *)&sPaletteBuffer[0], (u32 *)&gObjPalette[0], water->mask, 16 * 16);
+    MaskPaletteWithUnderwaterColor_inline((u32 *)&sPaletteBuffer[16 * 16], (u32 *)&gBgPalette[0], water->mask, 16 * 16);
+}
+#endif
+
+#if (GAME == GAME_SA2)
 void InitWaterPalettes(void)
 {
     u16 animId, character;
@@ -137,6 +148,26 @@ void InitWaterPalettes(void)
 
     MaskPaletteWithUnderwaterColor_inline((u32 *)wd->pal[16], (u32 *)&GET_PALETTE_COLOR_BG(0, 0), water->mask, 16 * PALETTE_LEN_4BPP);
 }
+#endif
+
+#if (GAME == GAME_SA1)
+void LoadPalette423Anim(void)
+{
+    Sprite s;
+    s.graphics.dest = NULL;
+    s.graphics.anim = SA1_ANIM_LOAD_PALETTE_423;
+    s.variant = 0;
+    s.oamFlags = 0;
+    s.frameFlags = 0;
+    s.graphics.size = 0;
+    s.prevVariant = -1;
+    s.qAnimDelay = Q(0);
+    s.animSpeed = SPRITE_ANIM_SPEED(1.0);
+    s.palId = 0;
+
+    UpdateSpriteAnimation(&s);
+}
+#endif
 
 void CreateStageWaterTask(s32 waterLevel, u32 p1, u32 mask)
 {

@@ -99,6 +99,7 @@ static inline void MaskPaletteWithUnderwaterColor_inline(u32 *dst, u32 *src, u32
     }
 }
 
+#if (GAME == GAME_SA1)
 void sub_804C40C(void)
 {
     Water *water = &gWater;
@@ -106,6 +107,7 @@ void sub_804C40C(void)
     MaskPaletteWithUnderwaterColor_inline((u32 *)&sPaletteBuffer[0], (u32 *)&gObjPalette[0], water->mask, 16 * 16);
     MaskPaletteWithUnderwaterColor_inline((u32 *)&sPaletteBuffer[16 * 16], (u32 *)&gBgPalette[0], water->mask, 16 * 16);
 }
+#endif
 
 #if (GAME == GAME_SA2)
 void InitWaterPalettes(void)
@@ -209,21 +211,12 @@ void CreateStageWaterTask(s32 waterLevel, u32 p1, u32 mask)
     }
 }
 
-// (91.10%) https://decomp.me/scratch/zSeoc
-NONMATCH("asm/non_matching/game/shared/stage/water_effects__Task_StageWaterTask.inc", void Task_StageWaterTask(void))
+void Task_StageWaterTask(void)
 {
     Water *water = &gWater;
     struct Camera *cam = &gCamera;
     bool32 active;
     Sprite *s;
-    u8 unk1;
-#ifndef NON_MATCHING
-    register u8 unk2_0 asm("r0");
-    register u8 unk2_2 asm("r2");
-#else
-    u8 unk2_0;
-    u8 unk2_2;
-#endif
 
 #if (HAS_RUN_ON_WATER)
     if ((gCurrentLevel == LEVEL_INDEX(ZONE_1, ACT_1)) && (I(gPlayer.qWorldX) > 6665) && (I(gPlayer.qWorldX) <= 10650)) {
@@ -258,8 +251,7 @@ NONMATCH("asm/non_matching/game/shared/stage/water_effects__Task_StageWaterTask.
     gVBlankCallbacks[gNumVBlankCallbacks++] = SA2_LABEL(sub_8011A4C);
     gFlags |= FLAGS_EXECUTE_VBLANK_CALLBACKS;
 
-    unk1 = water->SA2_LABEL(unk1) - 1;
-    if (unk1 < DISPLAY_HEIGHT - 1) {
+    if (water->SA2_LABEL(unk1) > 0 && water->SA2_LABEL(unk1) < DISPLAY_HEIGHT) {
         s = &water->s;
         s->x = -((cam->x + ((gStageTime + 1) >> 2)) & 15);
         s->y = water->SA2_LABEL(unk2) + 1;
@@ -278,10 +270,9 @@ NONMATCH("asm/non_matching/game/shared/stage/water_effects__Task_StageWaterTask.
         }
     }
 
-    unk2_0 = (water->SA2_LABEL(unk2));
-    if ((unk2_2 = unk2_0 - 1) < DISPLAY_HEIGHT - 1) {
+    if (water->SA2_LABEL(unk2) > 0 && water->SA2_LABEL(unk2) < DISPLAY_HEIGHT) {
         gIntrTable[INTR_INDEX_VCOUNT] = SA2_LABEL(VCountIntr_8011ACC);
-        gVCountSetting = unk2_0 - 1;
+        gVCountSetting = water->SA2_LABEL(unk2) - 1;
         gFlags |= FLAGS_40;
     } else {
         gIntrTable[INTR_INDEX_VCOUNT] = gIntrTableTemplate[INTR_INDEX_VCOUNT];
@@ -289,24 +280,21 @@ NONMATCH("asm/non_matching/game/shared/stage/water_effects__Task_StageWaterTask.
     }
 
 #if (GAME == GAME_SA1)
-    if (unk2_0 >= DISPLAY_HEIGHT) {
+    if (water->SA2_LABEL(unk2) >= DISPLAY_HEIGHT) {
         gFlags &= ~FLAGS_EXECUTE_HBLANK_COPY;
     } else {
-        s32 r3 = gStageTime * 4;
-        u32 r5;
-        s32 adder;
-        void *ptr;
-        r3 += (gBgScrollRegs[3][1] + water->SA2_LABEL(unk2) % 32u) << 6;
-        r3 %= 1024u;
+#ifndef NON_MATCHING
+        UNUSED u32 _;
+#endif
+        u32 r5, i;
+        s32 r3 = CLAMP_SIN_PERIOD(((gStageTime * 4) + (((gBgScrollRegs[3][1] + water->SA2_LABEL(unk2)) % 32u) << 6)));
 
         SA2_LABEL(sub_8007738)
         (3, 0, 32, r3, 2, 64, (((gStageTime * 2 + (((gBgScrollRegs[3][1] + water->SA2_LABEL(unk2)) % 32u) << 5))) + 0x100) & ONE_CYCLE, 10,
          32, gBgScrollRegs[3][0], gBgScrollRegs[3][1]);
 
-        for (r5 = 32, ptr = gBgOffsetsHBlankPrimary + (adder = (gHBlankCopySize << 5)); r5 < DISPLAY_HEIGHT;) {
-            DmaCopy32(3, gBgOffsetsHBlankPrimary, ptr, (gHBlankCopySize << 5));
-            ptr += adder;
-            r5 += 0x20;
+        for (r5 = 32, i = 1; r5 < DISPLAY_HEIGHT; i++, r5 += 32) {
+            DmaCopy32(3, gBgOffsetsHBlankPrimary, gBgOffsetsHBlankPrimary + ((gHBlankCopySize << 5) * i), (gHBlankCopySize << 5));
         }
 
         if (water->SA2_LABEL(unk2)) {
@@ -315,7 +303,6 @@ NONMATCH("asm/non_matching/game/shared/stage/water_effects__Task_StageWaterTask.
     }
 #endif
 }
-END_NONMATCH
 
 #if (HAS_RUN_ON_WATER)
 void CreateRunOnWaterEffect(void)
