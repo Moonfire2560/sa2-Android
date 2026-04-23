@@ -122,11 +122,11 @@ void sub_80308A4(CamCoord worldX, CamCoord worldY)
     }
 
     if (boss->unk87 == 0) {
-        collPlayer = Coll_Player_Boss(s, worldX, worldY, &gPlayer);
+        collPlayer = Coll_Player_Enemy(s, worldX, worldY, &gPlayer);
         collPartner = 0;
 
         if (gNumSingleplayerCharacters == 2) {
-            collPartner = Coll_Player_Boss(s, worldX, worldY, &gPartner);
+            collPartner = Coll_Player_Enemy(s, worldX, worldY, &gPartner);
         }
 
         s2 = &boss->s2;
