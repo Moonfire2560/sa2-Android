@@ -704,7 +704,7 @@ void StageInit_Zone6Act1(void)
         //
         // Rocket "started", so don't allow player to leave.
         gCamera.minX = EGG_ROCKET_LAUNCH_MIN_X;
-        gCamera.sa2__unk50 |= 0x8000;
+        gCamera.SA2_LABEL(unk50) |= 0x8000;
         gBgCntRegs[3] &= ~(BGCNT_TXT512x512);
 
         if (gGameMode == GAME_MODE_SINGLE_PLAYER) {
@@ -718,7 +718,7 @@ void StageInit_Zone6Act1(void)
         //
         // 'maxY' set because we are "climbing" the rocket and positive Y goes down.
         gCamera.maxY = EGG_ROCKET_BOOSTER_DEPART_MAX_Y;
-        gCamera.sa2__unk50 |= 0x8000;
+        gCamera.SA2_LABEL(unk50) |= 0x8000;
         gBgCntRegs[3] &= ~(BGCNT_TXT512x512);
 
         if (gGameMode == GAME_MODE_SINGLE_PLAYER) {
@@ -729,8 +729,8 @@ void StageInit_Zone6Act1(void)
 
     if (gBossIndex > 2) {
         gBgCntRegs[3] &= ~(BGCNT_TXT512x512);
-        gCamera.sa2__unk50 |= 0x4000;
-        gCamera.sa2__unk50 &= ~0x8000;
+        gCamera.SA2_LABEL(unk50) |= 0x4000;
+        gCamera.SA2_LABEL(unk50) &= ~0x8000;
         gCamera.maxY = EGG_ROCKET_MIDDLE_DEPART_MAX_Y;
 
         if (gGameMode == GAME_MODE_SINGLE_PLAYER) {

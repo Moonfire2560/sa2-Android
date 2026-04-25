@@ -1068,7 +1068,7 @@ bool32 Coll_DamageSuperSonic(Player *p)
     p->qSpeedAirX = -Q(3);
     p->qSpeedGround = -Q(3);
     p->qSpeedAirY = -Q(0);
-    p->sa2__unk2A = 24;
+    p->SA2_LABEL(unk2A) = 24;
     p->charState = 4;
     p->SA2_LABEL(unk61) = 0;
     p->SA2_LABEL(unk62) = 0;

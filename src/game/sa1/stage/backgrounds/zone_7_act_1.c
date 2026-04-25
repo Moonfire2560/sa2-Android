@@ -11,15 +11,15 @@ void StageBgUpdate_Zone7Act1(s32 x, s32 y)
     const Collision *collision;
     s32 xSub, ySub;
 
-    x -= gCamera.sa2__unk20;
-    y -= gCamera.sa2__unk24;
+    x -= gCamera.SA2_LABEL(unk20);
+    y -= gCamera.SA2_LABEL(unk24);
 
     collision = gRefCollision;
 
     xSub = Div(x * 64 - x * 8, collision->pxWidth - DISPLAY_WIDTH);
-    gBgScrollRegs[3][0] = gCamera.sa2__unk52 = xSub;
+    gBgScrollRegs[3][0] = gCamera.SA2_LABEL(unk52) = xSub;
 
     ySub = Div((y << 4) + y * 8, collision->pxHeight - DISPLAY_HEIGHT);
-    gCamera.sa2__unk54 = ySub;
+    gCamera.SA2_LABEL(unk54) = ySub;
     gBgScrollRegs[3][1] = ySub;
 }

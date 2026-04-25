@@ -1210,7 +1210,7 @@ void Task_8038554()
         } break;
 
         case 4: {
-            gPlayer.sa2__unk72 = 0x3C;
+            gPlayer.SA2_LABEL(unk72) = 0x3C;
 
             if (--strc10->unk6 == 0) {
                 gPlayer.charState = CHARSTATE_50;

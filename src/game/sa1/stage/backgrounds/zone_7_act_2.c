@@ -17,8 +17,8 @@ void StageBgUpdate_Zone7Act2(void)
     u32 *offsets;
     s32 i;
 
-    gBgScrollRegs[1][0] = cam->sa2__unk52 = 0;
-    gBgScrollRegs[1][1] = cam->sa2__unk54 = 0;
+    gBgScrollRegs[1][0] = cam->SA2_LABEL(unk52) = 0;
+    gBgScrollRegs[1][1] = cam->SA2_LABEL(unk54) = 0;
 
     bg->scrollX = 0;
     bg->scrollY = 0;
