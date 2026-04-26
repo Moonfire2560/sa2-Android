@@ -114,22 +114,7 @@ SECTIONS {
         sa2/src/game/dummy_task.o(.text);
 
         src/game/shared/stage/stage.o(.text);
-        src/game/shared/stage/camera.o(.text);
-        sa2/src/game/sa1/stage/backgrounds/zone_1.o(.text);
-        sa2/src/game/sa1/stage/backgrounds/zone_2_interior.o(.text);
-        sa2/src/game/sa1/stage/backgrounds/zone_3.o(.text);
-        sa2/src/game/sa1/stage/backgrounds/zone_4.o(.text);
-        sa2/src/game/sa1/stage/backgrounds/zone_6.o(.text);
-        sa2/src/game/sa1/stage/backgrounds/zone_7_act_2.o(.text);
-        sa2/src/game/sa1/stage/camera_destroy.o(.text);
-        sa2/src/game/sa1/stage/backgrounds/zone_4_init.o(.text);
-        sa2/src/game/sa1/stage/backgrounds/zone_5_init.o(.text);
-        sa2/src/game/sa1/stage/backgrounds/zone_7_act_1.o(.text);
-        sa2/src/game/sa1/stage/backgrounds/zone_7_act_2_init.o(.text);
-        sa2/src/game/sa1/stage/backgrounds/zone_2.o(.text);
-        sa2/src/game/sa1/stage/backgrounds/zone_5.o(.text);
-        sa2/src/game/sa1/stage/backgrounds/zone_3_firework.o(.text);
-        sa2/src/game/sa1/stage/backgrounds/zone_6_hblank.o(.text);
+        sa2/src/game/shared/stage/camera.o(.text);
         sa2/src/game/shared/stage/terrain_collision.o(.text);
         sa2/src/game/shared/stage/mp_sprite_task.o(.text);
         sa2/src/game/shared/stage/dust_effect_braking.o(.text);
@@ -360,7 +345,7 @@ SECTIONS {
         sa2/src/game/shared/stage/amy_attack_heart_effect.o(.rodata);
         sa2/src/game/shared/stage/music_manager.o(.rodata);
         src/game/shared/stage/stage.o(.rodata);
-        src/game/shared/stage/camera.o(.rodata);
+        sa2/src/game/shared/stage/camera.o(.rodata);
         src/data/sa1/tilemap_table.o(.rodata);
         sa2/src/game/shared/stage/terrain_collision.o(.rodata);
         data/sa1/data_0_4.o(.rodata);

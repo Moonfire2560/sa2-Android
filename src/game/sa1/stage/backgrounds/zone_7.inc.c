@@ -23,3 +23,14 @@ void StageBgUpdate_Zone7Act1(s32 x, s32 y)
     gCamera.SA2_LABEL(unk54) = ySub;
     gBgScrollRegs[3][1] = ySub;
 }
+
+void CreateStageBg_Zone7_Act2(void)
+{
+    Background *bg;
+    const Collision *collision;
+
+    DmaFill32(3, 0, BG_TILE_ADDR(128), 0x4000);
+    DmaFill32(3, 0, BG_TILE_ADDR(448), 0x800);
+
+    gBgCntRegs[2] = BGCNT_TXT512x256 | BGCNT_SCREENBASE(28) | BGCNT_256COLOR | 0x5;
+}

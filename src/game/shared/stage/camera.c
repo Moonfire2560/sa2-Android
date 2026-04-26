@@ -29,16 +29,6 @@
 
 #define BOSS_CAM_FRAME_DELTA_PIXELS 5
 
-#if (GAME == GAME_SA2)
-#if !PORTABLE
-#define USE_BOSS_BG_IN_ZONE_6_ACTS FALSE
-#else
-// The default flickering is very strong, so we disable it.
-// TODO: Add a global option, so players can decide to use the original effect if they want to.
-#define USE_BOSS_BG_IN_ZONE_6_ACTS TRUE
-#endif
-#endif
-
 // NOTE:
 // unk8 is a regular integer in SA1, but Q_24_8 in SA2
 #if (GAME == GAME_SA1)
@@ -62,16 +52,12 @@
 #define CAMBG_BACK_B_LAYER    3
 
 #if !WIDESCREEN_HACK
-#define SCREENBASE_SKY_CANYON_CLOUDS 27
-#define CAM_SCREENBASE_BACK_A        28
-#define CAM_SCREENBASE_BACK_B        29
-#define CAM_SCREENBASE_BACK_C        26
-#define CAM_SCREENBASE_MAP_FRONT     30
-#define CAM_SCREENBASE_MAP_BACK      31
-
+#define CAM_SCREENBASE_BACK_A    28
+#define CAM_SCREENBASE_BACK_B    29
+#define CAM_SCREENBASE_BACK_C    26
+#define CAM_SCREENBASE_MAP_FRONT 30
+#define CAM_SCREENBASE_MAP_BACK  31
 #else
-#define SCREENBASE_SKY_CANYON_CLOUDS 27
-
 #define CAM_SCREENBASE_BACK_A    48
 #define CAM_SCREENBASE_BACK_B    50
 #define CAM_SCREENBASE_BACK_C    58
@@ -313,13 +299,6 @@ const TileInfoFirework gTileInfoZone3Fireworks[2] = {
     [1] = { SA1_ANIM_FIREWORKS_SMALL, 0, MAX_TILES(SA1_ANIM_FIREWORKS_SMALL) },
 };
 #elif (GAME == GAME_SA2)
-void sub_801E3F0(void);
-void HBlankCB_801E434(int_vcount vcount);
-void HBlankCB_801E454(int_vcount vcount);
-void nullsub_801E494(void);
-void HBlankCB_BgUpdateZone5ActBoss(int_vcount vcount);
-void HBlankCB_BgUpdateZoneFinalActXX(int_vcount vcount);
-
 // SA2 Zone specific backgrounds
 void CreateStageBg_Zone1(void);
 void StageBgUpdate_Zone1Acts12(s32 a, s32 b);
@@ -720,14 +699,32 @@ void UpdateCamera(void)
     Player *player = &gPlayer;
     struct Camera *camera = &gCamera;
     s32 newX, newY;
+
+#if DEBUG
+    if (gInput & L_BUTTON) {
+        s32 speed = Q(10);
+        if (gInput & DPAD_DOWN)
+            gPlayer.qWorldY += speed;
+        if (gInput & DPAD_UP)
+            gPlayer.qWorldY -= speed;
+        if (gInput & DPAD_RIGHT)
+            gPlayer.qWorldX += speed;
+        if (gInput & DPAD_LEFT)
+            gPlayer.qWorldX -= speed;
+    }
+#endif
+
     newX = camera->x;
     newY = camera->y;
+#if (GAME == GAME_SA2)
     camera->dx = camera->x;
     camera->dy = camera->y;
+#endif
 
     newX = CLAMP(newX, camera->minX, camera->maxX - (DISPLAY_WIDTH + 1));
     newY = CLAMP(newY, camera->minY, camera->maxY - (DISPLAY_HEIGHT + 1));
 
+#if (GAME == GAME_SA2)
 #ifndef COLLECT_RINGS_ROM
     if (IS_BOSS_STAGE(gCurrentLevel)) {
         s32 delta, playerY;
@@ -738,11 +735,11 @@ void UpdateCamera(void)
             return;
         }
 
-        if (gCurrentLevel == LEVEL_INDEX(ZONE_FINAL, ACT_TRUE_AREA_53)) {
+        if (IS_EXTRA_STAGE(gCurrentLevel)) {
             SuperSonicGetPos(&player->qWorldX, &player->qWorldY);
         }
 
-        camera->unk10 += BOSS_CAM_FRAME_DELTA_PIXELS;
+        camera->SA2_LABEL(unk10) += BOSS_CAM_FRAME_DELTA_PIXELS;
         newX += BOSS_CAM_FRAME_DELTA_PIXELS;
 
 // Most TASes were written with the expection that
@@ -751,11 +748,12 @@ void UpdateCamera(void)
 // So we need to emulate that behaviour on some specific
 // levels
 #if TAS_TESTING && TAS_TESTING_WIDESCREEN_HACK && DISPLAY_WIDTH > 240
-        if (newX + (DISPLAY_WIDTH_FOR_BOSS_TAS + 1) < I(player->qWorldX)) {
+        if (newX + (DISPLAY_WIDTH_FOR_BOSS_TAS + 1) < I(player->qWorldX))
 #else
-        if (newX + (DISPLAY_CENTER_X + 1) < I(player->qWorldX)) {
+        if (newX + (DISPLAY_CENTER_X + 1) < I(player->qWorldX))
 #endif
-            if ((camera->unk10 + DISPLAY_CENTER_Y) > newX) {
+        {
+            if ((camera->SA2_LABEL(unk10) + DISPLAY_CENTER_Y) > newX) {
                 s32 playerScreenX = I(player->qWorldX);
 #if TAS_TESTING && TAS_TESTING_WIDESCREEN_HACK && DISPLAY_WIDTH > 240
                 playerScreenX -= DISPLAY_WIDTH_FOR_BOSS_TAS;
@@ -764,7 +762,7 @@ void UpdateCamera(void)
 #endif
                 camera->shiftX = playerScreenX - newX;
             } else {
-                newX = (camera->unk10 + DISPLAY_CENTER_Y);
+                newX = (camera->SA2_LABEL(unk10) + DISPLAY_CENTER_Y);
                 camera->shiftX = 0;
             }
         } else {
@@ -772,15 +770,15 @@ void UpdateCamera(void)
             if ((newX + 96) > I(player->qWorldX)) {
                 newX = I(player->qWorldX);
                 newX -= 96;
-                if (newX < camera->unk10) {
-                    newX = camera->unk10;
+                if (newX < camera->SA2_LABEL(unk10)) {
+                    newX = camera->SA2_LABEL(unk10);
                 }
             }
         }
 
         playerY = I(player->qWorldY);
         delta = playerY - newY;
-        if (gCurrentLevel == LEVEL_INDEX(ZONE_FINAL, ACT_TRUE_AREA_53)) {
+        if (IS_EXTRA_STAGE(gCurrentLevel)) {
             if (delta <= 48) {
                 s32 temp = newY - 48;
                 newY = delta + temp;
@@ -806,79 +804,125 @@ void UpdateCamera(void)
         newX += camera->shakeOffsetX;
         newY += camera->shakeOffsetY;
 
-    } else
+    } else // if !IS_BOSS_STAGE(gCurrentLevel) ->
+#endif
 #endif
     {
-        if (camera->unk40 != 0) {
-            camera->unk40--;
+        if (camera->SA2_LABEL(unk40) != 0) {
+            camera->SA2_LABEL(unk40)--;
         } else {
-            if (!(camera->unk50 & 1)) {
-                s16 airSpeedX = player->qSpeedAirX;
-                camera->unk10 = I(player->qWorldX) + camera->shiftX - DISPLAY_CENTER_X;
-                camera->SA2_LABEL(unk56) = (airSpeedX + (camera->SA2_LABEL(unk56) * 15)) >> 4;
-                camera->unk10 += (camera->SA2_LABEL(unk56) >> 5);
-            }
-            if (!(camera->unk50 & 2)) {
-                s32 unk64 = camera->unk64;
-                s32 temp8 = player->spriteOffsetY - 4;
-                if (GRAVITY_IS_INVERTED) {
-                    temp8 = -temp8;
+            s32 unk64, temp8;
+#if (GAME == GAME_SA1)
+            if (IS_MULTI_PLAYER) {
+                MultiplayerPlayer *mpp = TASK_DATA(gMultiplayerPlayerTasks[camera->spectatorTarget]);
+
+                if (!(camera->SA2_LABEL(unk50) & 0x1)) {
+                    camera->SA2_LABEL(unk10) = (mpp->pos.x + camera->shiftX) - DISPLAY_CENTER_X;
                 }
 
-                if (unk64 != temp8) {
-                    if (unk64 < temp8) {
-                        unk64 += 5;
-                        if (unk64 > temp8) {
-                            unk64 = temp8;
-                        }
-                    } else {
-                        unk64 -= 5;
-                        if (unk64 < temp8) {
-                            unk64 = temp8;
-                        }
+                if (!(camera->SA2_LABEL(unk50) & 2)) {
+                    unk64 = camera->SA2_LABEL(unk64);
+                    temp8 = mpp->unk58[0] - 4;
+                    if (GRAVITY_IS_INVERTED) {
+                        temp8 = -temp8;
                     }
-                    camera->unk64 = unk64;
+
+                    if (unk64 != temp8) {
+                        if (unk64 < temp8) {
+                            unk64 += 5;
+                            if (unk64 > temp8) {
+                                unk64 = temp8;
+                            }
+                        } else {
+                            unk64 -= 5;
+                            if (unk64 < temp8) {
+                                unk64 = temp8;
+                            }
+                        }
+                        camera->SA2_LABEL(unk64) = unk64;
+                    }
+
+                    camera->SA2_LABEL(unk14) = ((mpp->pos.y) + camera->shiftY) - DISPLAY_CENTER_Y + camera->SA2_LABEL(unk4C) + unk64;
+                }
+            } else
+#endif
+            {
+                if (!(camera->SA2_LABEL(unk50) & 1)) {
+                    s16 airSpeedX = player->qSpeedAirX;
+                    camera->SA2_LABEL(unk10) = I(player->qWorldX) + camera->shiftX - DISPLAY_CENTER_X;
+#if (GAME == GAME_SA2)
+                    camera->SA2_LABEL(unk56) = (airSpeedX + (camera->SA2_LABEL(unk56) * 15)) >> 4;
+                    camera->SA2_LABEL(unk10) += (camera->SA2_LABEL(unk56) >> 5);
+#endif
                 }
 
-                camera->unk14 = I(player->qWorldY) + camera->shiftY - DISPLAY_CENTER_Y + camera->unk4C + unk64;
+                if (!(camera->SA2_LABEL(unk50) & 2)) {
+                    unk64 = camera->SA2_LABEL(unk64);
+                    temp8 = player->spriteOffsetY - 4;
+                    if (GRAVITY_IS_INVERTED) {
+                        temp8 = -temp8;
+                    }
+
+                    if (unk64 != temp8) {
+                        if (unk64 < temp8) {
+                            unk64 += 5;
+                            if (unk64 > temp8) {
+                                unk64 = temp8;
+                            }
+                        } else {
+                            unk64 -= 5;
+                            if (unk64 < temp8) {
+                                unk64 = temp8;
+                            }
+                        }
+                        camera->SA2_LABEL(unk64) = unk64;
+                    }
+
+                    camera->SA2_LABEL(unk14) = I(player->qWorldY) + camera->shiftY - DISPLAY_CENTER_Y + camera->SA2_LABEL(unk4C) + unk64;
+                }
             }
         }
 
-        if ((camera->unk10 - newX) > camera->unk44) {
-            s32 temp = camera->unk10 - newX - camera->unk44;
-            s32 temp2 = I(camera->unk8);
+        if ((camera->SA2_LABEL(unk10) - newX) > camera->SA2_LABEL(unk44)) {
+            s32 temp = camera->SA2_LABEL(unk10) - newX - camera->SA2_LABEL(unk44);
+            s32 temp2 = CAM_UNK8_INT(camera->SA2_LABEL(unk8));
             if (temp2 > temp) {
                 temp2 = temp;
             }
             newX += temp2;
-        } else if ((camera->unk10 - newX) < -camera->unk44) {
-            s32 temp = (camera->unk10 - newX) + camera->unk44;
-            s32 temp2 = -I(camera->unk8);
+        } else if ((camera->SA2_LABEL(unk10) - newX) < -camera->SA2_LABEL(unk44)) {
+            s32 temp = (camera->SA2_LABEL(unk10) - newX) + camera->SA2_LABEL(unk44);
+            s32 temp2 = -CAM_UNK8_INT(camera->SA2_LABEL(unk8));
             if (temp2 < temp) {
                 temp2 = temp;
             }
 
             newX += temp2;
         }
-
         newX = CLAMP(newX, camera->minX, camera->maxX - DISPLAY_WIDTH);
 
-        if (camera->unk8 < Q(16)) {
-            camera->unk8 += Q(0.125);
+#if (GAME == GAME_SA2)
+        if (camera->SA2_LABEL(unk8) < Q(16)) {
+            camera->SA2_LABEL(unk8) += Q(0.125);
         }
+#endif
 
         if ((player->moveState & MOVESTATE_IN_AIR) && (player->character != CHARACTER_KNUCKLES || player->SA2_LABEL(unk61) != 9)) {
-            camera->unk48 += 4;
-            camera->unk48 = MIN(camera->unk48, 24);
+            camera->SA2_LABEL(unk48) += 4;
+            camera->SA2_LABEL(unk48) = MIN(camera->SA2_LABEL(unk48), 24);
         } else {
-            camera->unk48 -= 4;
-            camera->unk48 = MAX(camera->unk48, 0);
+            camera->SA2_LABEL(unk48) -= 4;
+            camera->SA2_LABEL(unk48) = MAX(camera->SA2_LABEL(unk48), 0);
         }
 
-        if ((camera->unk14 - newY) > camera->unk48) {
-            newY += (camera->unkC > ((camera->unk14 - newY) - camera->unk48)) ? ((camera->unk14 - newY) - camera->unk48) : camera->unkC;
-        } else if ((camera->unk14 - newY) < -(camera->unk48)) {
-            newY += (-camera->unkC < (camera->unk14 - newY) + camera->unk48) ? (camera->unk14 - newY) + camera->unk48 : -camera->unkC;
+        if ((camera->SA2_LABEL(unk14) - newY) > camera->SA2_LABEL(unk48)) {
+            newY += (camera->SA2_LABEL(unkC) > ((camera->SA2_LABEL(unk14) - newY) - camera->SA2_LABEL(unk48)))
+                ? ((camera->SA2_LABEL(unk14) - newY) - camera->SA2_LABEL(unk48))
+                : camera->SA2_LABEL(unkC);
+        } else if ((camera->SA2_LABEL(unk14) - newY) < -(camera->SA2_LABEL(unk48))) {
+            newY += (-camera->SA2_LABEL(unkC) < (camera->SA2_LABEL(unk14) - newY) + camera->SA2_LABEL(unk48))
+                ? (camera->SA2_LABEL(unk14) - newY) + camera->SA2_LABEL(unk48)
+                : -camera->SA2_LABEL(unkC);
         }
 
         newY = CLAMP(newY, camera->minY, camera->maxY - DISPLAY_HEIGHT);
@@ -890,11 +934,13 @@ void UpdateCamera(void)
         newY = newY + camera->shakeOffsetY;
     }
 
+    // TODO: CAMERA_SET_POS macro
     camera->x = newX;
     camera->y = newY;
-
+#if (GAME == GAME_SA2)
     camera->dx -= newX;
     camera->dy -= newY;
+#endif
 
     RenderMetatileLayers(newX, newY);
 
@@ -905,11 +951,38 @@ void UpdateCamera(void)
 
 void RenderMetatileLayers(s32 x, s32 y)
 {
+    Background *layer;
+#if (GAME == GAME_SA1)
+    if (IS_EXTRA_STAGE(gCurrentLevel)) {
+        s32 scrollX = (x + gStageTime * 8);
+        // 2688(0xA80) =
+        //          3072         -          600
+        // Moon Zone Pixel Width - (4 * Metatile_Width)
+        const s32 scrollMaxX = (28 * 96);
+
+        if (scrollX - 72 >= scrollMaxX) {
+            scrollX -= 72;
+            scrollX = Mod(scrollX, scrollMaxX) + 72;
+        }
+
+        x = scrollX;
+        if (IS_EXTRA_STAGE(gCurrentLevel)) {
+            layer = &gStageBackgroundsRam.unk80;
+            gBgScrollRegs[0][0] = x % 8u;
+            gBgScrollRegs[0][1] = y % 8u;
+            layer->scrollX = x;
+            layer->scrollY = y;
+            DrawBackground(layer);
+            return;
+        }
+    }
+#endif
+
 #ifndef COLLECT_RINGS_ROM
     if (!IS_EXTRA_STAGE(gCurrentLevel))
 #endif
     {
-        Background *layer = &gStageBackgroundsRam.unk40;
+        layer = &gStageBackgroundsRam.unk40;
         gBgScrollRegs[1][0] = x % 8u;
         gBgScrollRegs[1][1] = y % 8u;
         layer->scrollX = x;
@@ -926,1429 +999,25 @@ void RenderMetatileLayers(s32 x, s32 y)
     }
 }
 
-/************************************ ZONE 1 ************************************/
-
-void CreateStageBg_Zone1(void)
-{
-    Background *background = &gStageBackgroundsRam.unk0;
-    gDispCnt |= DISPCNT_BG0_ON;
-    gBgCntRegs[0] = BGCNT_SCREENBASE(27) | BGCNT_CHARBASE(3) | BGCNT_PRIORITY(3);
-
+#if (GAME == GAME_SA1)
+#include "../src/game/sa1/stage/backgrounds/zone_1.inc.c"
+#include "../src/game/sa1/stage/backgrounds/zone_2_interior.inc.c"
+#include "../src/game/sa1/stage/backgrounds/zone_3.inc.c"
+#include "../src/game/sa1/stage/backgrounds/zone_4.inc.c"
+#include "../src/game/sa1/stage/backgrounds/zone_6.inc.c"
+#include "../src/game/sa1/stage/backgrounds/zone_7_act_2.inc.c"
+#elif (GAME == GAME_SA2)
+#include "../src/game/sa2/stage/backgrounds/zone_1.inc.c"
 #ifndef COLLECT_RINGS_ROM
-    if (gGameMode != GAME_MODE_MULTI_PLAYER_COLLECT_RINGS) {
-        const Background *templates = gStageCameraBgTemplates;
-        memcpy(background, &templates[3], sizeof(Background));
-
-        background->tilemapId = TM_STAGE_1_BG_0_COPY;
-        background->graphics.dest = (void *)BG_SCREEN_ADDR(24);
-        background->layoutVram = (void *)BG_SCREEN_ADDR(27);
-
-        background->targetTilesX = 256 / TILE_WIDTH;
-        background->targetTilesY = 256 / TILE_WIDTH;
-    } else
+#include "../src/game/sa2/stage/backgrounds/zone_2.inc.c"
+#include "../src/game/sa2/stage/backgrounds/zone_3.inc.c"
+#include "../src/game/sa2/stage/backgrounds/zone_4.inc.c"
+#include "../src/game/sa2/stage/backgrounds/zone_5.inc.c"
+#include "../src/game/sa2/stage/backgrounds/zone_6.inc.c"
+#include "../src/game/sa2/stage/backgrounds/zone_7_init.inc.c"
+#include "../src/game/sa2/stage/backgrounds/zone_8.inc.c"
 #endif
-    {
-        const Background *templates = gStageCameraBgTemplates;
-        memcpy(background, &templates[3], sizeof(Background));
-        background->tilemapId = TM_LEVEL_BG(LEVEL_INDEX(ZONE_1, ACT_1));
-
-        background->graphics.dest = (void *)BG_SCREEN_ADDR(24);
-        background->layoutVram = (void *)BG_SCREEN_ADDR(27);
-
-        background->targetTilesX = 256 / TILE_WIDTH;
-        background->targetTilesY = 240 / TILE_WIDTH;
-    }
-
-    DrawBackground(background);
-    gBgScrollRegs[0][0] = 0;
-    gBgScrollRegs[0][1] = 0;
-}
-
-#ifndef COLLECT_RINGS_ROM
-
-void StageBgUpdate_Zone1Acts12(s32 UNUSED a, s32 UNUSED b)
-{
-    s32 i;
-    s32 initial1, initial2;
-    s16 camY;
-    u16 bgScroll;
-    u16 *cursor;
-
-    if (gGameMode != GAME_MODE_MULTI_PLAYER_COLLECT_RINGS) {
-        if ((gPlayer.moveState & MOVESTATE_GOAL_REACHED) && gSpecialRingCount >= SPECIAL_STAGE_REQUIRED_SP_RING_COUNT) {
-            s32 temp, val;
-            temp = (gPlayer.moveState & MOVESTATE_4000000) ? 7 : 0xF;
-
-            val = gBgScrollRegs[0][0];
-            if ((gStageTime & temp) == temp) {
-                val++;
-            }
-            gBgScrollRegs[0][0] = val;
-            gBgScrollRegs[0][0] &= 0xFF;
-        } else {
-            gBgScrollRegs[0][0] = gCamera.x >> 6;
-            gBgScrollRegs[0][0] &= 0xFF;
-        }
-
-        gBgScrollRegs[0][1] = gCamera.y >> 9;
-        gFlags |= FLAGS_EXECUTE_HBLANK_COPY;
-        gHBlankCopyTarget = (void *)REG_ADDR_BG3HOFS;
-        gHBlankCopySize = 4;
-        cursor = gBgOffsetsHBlankPrimary;
-        initial1 = 0;
-
-        if ((gPlayer.moveState & MOVESTATE_GOAL_REACHED) && gSpecialRingCount >= SPECIAL_STAGE_REQUIRED_SP_RING_COUNT) {
-            s32 temp, val;
-            temp = (gPlayer.moveState & MOVESTATE_4000000) ? 0xF : 0x1F;
-
-            val = gBgScrollRegs[3][0];
-            if ((gStageTime & temp) == temp) {
-                val++;
-            }
-            gBgScrollRegs[3][0] = val;
-            gBgScrollRegs[3][0] &= 0xFF;
-            bgScroll = gBgScrollRegs[3][0];
-        } else {
-            bgScroll = gCamera.x >> 7;
-            gBgScrollRegs[3][0] = bgScroll;
-        }
-
-        camY = gCamera.y >> 8;
-        initial2 = 0;
-
-#ifdef BUG_FIX
-        if (cursor != NULL)
 #endif
-        {
-            for (i = 71; i >= 0; i--) {
-                *cursor++ = initial1;
-                *cursor++ = initial2;
-            }
-
-            for (i = 86; i >= 0; i--) {
-                *cursor++ = bgScroll;
-                *cursor++ = camY;
-            }
-        }
-    }
-}
-
-/************************************ ZONE 2 ************************************/
-
-// (88.05%) https://decomp.me/scratch/ekyaq
-// (91.40%) https://decomp.me/scratch/vapLV
-// (95.71%) https://decomp.me/scratch/Naixp (more accurate)
-NONMATCH("asm/non_matching/game/sa2/stage/background/StageBgUpdate_Zone2Acts12.inc",
-         void StageBgUpdate_Zone2Acts12(s32 cameraX, s32 cameraY))
-{
-    s16 something;
-    u8 i, j;
-    s16 camFracY, camFracX;
-
-    u16 *cursor;
-    s32 x0 = 0;
-    if ((gPlayer.moveState & MOVESTATE_GOAL_REACHED) && gSpecialRingCount >= 7) {
-        if (gBgScrollRegs[3][0] == 0) {
-            gBgScrollRegs[3][0] = cameraX;
-        }
-        gBgScrollRegs[3][0] += (gPlayer.qSpeedGround >> 8);
-        cameraX = gBgScrollRegs[3][0];
-    }
-
-    if (!IS_SINGLE_PLAYER) {
-        gBgScrollRegs[3][0] = cameraX >> 4;
-        camFracY = Div(cameraY, 0x10);
-        if (camFracY > 0x100) {
-            camFracY = 0x100;
-        }
-        gBgScrollRegs[3][1] = camFracY;
-    } else {
-        s32 dt;
-
-        camFracY = Div(cameraY, 0x10);
-
-        // Prevent wrapping of the background map at the bottom of the screen on high cameraY's
-#if !WIDESCREEN_HACK
-        if (camFracY > 0x100) {
-            camFracY = 0x100;
-        }
-#else
-        {
-            // TODO: Use proper maths for max, depending on DISPLAY_HEIGHT instead of a hardcoded value
-            const u32 max = 153;
-
-            if (camFracY > max) {
-                camFracY = max;
-            }
-        }
-#endif
-
-        camFracX = Div(cameraX, 0x69);
-        if (camFracX > 0x100) {
-            camFracX = 0x100;
-        }
-
-        gFlags |= FLAGS_EXECUTE_HBLANK_COPY;
-        gHBlankCopyTarget = (void *)REG_ADDR_BG3HOFS;
-        gHBlankCopySize = sizeof(u16) * 2;
-
-        cursor = gBgOffsetsHBlankPrimary;
-        dt = gStageTime * 0x18;
-
-        // Sky and Clouds
-        for (i = 0; i < DISPLAY_HEIGHT - 1; i++) {
-            if ((u32)((camFracY + i) - 111) < 10) {
-                camFracX = ((((camFracY + i) - 110) * cameraX) >> 5) & 0xFF;
-            } else {
-                camFracX = (camFracY + i) > 120 ? ((cameraX * 10) >> 5) & 0xFF : camFracX;
-            }
-            *cursor++ = camFracX;
-            *cursor++ = camFracY;
-            if ((camFracY + i) + (SIN(((i * 8) + (camFracY << 3)) & ONE_CYCLE) >> 12) >= 178) {
-                break;
-            }
-        }
-
-        // Red Bottom
-        something = (cameraX >> 3);
-        for (j = 0; i < DISPLAY_HEIGHT - 1; i++, j++) {
-            u16 cursorX, cursorY;
-
-            x0 += 8;
-            x0 = CLAMP_SIN_PERIOD(x0);
-            cursorX = camFracX + (SIN(x0) >> 13) + (COS(((gStageTime * 2) + x0) & 0x3FF) >> 11)
-                + (SIN(CLAMP_SIN_PERIOD(dt + (i * 0x40))) >> 13);
-            *cursor++ = cursorX;
-            cursorY = (j / 2) + camFracY + (SIN(x0) >> 12) + (COS(CLAMP_SIN_PERIOD(gStageTime + (i * 8))) >> 10);
-            *cursor++ = cursorY;
-        };
-    }
-}
-END_NONMATCH
-
-// TODO: make this static!
-extern const u8 gUnknown_080D5B20[16][3];
-
-const u8 gUnknown_080D5B20[16][3] = {
-    { 14, 0, 1 }, //
-    { 22, 0, 3 }, //
-    { 30, 0, 2 }, //
-    { 38, 0, 1 }, //
-    { 46, 0, 3 }, //
-    { 62, 0, 1 }, //
-    { 70, 0, 2 }, //
-    { 86, 0, 1 }, //
-    { 94, 0, 2 }, //
-    { 126, 0, 1 }, //
-    { 168, 1, 1 }, //
-    { 174, 1, 2 }, //
-    { 182, 2, 3 }, //
-    { 198, 3, 4 }, //
-    { 222, 4, 5 }, //
-    { 255, 5, 6 }, //
-};
-
-// NOTE: Only values > 105 appear to be used.
-const u8 gUnknown_080D5B50[DISPLAY_HEIGHT] = { // 0-94
-                                               10, 10, 10, //
-                                               10, 10, 10, //
-                                               10, 10, 10, //
-                                               10, 10, 10, //
-                                               10, 10, 10, //
-                                               10, 10, 10, //
-                                               10, 10, 10, //
-                                               10, 10, 10, //
-                                               10, 10, 10, //
-                                               10, 10, 10, //
-                                               10, 10, 10, //
-                                               10, 10, 10, //
-                                               10, 10, 10, //
-                                               10, 10, 10, //
-                                               10, 10, 10, //
-                                               10, 10, 10, //
-                                               10, 10, 10, //
-                                               10, 10, 10, //
-                                               10, 10, 10, //
-                                               10, 10, 10, //
-                                               10, 10, 10, //
-                                               10, 10, 10, //
-                                               10, 10, 10, //
-                                               10, 10, 10, //
-                                               10, 10, 10, //
-                                               10, 10, 10, //
-                                               10, 10, 10, //
-                                               10, 10, 10, //
-                                               10, 10, 10, //
-                                               10, 10, 10, //
-                                               10, 10, 10, //
-                                               10, 10, 8, 8, 8, 8, // 95-98
-                                               7, 7, 7, 7, // 99-102
-                                               6, 6, 6, // 103-104
-                                               /* 105-159 */
-                                               6, 6, //
-                                               6, 6, 6, //
-                                               5, 5, 5, //
-                                               5, 5, 5, //
-                                               5, 5, 4, //
-                                               4, 4, 4, //
-                                               4, 4, 4, //
-                                               4, 3, 3, //
-                                               3, 3, 3, //
-                                               3, 3, 3, //
-                                               3, 3, 3, //
-                                               3, 3, 3, //
-                                               3, 3, 2, //
-                                               2, 2, 2, //
-                                               2, 2, 2, //
-                                               2, 2, 2, //
-                                               2, 2, 2, //
-                                               2, 2, 2, //
-
-                                               // Maybe padding?
-                                               0
-};
-
-/************************************ ZONE 3 ************************************/
-
-static s16 sUnknown_03000408;
-
-void CreateStageBg_Zone3(void)
-{
-    Background *background = &gStageBackgroundsRam.unk0;
-    gDispCnt |= DISPCNT_BG0_ON;
-    gBgCntRegs[0] = BGCNT_SCREENBASE(27) | BGCNT_CHARBASE(3) | BGCNT_PRIORITY(3);
-
-    *background = gStageCameraBgTemplates[3];
-
-    background->tilemapId = TM_MUSIC_PLANT_MOVING_STARS;
-    background->graphics.dest = (void *)BG_SCREEN_ADDR(24);
-    background->layoutVram = (void *)BG_SCREEN_ADDR(27);
-    background->targetTilesX = 0x20;
-    background->targetTilesY = 0x20;
-    DrawBackground(background);
-
-    gBgScrollRegs[0][0] = 0;
-    gBgScrollRegs[0][1] = 0;
-    gBgScrollRegs[3][0] = 0;
-    gBgScrollRegs[3][1] = 0;
-}
-
-// (85.02%) https://decomp.me/scratch/Esyzr
-#if 01
-NONMATCH("asm/non_matching/game/sa2/stage/background/StageBgUpdate_Zone3Acts12.inc",
-         void StageBgUpdate_Zone3Acts12(s32 cameraX, s32 cameraY))
-#else
-void StageBgUpdate_Zone3Acts12(s32 cameraX, s32 cameraY)
-#endif
-{
-    s16 r6;
-    u8 i;
-    u8 sp40;
-    Vec2_16 sp[16];
-    Vec2_16 *cursorStack;
-    u8 *cursor;
-    s32 pFlags;
-#ifndef NON_MATCHING
-    register s16 sl asm("sl") = 0;
-    register u16 *bgBuffer asm("r5") = gBgOffsetsHBlankPrimary;
-    register s16 camFracY asm("r3") = (Div(cameraY, 60) << 16) >> 16;
-#else
-    s16 sl = 0;
-    u16 *bgBuffer = gBgOffsetsHBlankPrimary;
-    s16 camFracY = Div(cameraY, 60);
-#endif
-
-    // Prevent wrapping of the background map at the bottom of the screen on high cameraY's
-#if WIDESCREEN_HACK
-    if (camFracY > 256 - DISPLAY_HEIGHT) {
-        camFracY = 256 - DISPLAY_HEIGHT;
-    }
-#endif
-
-    gBgScrollRegs[0][1] = camFracY;
-    gBgScrollRegs[3][1] = camFracY;
-
-    if (IS_SINGLE_PLAYER) {
-        if ((gPlayer.moveState & MOVESTATE_GOAL_REACHED) && (gSpecialRingCount >= SPECIAL_STAGE_REQUIRED_SP_RING_COUNT)) {
-            if (sUnknown_03000408 == 0) {
-                sUnknown_03000408 = cameraX;
-            }
-            sUnknown_03000408 += I(gPlayer.qSpeedGround);
-            cameraX = sUnknown_03000408;
-        } else {
-            sUnknown_03000408 = 0;
-        }
-        // _0801CC72
-        i = 0;
-
-        {
-            s32 r6 = camFracY;
-            cursor = (u8 *)gUnknown_080D5B20;
-            sp40 = camFracY;
-
-            while (r6 >= cursor[i * 3]) {
-                if (++i >= ARRAY_COUNT(gUnknown_080D5B20)) {
-                    break;
-                }
-                {
-                    sl = i;
-                }
-            }
-        }
-        //_0801CCA8:
-
-        for (i = 0; i < ARRAY_COUNT(gUnknown_080D5B20); i++) {
-            sp[i].x = (((gUnknown_080D5B20[i][1] * cameraX) >> 5) & 0xFF);
-            sp[i].y = (((gUnknown_080D5B20[i][2] * cameraX) >> 5) & 0xFF);
-        }
-        // __0801CCF0
-
-        cursorStack = &sp[sl];
-        cursor = (u8 *)gUnknown_080D5B20[sl];
-        for (i = 0; (u8)i < DISPLAY_HEIGHT - 1; sp40++, i++) {
-            *bgBuffer = cursorStack->y;
-            bgBuffer++;
-
-            *bgBuffer = cursorStack->x;
-            bgBuffer++;
-
-            if (sp40 >= *cursor) {
-                cursor += 3;
-                cursorStack++;
-            }
-        }
-
-        // __0801CD2C
-        gHBlankCallbacks[gNumHBlankCallbacks++] = HBlankCB_801E454;
-        gFlags |= FLAGS_EXECUTE_HBLANK_CALLBACKS;
-    }
-}
-#if 01
-END_NONMATCH
-#endif
-
-/************************************ ZONE 4 ************************************/
-
-static s16 sCameraShiftX;
-
-void CreateStageBg_Zone4(void)
-{
-    Background *background = &gStageBackgroundsRam.unk0;
-    const Background *templates;
-    gBgCntRegs[0] = BGCNT_SCREENBASE(27) | BGCNT_CHARBASE(3) | BGCNT_PRIORITY(3);
-
-    *background = gStageCameraBgTemplates[CAMBG_BACK_B_LAYER];
-
-    background->tilemapId = TM_SPOTLIGHT_SNOW;
-    background->graphics.dest = (void *)BG_SCREEN_ADDR(24);
-    background->layoutVram = (void *)BG_SCREEN_ADDR(27);
-    background->targetTilesX = 32;
-    background->targetTilesY = 32;
-    background->flags = BACKGROUND_DISABLE_PALETTE_UPDATE | BACKGROUND_FLAGS_BG_ID(3);
-    DrawBackground(background);
-
-    gBgScrollRegs[0][0] = 0;
-    gBgScrollRegs[0][1] = 0;
-    gBgScrollRegs[3][0] = 0;
-    gBgScrollRegs[3][1] = 0;
-
-// Software renderer for these devices are too slow
-// to handle these spotlights
-#if !defined(__PS2__) && !defined(__PSP__)
-    if (IS_SINGLE_PLAYER) {
-        CreateSpotlightsManager();
-    }
-#endif
-}
-
-void StageBgUpdate_Zone4Acts12(s32 cameraX, s32 cameraY)
-{
-    Player *player = &gPlayer;
-    s32 camFracY;
-
-    if ((player->moveState & MOVESTATE_GOAL_REACHED) && gSpecialRingCount >= SPECIAL_STAGE_REQUIRED_SP_RING_COUNT) {
-        if (sCameraShiftX == 0) {
-            sCameraShiftX = cameraX;
-        }
-        sCameraShiftX += I(player->qSpeedGround);
-        cameraX = sCameraShiftX;
-    } else {
-        sCameraShiftX = 0;
-    }
-
-    if (IS_SINGLE_PLAYER && !(gStageFlags & STAGE_FLAG__100)) {
-        gWinRegs[WINREG_WINOUT] = 0x3e;
-        gWinRegs[WINREG_WININ] = 0x3f3f;
-        gWinRegs[WINREG_WIN0H] = WIN_RANGE(0, DISPLAY_WIDTH);
-        gWinRegs[WINREG_WIN0V] = WIN_RANGE(0, DISPLAY_HEIGHT);
-        gWinRegs[WINREG_WIN1H] = WIN_RANGE(0, DISPLAY_WIDTH);
-        gWinRegs[WINREG_WIN1V] = WIN_RANGE(0, DISPLAY_HEIGHT);
-        gBldRegs.bldY = 7;
-        gBldRegs.bldCnt = 0x3f41;
-        gBldRegs.bldAlpha = 0xc0c;
-    }
-
-#ifdef BUG_FIX
-    UpdateBgAnimationTiles(&gStageBackgroundsRam.unk0);
-    DrawBackground(&gStageBackgroundsRam.unk0);
-#else
-    DrawBackground(&gStageBackgroundsRam.unk0);
-    UpdateBgAnimationTiles(&gStageBackgroundsRam.unk0);
-#endif
-
-    if ((gStageTime % 16u) == 0) {
-        gBgScrollRegs[0][0] = (gBgScrollRegs[0][0] - 1) & 0xff;
-        gBgScrollRegs[0][1] = (gBgScrollRegs[0][1] - 1) & 0xff;
-    }
-    gBgScrollRegs[3][0] = cameraX >> 4;
-
-    camFracY = cameraY >> 6;
-#if WIDESCREEN_HACK
-    if (camFracY > 256 - DISPLAY_HEIGHT) {
-        camFracY = 256 - DISPLAY_HEIGHT;
-    }
-#endif
-    gBgScrollRegs[3][1] = camFracY;
-}
-
-/************************************ ZONE 5 ************************************/
-
-void CreateStageBg_Zone5(void)
-{
-    Background *background = &gStageBackgroundsRam.unk0;
-
-    if (IS_SINGLE_PLAYER) {
-        gDispCnt |= DISPCNT_BG0_ON;
-        gBgCntRegs[0] = (BGCNT_TXT256x256 | BGCNT_SCREENBASE(SCREENBASE_SKY_CANYON_CLOUDS) | BGCNT_CHARBASE(3));
-        *background = gStageCameraBgTemplates[3];
-        background->tilemapId = TM_SKY_CANYON_CLOUDS_FOREGROUND;
-        background->graphics.dest = (void *)BG_SCREEN_ADDR(24);
-        background->layoutVram = (void *)BG_SCREEN_ADDR(SCREENBASE_SKY_CANYON_CLOUDS);
-        background->targetTilesX = (256 / TILE_WIDTH);
-        background->targetTilesY = (256 / TILE_WIDTH);
-        DrawBackground(background);
-    }
-
-    gBgScrollRegs[0][0] = 0;
-    gBgScrollRegs[0][1] = 160 - DISPLAY_HEIGHT;
-    gBgScrollRegs[3][0] = 0;
-    gBgScrollRegs[3][1] = 0;
-}
-
-#if WIDESCREEN_HACK
-// NOTE: This is very much temporary.
-void HBlankCB_FixCloudRendering(int_vcount vcount)
-{
-    // NOTE: If gBgScrollRegs[0][1] doesn't also get set here, a transparent line will appear at the very top.
-    //       Only setting REG_BG0VOFS leads to its value getting overwritten at the end of the frame,
-    //       with gBgScrollRegs[0][1], so we have to set it accordingly.
-    if (vcount < 80 || vcount == 239) {
-        REG_BG0VOFS = 0;
-        gBgScrollRegs[0][1] = 0;
-    } else {
-        REG_BG0VOFS = 160 - DISPLAY_HEIGHT;
-        gBgScrollRegs[0][1] = 160 - DISPLAY_HEIGHT;
-    }
-}
-#endif
-
-#define BG_CLOUD_START_Y 96
-
-void StageBgUpdate_Zone5Acts12(s32 UNUSED cameraX, s32 UNUSED cameraY)
-{
-    s32 num;
-    u16 *cursor, i, val;
-    gBgScrollRegs[0][0]++;
-    gBgScrollRegs[3][0] = 0;
-    num = gStageTime * 2;
-
-    if (IS_SINGLE_PLAYER) {
-        gFlags = gFlags | FLAGS_EXECUTE_HBLANK_COPY;
-        gHBlankCopyTarget = (void *)REG_ADDR_BG3HOFS;
-        gHBlankCopySize = 2;
-        cursor = gBgOffsetsHBlankPrimary;
-
-        if (gCurrentLevel != LEVEL_INDEX(ZONE_5, ACT_BOSS)) {
-            gDispCnt |= DISPCNT_BG0_ON;
-            gDispCnt |= DISPCNT_WIN0_ON;
-            gWinRegs[WINREG_WINOUT] = WINOUT_WIN01_ALL;
-            gWinRegs[WINREG_WININ] = (WININ_WIN0_ALL | WININ_WIN1_ALL);
-            gWinRegs[WINREG_WIN0H] = WIN_RANGE(0, DISPLAY_WIDTH);
-            gWinRegs[WINREG_WIN0V] = WIN_RANGE(0, DISPLAY_HEIGHT);
-            gWinRegs[WINREG_WIN1H] = WIN_RANGE(0, DISPLAY_WIDTH);
-            gWinRegs[WINREG_WIN1V] = WIN_RANGE(0, DISPLAY_HEIGHT);
-            gBldRegs.bldY = 7;
-            gBldRegs.bldCnt = (BLDCNT_TGT2_ALL | BLDCNT_EFFECT_BLEND | BLDCNT_TGT1_BG0);
-            gBldRegs.bldAlpha = BLDALPHA_BLEND(16, 16);
-        }
-
-        // Move the parallax clouds
-#if !WIDESCREEN_HACK
-        for (i = 0; i < BG_CLOUD_START_Y; i++) {
-            *cursor++ = 0;
-        }
-
-        val = Div(num, 8);
-        for (; i < BG_CLOUD_START_Y + 4; i++) {
-            *cursor++ = val;
-        }
-
-        val = Div(num, 7);
-        for (; i < BG_CLOUD_START_Y + 8; i++) {
-            *cursor++ = val;
-        }
-
-        val = Div(num, 6);
-        for (; i < BG_CLOUD_START_Y + 16; i++) {
-            *cursor++ = val;
-        }
-
-        val = Div(num, 5);
-        for (; i < BG_CLOUD_START_Y + 24; i++) {
-            *cursor++ = val;
-        }
-
-        val = Div(num, 4);
-        for (; i < BG_CLOUD_START_Y + 32; i++) {
-            *cursor++ = val;
-        }
-
-        val = Div(num, 3);
-        for (; i < BG_CLOUD_START_Y + 48; i++) {
-            *cursor++ = val;
-        }
-
-        val = Div(num, 2);
-        for (; i < BG_CLOUD_START_Y + 63; i++) {
-            *cursor++ = val;
-        }
-#else
-        // NOTE: Temporary solution to render the bottom of the background in a decent looking way
-        gHBlankCopySize = 2 * sizeof(u16);
-
-        for (i = 0; i < DISPLAY_HEIGHT - 1; i++) {
-            s32 originalLine = (s32)(((float)i / (float)DISPLAY_HEIGHT) * 160.0f);
-
-            if (originalLine > 159) {
-                originalLine = 159;
-            }
-
-            if (originalLine < BG_CLOUD_START_Y) {
-                *cursor++ = 0;
-                *cursor++ = originalLine - i;
-            } else if (originalLine < BG_CLOUD_START_Y + 4) {
-                *cursor++ = num >> 3;
-                *cursor++ = originalLine - i;
-            } else if (originalLine < BG_CLOUD_START_Y + 8) {
-                *cursor++ = Div(num, 7);
-                *cursor++ = originalLine - i;
-            } else if (originalLine < BG_CLOUD_START_Y + 16) {
-                *cursor++ = Div(num, 6);
-                *cursor++ = originalLine - i;
-            } else if (originalLine < BG_CLOUD_START_Y + 24) {
-                *cursor++ = Div(num, 5);
-                *cursor++ = originalLine - i;
-            } else if (originalLine < BG_CLOUD_START_Y + 32) {
-                *cursor++ = num >> 2;
-                *cursor++ = originalLine - i;
-            } else if (originalLine < BG_CLOUD_START_Y + 48) {
-                *cursor++ = Div(num, 3);
-                *cursor++ = originalLine - i;
-            } else if (originalLine < BG_CLOUD_START_Y + 63) {
-                *cursor++ = num >> 1;
-                *cursor++ = originalLine - i;
-            } else {
-                *cursor++ = 0;
-                *cursor++ = originalLine - i;
-            }
-        }
-
-        gHBlankCallbacks[gNumHBlankCallbacks++] = HBlankCB_FixCloudRendering;
-        gFlags |= FLAGS_EXECUTE_HBLANK_CALLBACKS;
-#endif
-    }
-}
-
-/************************************ ZONE 6 ************************************/
-
-const s16 gUnknown_080D5BF0[] = {
-    Q_8_8(0.00), Q_8_8(0.25), Q_8_8(2.25), Q_8_8(2.50), Q_8_8(3.50), Q_8_8(3.625), Q_8_8(5.625), Q_8_8(5.75), Q_8_8(6.75),
-};
-
-// TODO: Make static and Rename to sBlendColors
-const u8 gUnknown_080D5C02[2][16][3] = {
-    {
-        //   r,    g,    b
-        { 0x1F, 0x00, 0x1F },
-        { 0x01, 0x07, 0x14 },
-        { 0x01, 0x09, 0x14 },
-        { 0x00, 0x0A, 0x13 },
-        { 0x00, 0x0C, 0x13 },
-        { 0x00, 0x0D, 0x12 },
-        { 0x00, 0x0F, 0x12 },
-        { 0x00, 0x10, 0x11 },
-        { 0x00, 0x12, 0x10 },
-        { 0x00, 0x13, 0x10 },
-        { 0x00, 0x15, 0x0F },
-        { 0x00, 0x16, 0x0F },
-        { 0x00, 0x18, 0x0E },
-        { 0x00, 0x19, 0x0E },
-        { 0x00, 0x1B, 0x0D },
-        { 0x1F, 0x07, 0x00 },
-    },
-    {
-        //   r,    g,    b
-        { 0x1F, 0x00, 0x00 },
-        { 0x0F, 0x00, 0x1B },
-        { 0x0E, 0x00, 0x19 },
-        { 0x0D, 0x01, 0x17 },
-        { 0x0C, 0x01, 0x15 },
-        { 0x0B, 0x02, 0x13 },
-        { 0x0A, 0x02, 0x11 },
-        { 0x08, 0x03, 0x0F },
-        { 0x07, 0x03, 0x0D },
-        { 0x06, 0x04, 0x0B },
-        { 0x05, 0x04, 0x09 },
-        { 0x04, 0x05, 0x07 },
-        { 0x03, 0x05, 0x05 },
-        { 0x02, 0x06, 0x03 },
-        { 0x01, 0x06, 0x01 },
-        { 0x00, 0x07, 0x00 },
-    },
-};
-
-void CreateStageBg_Zone6_Acts(void)
-{
-    gDispCnt |= DISPCNT_BG0_ON;
-    gBgCntRegs[0] = BGCNT_SCREENBASE(26) | BGCNT_CHARBASE(3) | BGCNT_PRIORITY(3);
-    INIT_BG_SPRITES_LAYER_32(0);
-    DmaFill32(3, 0, BG_SCREEN_ADDR(24), sizeof(Background));
-    gBgScrollRegs[0][0] = 0;
-    gBgScrollRegs[0][1] = 0;
-    gBgScrollRegs[3][0] = 0;
-    gBgScrollRegs[3][1] = 0;
-    gStageTime = 0x380;
-
-    if (USE_BOSS_BG_IN_ZONE_6_ACTS || IS_MULTI_PLAYER) {
-        CreateStageBg_Zone6_Boss();
-    }
-
-    gBgCntRegs[3] &= ~BGCNT_PRIORITY(3);
-    gBgCntRegs[3] |= BGCNT_PRIORITY(2);
-}
-
-void CreateStageBg_Zone6_Boss(void)
-{
-    Background *background = &gStageBackgroundsRam.unk0;
-    gDispCnt |= DISPCNT_BG0_ON;
-    gBgCntRegs[0] = BGCNT_SCREENBASE(26) | BGCNT_CHARBASE(3) | BGCNT_PRIORITY(3);
-    INIT_BG_SPRITES_LAYER_32(0);
-    DmaFill32(3, 0, BG_SCREEN_ADDR(24), sizeof(Background));
-    gBgScrollRegs[0][0] = 0;
-    gBgScrollRegs[0][1] = 0;
-    gBgScrollRegs[3][0] = 0;
-    gBgScrollRegs[3][1] = 0;
-
-    *background = gStageCameraBgTemplates[3];
-    background->tilemapId = TM_TECHNO_BASE_BG_CIRCUIT_MASK;
-    background->graphics.dest = (void *)BG_SCREEN_ADDR(24);
-    background->layoutVram = (void *)BG_SCREEN_ADDR(26);
-    background->targetTilesX = 32;
-    background->targetTilesY = 32;
-
-    DrawBackground(background);
-}
-
-// (82.58%) https://decomp.me/scratch/tB3Bs
-// (85.82%) https://decomp.me/scratch/pNyvP
-NONMATCH("asm/non_matching/game/sa2/stage/background/sub_801D24C.inc", void sub_801D24C(u8 p0, s16 p1, u8 p2))
-{
-    s16 r6;
-    u16 *hOffsets;
-    s32 stageTime;
-    s32 stageTime2;
-    s16 i;
-    s16 r4;
-    s32 sl;
-    s32 p1_2;
-
-    gFlags |= FLAGS_EXECUTE_HBLANK_COPY;
-
-    gHBlankCopyTarget = (void *)&REG_BG0HOFS;
-    gHBlankCopySize = 4;
-
-    gWinRegs[WINREG_WINOUT] = WINOUT_WIN01_ALL;
-    gBldRegs.bldCnt = (BLDCNT_TGT2_ALL | BLDCNT_EFFECT_BLEND | BLDCNT_TGT1_BG0);
-    gBldRegs.bldAlpha = BLDALPHA_BLEND(16, 8);
-    gBldRegs.bldY = 16 * 10;
-
-    hOffsets = gBgOffsetsHBlankPrimary;
-
-    stageTime = (gStageTime & 0x3FF);
-    stageTime2 = ((gStageTime >> 1) & 0x3FF);
-
-    // p1 *= 2.5
-
-    p1_2 = p1;
-    r6 = (DISPLAY_HEIGHT - 1) - ((p1_2 * 2) + (p1_2 >> 1));
-
-    if (r6 > (DISPLAY_HEIGHT - 1)) {
-        r6 = (DISPLAY_HEIGHT - 1);
-    }
-
-    if (p2 != 0) {
-        s16 r2;
-        // _0801D2CA
-        gBldRegs.bldAlpha = BLDALPHA_BLEND(16, (16 - (p1_2 >> 4)));
-
-        for (r4 = 0; r4 < r6; r4++) {
-            *hOffsets++ = 0;
-            *hOffsets++ = (-15 - r4) & 0xFF;
-        }
-        // _0801D312
-
-        while (r4 < (DISPLAY_HEIGHT - 1)) {
-            // _0801D31C
-            s32 sin = SIN_24_8(CLAMP_SIN_PERIOD(r4 * 16 + stageTime2 + stageTime)) >> 1;
-            sin++;
-            sin = (sin)-r4 * 2;
-            *hOffsets++ = sin & 0xFF;
-
-            if ((r4 - 15) < r6) {
-                s32 r0 = (1 - r4);
-                r0 -= (((r4 - r6) - 15) * 8);
-                *hOffsets++ = r0 & 0xFE;
-            } else {
-                // _0801D3A0
-                s32 sin = (SIN_24_8(CLAMP_SIN_PERIOD(stageTime + r4 * 4)) >> 1) + 1;
-                sin = sin - r4;
-                *hOffsets++ = (stageTime2 + sin) & 0xFF;
-            }
-
-            r4++;
-        }
-    } else {
-        // _0801D3D6
-        gBldRegs.bldAlpha = BLDALPHA_BLEND(16, (16 - (p1_2 >> 5)));
-        r4 = 0;
-
-        // _0801D3FC
-        for (; r4 < r6; r4++) {
-            s32 sin = SIN_24_8(CLAMP_SIN_PERIOD(r4 * 16 + stageTime2 + stageTime)) >> 1;
-            sin += 1;
-            sin = sin - r4 * 2;
-            *hOffsets++ = sin & 0xFF;
-
-            sin = SIN_24_8((CLAMP_SIN_PERIOD(stageTime2 + r4 * 4))) >> 1;
-            sin++;
-            sin = (sin)-r4 * 2;
-            *hOffsets++ = (stageTime2 + sin) & 0xFF;
-        }
-
-        // _0801D44C
-
-        while (r4 < (DISPLAY_HEIGHT - 1)) {
-            *hOffsets++ = 0;
-
-            if ((r4 - 15) < r6) {
-                *hOffsets++ = ((((r4 - r6) - 15) << 3) - (r4 - 1)) & 0xFF;
-            } else {
-                *hOffsets++ = ((-r4 + 1) & 0xFF);
-            }
-
-            r4++;
-        }
-    }
-    // _0801D498
-
-    if (p0 > 16) {
-        p0 = 16;
-    }
-    // _0801D4A2
-
-    for (i = 0; i < PALETTE_LEN_4BPP; i++) {
-        s32 b, g, r;
-        r = (p0 * gUnknown_080D5C02[1][i][0]) >> 4;
-        r &= 0x1F;
-
-        g = (p0 * gUnknown_080D5C02[1][i][1]) >> 4;
-        g &= 0x1F;
-
-        b = (p0 * gUnknown_080D5C02[1][i][2]) >> 4;
-        b &= 0x1F;
-
-        SET_PALETTE_COLOR_BG(15, i, RGB16_REV(r, g, b));
-    }
-
-    gFlags |= FLAGS_UPDATE_BACKGROUND_PALETTES;
-}
-END_NONMATCH
-
-// (84.63%) https://decomp.me/scratch/W9B0j
-// (82.95%) https://decomp.me/scratch/ZEtCx (newer)
-NONMATCH("asm/non_matching/game/sa2/stage/background/StageBgUpdate_Zone6Acts12.inc", void StageBgUpdate_Zone6Acts12(s32 x, s32 UNUSED y))
-{
-    u16 r6;
-    u8 r5;
-    u8 r2;
-    Background *bg = &gStageBackgroundsRam.unk0;
-
-    gBgScrollRegs[3][0] = x >> 4;
-
-    r6 = Mod(gStageTime, 0x680);
-    r5 = 0;
-    r2 = 8;
-
-    if (r6 > gUnknown_080D5BF0[7]) {
-        r5 = 7;
-    } else
-        while (1) {
-            u32 r3;
-            u32 r0 = (r2 << 24);
-            r0 += (0xFF << 24);
-            r2 = r0 >> 24;
-            r3 = r2 << 24;
-            r0 = r3 >> 24;
-            if (((signed)r0 >= 0) || (r6 > gUnknown_080D5BF0[r0])) {
-                break;
-            }
-        }
-
-    if (IS_MULTI_PLAYER) {
-        r5 = 5;
-    }
-
-    SET_PALETTE_COLOR_BG(0, 0, RGB_BLACK);
-    gFlags |= FLAGS_UPDATE_BACKGROUND_PALETTES;
-
-    switch (r5) {
-        case 0: {
-            if (r6 == 1) {
-                const Background *bgTemplate = gStageCameraBgTemplates;
-                memcpy(bg, (bgTemplate + 3), sizeof(Background));
-                bg->tilemapId = TM_TECHNO_BASE_BG_PURPLE_GRID;
-                bg->graphics.dest = (void *)BG_CHAR_ADDR(3);
-                bg->layoutVram = (void *)BG_SCREEN_ADDR(26);
-                bg->targetTilesX = 32;
-                bg->targetTilesY = 32;
-                DrawBackground(bg);
-            } else if (r6 > 1) {
-                // _0801D636
-                gDispCnt |= DISPCNT_BG0_ON;
-                gBgCntRegs[0] &= ~BGCNT_PRIORITY(3);
-                gBgCntRegs[0] |= BGCNT_PRIORITY(3);
-                gBgCntRegs[3] &= ~BGCNT_PRIORITY(3);
-                gBgCntRegs[3] |= BGCNT_PRIORITY(3);
-
-                r2 = r6;
-                if (r2 > 63)
-                    r2 = 63;
-
-                r6 /= 4u;
-
-                sub_801D24C(r6, 63 - r2, 0);
-            }
-        } break;
-
-        case 1: {
-            sub_801D24C(15, 0, 0);
-        } break;
-
-        case 2: {
-            u32 r0 = (r6 - 577);
-            r0 <<= 16;
-            r2 = (r0 << 8) >> 24;
-            r6 /= 4u;
-            r6 = (15 - r6);
-
-            if (r6 != 0) {
-                sub_801D24C(r6, 63 - r2, 1);
-            } else {
-                gFlags &= ~FLAGS_EXECUTE_HBLANK_COPY;
-                gBldRegs.bldCnt = r6;
-            }
-        } break;
-
-        case 3: {
-            s8 i;
-            gBgCntRegs[0] &= ~BGCNT_PRIORITY(3);
-            gBgCntRegs[0] |= BGCNT_PRIORITY(3);
-            gBgCntRegs[3] &= ~BGCNT_PRIORITY(3);
-            gBgCntRegs[3] |= BGCNT_PRIORITY(2);
-
-            for (i = 0; i < 16; i++) {
-                SET_PALETTE_COLOR_BG(15, i, RGB_BLACK);
-            }
-
-            // jumps to _0801D8EE for this
-            gFlags |= FLAGS_UPDATE_BACKGROUND_PALETTES;
-        } break;
-
-        case 4: {
-            s8 i;
-            s32 v;
-
-            if (r6 == 897) {
-                memcpy(&gStageBackgroundsRam.unk0, &gStageCameraBgTemplates[3], sizeof(Background));
-                gStageBackgroundsRam.unk0.tilemapId = TM_TECHNO_BASE_BG_CIRCUIT_MASK;
-                bg->graphics.dest = (void *)BG_CHAR_ADDR(3);
-                bg->layoutVram = (void *)BG_SCREEN_ADDR(26);
-                bg->targetTilesX = 32;
-                bg->targetTilesY = 32;
-                DrawBackground(bg);
-            } else {
-                gDispCnt |= DISPCNT_BG0_ON;
-                gBgCntRegs[0] |= BGCNT_PRIORITY(3);
-            }
-            // _0801D76C
-
-            v = r6 - 897;
-            r6 = v;
-
-            for (i = 0; i < 16; i++) {
-                u32 red = ((gUnknown_080D5C02[0][i][0] * r6) >> 5) & 0x1F;
-                u32 green = ((gUnknown_080D5C02[0][i][1] * r6) >> 5) & 0x1F;
-                u32 blue = ((gUnknown_080D5C02[0][i][2] * r6) >> 5) & 0x1F;
-
-                SET_PALETTE_COLOR_BG(15, i, RGB16_REV(red, blue, green));
-            }
-
-            // jumps to _0801D83C for this
-            gFlags |= FLAGS_UPDATE_BACKGROUND_PALETTES;
-            gBgScrollRegs[0][0] = (gBgScrollRegs[0][0] - 2) & 0xFF;
-            gBgScrollRegs[0][1] = (gBgScrollRegs[0][1] + 1) & 0xFF;
-        } break;
-
-        case 5: {
-            // _0801D7F8_case5
-            s8 i;
-
-            for (i = 0; i < 16; i++) {
-                u32 red = gUnknown_080D5C02[0][i][0];
-                u32 green = gUnknown_080D5C02[0][i][1];
-                u32 blue = gUnknown_080D5C02[0][i][2];
-
-                SET_PALETTE_COLOR_BG(15, i, RGB16_REV(red, blue, green));
-            }
-
-            // _0801D83C
-            gFlags |= FLAGS_UPDATE_BACKGROUND_PALETTES;
-
-            gBgScrollRegs[0][0] = (gBgScrollRegs[0][0] - 2) & 0xFF;
-            gBgScrollRegs[0][1] = (gBgScrollRegs[0][1] + 1) & 0xFF;
-        } break;
-
-        case 6: {
-            s8 i;
-            s32 v;
-
-            gBgScrollRegs[0][0] = (gBgScrollRegs[0][0] - 2) & 0xFF;
-            gBgScrollRegs[0][1] = (gBgScrollRegs[0][1] + 1) & 0xFF;
-
-            v = r6 - 1441;
-            r6 = v;
-            r6 = (31 - r6) / 2u;
-
-            for (i = 0; i < 16; i++) {
-                u32 red = ((gUnknown_080D5C02[0][i][0] * r6) >> 4) & 0x1F;
-                u32 green = ((gUnknown_080D5C02[0][i][1] * r6) >> 4) & 0x1F;
-                u32 blue = ((gUnknown_080D5C02[0][i][2] * r6) >> 4) & 0x1F;
-
-                SET_PALETTE_COLOR_BG(15, i, RGB16_REV(red, blue, green));
-            }
-
-            gFlags |= FLAGS_UPDATE_BACKGROUND_PALETTES;
-        } break;
-
-        case 7: {
-            s8 i;
-            for (i = 0; i < 16; i++) {
-                SET_PALETTE_COLOR_BG(15, i, RGB_BLACK);
-            }
-            gFlags |= FLAGS_UPDATE_BACKGROUND_PALETTES;
-            gDispCnt &= ~(DISPCNT_BG0_ON);
-        } break;
-    }
-}
-END_NONMATCH
-
-/************************************ ZONE 7 ************************************/
-
-const s16 gUnknown_080D5C62[8][2] = {
-    { -Q_8_8(3.00), -Q_8_8(0.25) }, //
-    { -Q_8_8(1.50), +Q_8_8(0.00) }, //
-
-    { -Q_8_8(3.00), -Q_8_8(0.25) }, //
-    { -Q_8_8(1.00), -Q_8_8(0.0859375) }, //
-
-    { -Q_8_8(3.00), -Q_8_8(0.25) }, //
-    { -Q_8_8(1.50), +Q_8_8(0.00) }, //
-
-    { -Q_8_8(3.00), -Q_8_8(0.25) }, //
-    { -Q_8_8(0.75), -Q_8_8(0.125) }, //
-};
-
-static const ColorRaw sPalette_Zone7BgCeiling[] = INCPAL("graphics/sa2/zone_7_bg_ceiling.pal");
-
-void CreateStageBg_Zone7(void)
-{
-    Background *bg = &gStageBackgroundsRam.unk0;
-    const Background *src;
-    gDispCnt = DISPCNT_OBJ_ON | DISPCNT_BG2_ON | DISPCNT_BG1_ON | DISPCNT_OBJ_1D_MAP | DISPCNT_MODE_0;
-
-    gBgCntRegs[0] = (BGCNT_TXT256x256 | BGCNT_SCREENBASE(22) | BGCNT_16COLOR | BGCNT_PRIORITY(15));
-
-    src = gStageCameraBgTemplates;
-    memcpy(bg, &src[3], sizeof(Background));
-
-    bg->tilemapId = TM_UNK_SPACE_BG;
-    bg->graphics.dest = (void *)BG_SCREEN_ADDR(24);
-    bg->layoutVram = (void *)BG_SCREEN_ADDR(22);
-    bg->targetTilesX = 32;
-    bg->targetTilesY = 20;
-    DrawBackground(bg);
-
-    gBgCntRegs[3] &= ~BGCNT_PRIORITY(3);
-    gBgCntRegs[3] |= BGCNT_PRIORITY(3);
-    gBgScrollRegs[0][0] = 0;
-    gBgScrollRegs[0][1] = 0;
-}
-
-// (98.52%) https://decomp.me/scratch/DUPkY
-// (99.82%) https://decomp.me/scratch/pfVTf (fake match)
-NONMATCH("asm/non_matching/game/sa2/stage/background/Zone7BgUpdate_Inside.inc", void Zone7BgUpdate_Inside(s32 x, s32 y))
-{
-    u16 *dst;
-    s32 someX;
-    s32 lineY;
-    s32 ip;
-    u8 j;
-    u8 r1;
-    u8 r2;
-    u8 r5;
-
-    if ((gPlayer.moveState & MOVESTATE_GOAL_REACHED) && (gSpecialRingCount >= SPECIAL_STAGE_REQUIRED_SP_RING_COUNT)) {
-        if (gBgScrollRegs[3][0] == 0)
-            gBgScrollRegs[3][0] = x;
-
-        gBgScrollRegs[3][0] += I(gPlayer.qSpeedGround);
-
-        x = gBgScrollRegs[3][0];
-    }
-
-    gDispCnt &= ~DISPCNT_BG0_ON;
-    gDispCnt |= DISPCNT_BG3_ON;
-
-    gFlags |= FLAGS_EXECUTE_HBLANK_COPY;
-
-    gHBlankCopyTarget = (void *)&REG_BG3HOFS;
-    gHBlankCopySize = 4;
-
-    dst = (u16 *)gBgOffsetsHBlankPrimary;
-
-#ifndef NON_MATCHING
-    // Why call Div without using its return value?
-    someX = Div(x * 42, 400);
-#endif
-
-    // Move BG3 to the "ceiling" for the first 40 lines
-    for (lineY = 0; lineY < 40; lineY++) {
-        *dst++ = 8;
-        *dst++ = 16;
-    }
-
-    // ip = Div(25*x, 400);
-    ip = Div(25 * x, 400) & 0xFF;
-
-    for (lineY = 0; lineY < 119; lineY++) {
-        *dst++ = ip;
-        *dst++ = 17;
-    }
-
-    // _0801DAA6
-    // Draw the small, green-shining, moving pillars
-    // NOTE: j stored in *sp
-    j = 0;
-    do {
-        ip = (((gStageTime + x) / 8)) & 0xFF;
-
-        r5 = (((100 * j) + 64) - (y >> 4));
-        if (r5 < 240) {
-            // __0801DACA
-            if (r5 > 80) {
-                dst = gBgOffsetsHBlankPrimary;
-                r1 = ((r5 - 80) >> 4);
-                dst += (r5 - r1) << 1;
-
-                lineY = r5;
-                for (r2 = 0; ((lineY < r1 + 160) && (r2 < r1)); lineY++, r2++) {
-                    *dst++ = 0;
-                    *dst++ = 208 - r5;
-                }
-            }
-            // _0801DB1C
-            dst = gBgOffsetsHBlankPrimary;
-            dst = ((void *)dst) + (r5 * 4);
-
-            for (lineY = r5, r2 = 0; ((lineY < DISPLAY_HEIGHT) && (r2 < 16)); lineY++, r2++) {
-                *dst++ = ip;
-                *dst++ = (240 - r5);
-            }
-
-            if (lineY < 80) {
-                s32 r0 = (80 - lineY) >> 4;
-                r1 = r0;
-
-                for (r2 = 0; ((lineY < DISPLAY_HEIGHT) && (r2 < r1)); lineY++, r2++) {
-                    *dst++ = 0;
-                    *dst++ = (184 - r5);
-                }
-            }
-        } else {
-            // _0801DBAC
-            dst = gBgOffsetsHBlankPrimary;
-
-            for (lineY = 255 - r5; lineY < 16; lineY++) {
-                *dst++ = ip;
-                *dst++ = 495 - r5;
-            }
-            // _0801DBD2
-
-            for (r2 = 0; r2 < 4; r2++) {
-                *dst++ = 0;
-                *dst++ = 439 - r5;
-            }
-        }
-    } while (++j < 2); // _0801DBEE == continue of (j < 2)
-    // _0801DBFA
-
-    ip = ((gStageTime + x) / 2) & 0xFF;
-
-    {
-        r5 = -(y >> 1);
-
-        if (r5 < 224) {
-            u8 val;
-            if (r5 > 80) {
-                dst = gBgOffsetsHBlankPrimary;
-
-                val = ((r5 - 80) >> 4);
-                dst += (r5 - val) << 1;
-
-                lineY = r5, r2 = 0;
-                for (; ((lineY < (160 + val)) && (r2 < val)); lineY++, r2++) {
-                    *dst++ = 0;
-                    *dst++ = 208 - r5;
-                }
-            }
-            // _0801DC66
-            dst = gBgOffsetsHBlankPrimary;
-            dst = ((void *)dst) + (r5 * 4);
-
-            for (lineY = r5, r2 = 0; ((lineY < DISPLAY_HEIGHT) && (r2 < 32)); lineY++, r2++) {
-                *dst++ = ip;
-                *dst++ = 208 - r5;
-            }
-
-            if (lineY < 80) {
-                for (r1 = (80 - lineY) >> 4, r2 = 0; ((lineY < 160) && (r2 < r1)); lineY++, r2++) {
-                    *dst++ = 0;
-                    *dst++ = 168 - r5;
-                }
-            }
-        } else {
-            // _0801DCDC
-            dst = gBgOffsetsHBlankPrimary;
-
-            for (lineY = 255 - r5; lineY < 32; lineY++) {
-                *dst++ = ip;
-                *dst++ = 463 - r5;
-            }
-
-            for (r2 = 0; r2 < 4; r2++) {
-                *dst++ = 0;
-                *dst++ = 423 - r5;
-            }
-        }
-// _0801DD1A
-#if 001
-        { // Draw the "ceiling" movement
-            u32 new_r1 = (x >> 4) << 16;
-            const ColorRaw *src;
-            ColorRaw *dst;
-            s32 r6 = 0x7;
-            src = sPalette_Zone7BgCeiling;
-            dst = gBgPalette;
-            dst += 209;
-            new_r1 >>= 16;
-
-            for (lineY = 0; lineY < 8; new_r1--, lineY++) {
-                s32 index = (new_r1 & r6) + 1;
-                *dst++ = src[index];
-            }
-        }
-#else
-        { // Draw the "ceiling" movement
-            for (lineY = 0; lineY < 8; lineY++) {
-                SET_PALETTE_COLOR_BG(13, lineY + 1, sPalette_Zone7BgCeiling[((x >> 4) & 0x7) + 1]);
-            }
-        }
-#endif
-    }
-
-    gFlags = gFlags | FLAGS_UPDATE_BACKGROUND_PALETTES;
-}
-END_NONMATCH
-
-void Zone7BgUpdate_Outside(s32 x, s32 y)
-{
-    u16 *cursor;
-    u8 frameCount;
-    int_vcount i;
-    u16 sp[32];
-    u32 stageTime;
-
-    gDispCnt &= ~DISPCNT_BG3_ON;
-    gDispCnt |= DISPCNT_BG0_ON;
-
-    gFlags |= FLAGS_EXECUTE_HBLANK_COPY;
-
-    gHBlankCopyTarget = (void *)&REG_BG0HOFS;
-    gHBlankCopySize = 2;
-    cursor = (u16 *)gBgOffsetsHBlankPrimary;
-
-    stageTime = gStageTime;
-    frameCount = ((stageTime >> 3) & 0x1F);
-    if (frameCount >= 16) {
-        // Likely some sort of debug log
-#ifndef NON_MATCHING
-        register u32 r1 asm("r1");
-        register u8 r0 asm("r0");
-        r0 = 31 - frameCount;
-        asm("" ::"r"(r0));
-        r1 = r0;
-        asm("" ::"r"(r1));
-#endif
-    }
-
-    for (i = 0; i < ARRAY_COUNT(sp); i++) {
-        sp[i] = 0xFF & (I(gUnknown_080D5C62[(i & 0x7)][0] * stageTime) + gUnknown_080D5C62[(i & 0x7)][1]);
-    }
-
-    {
-        u16 sinVal, value;
-        u32 cosVal;
-        u32 scrollSpeed = (Q(80.5) - 1);
-
-#if !WIDESCREEN_HACK
-        for (i = 0; i < DISPLAY_HEIGHT / 2; i++) {
-            sinVal = SIN_24_8(((gStageTime * 4) + i * 2) & ONE_CYCLE) >> 3;
-            value = (COS_24_8(((i * scrollSpeed) >> 5) & ONE_CYCLE) >> 4) + sinVal;
-            value = (value + sp[(i & 0x1F)]) & 0xFF;
-            *cursor++ = value;
-        }
-
-        for (; i < DISPLAY_HEIGHT - 1; i++) {
-            sinVal = SIN_24_8(((gStageTime << 2) + i * 2) & ONE_CYCLE) >> 3;
-            cosVal = (COS_24_8((((DISPLAY_HEIGHT - i) * scrollSpeed) >> 5) & ONE_CYCLE) >> 4);
-            value = cosVal + sinVal;
-            value = (value + sp[(i & 0x1F)]) & 0xFF;
-            *cursor++ = value;
-        }
-#else
-        gHBlankCopySize = 2 * sizeof(u16);
-
-        for (i = 0; i < DISPLAY_HEIGHT; i++) {
-            const s32 gbaHLines = 160;
-            s32 originalLine = (s32)(((float)i / (float)DISPLAY_HEIGHT) * (float)gbaHLines);
-
-            if (originalLine < 80) {
-                sinVal = SIN_24_8(((gStageTime * 4) + originalLine * 2) & ONE_CYCLE) >> 3;
-                value = (COS_24_8(((originalLine * scrollSpeed) >> 5) & ONE_CYCLE) >> 4) + sinVal;
-                value = (value + sp[(originalLine & 0x1F)]) & 0xFF;
-                *cursor++ = value;
-                *cursor++ = originalLine - i;
-            } else if (originalLine < gbaHLines) {
-                sinVal = SIN_24_8(((gStageTime << 2) + originalLine * 2) & ONE_CYCLE) >> 3;
-                cosVal = (COS_24_8((((gbaHLines - originalLine) * scrollSpeed) >> 5) & ONE_CYCLE) >> 4);
-                value = cosVal + sinVal;
-                value = (value + sp[(originalLine & 0x1F)]) & 0xFF;
-                *cursor++ = value;
-                *cursor++ = originalLine - i;
-            }
-        }
-#endif
-    }
-}
-
-/************************************ ZONE FINAL ************************************/
-
-#define NUM_ZONE7_BG_TRANSITION_POSITIONS 8
-
-const u16 sZone7BgTransitionRegions[2][NUM_ZONE7_BG_TRANSITION_POSITIONS] = {
-    { 697, 1849, 8857, 11832, 18553, 22009, 25369, 27673 }, // ACT 1
-    { 1344, 2616, 9432, 15192, 18552, 19892, 23158, 25848 }, // ACT 2
-};
-
-const ColorRaw sExtraBossPalette[PALETTE_LEN_4BPP] = INCPAL("graphics/sa2/boss_9_normal.pal");
-
-void CreateStageBg_ZoneFinal_0(void)
-{
-    Background *bgDst;
-    const Background *bgSrc;
-    u8 i;
-
-    gDispCnt = (DISPCNT_OBJ_ON | DISPCNT_BG0_ON | DISPCNT_OBJ_1D_MAP | DISPCNT_MODE_1);
-    INIT_BG_SPRITES_LAYER_32(2);
-
-    bgDst = &gStageBackgroundsRam.unk80;
-    gBgCntRegs[2] = BGCNT_SCREENBASE(26) | BGCNT_256COLOR | BGCNT_CHARBASE(2) | BGCNT_PRIORITY(1);
-    bgSrc = gStageCameraBgTemplates;
-    memcpy(bgDst, &bgSrc[2], sizeof(Background));
-
-    bgDst->tilemapId = TM_EXTRA_BOSS_COCKPIT;
-    bgDst->graphics.dest = (void *)BG_CHAR_ADDR(2);
-
-    // TODO: Should this be a different macro?
-    bgDst->layoutVram = (void *)BG_TILE_ADDR(416);
-    bgDst->targetTilesX = 10;
-    bgDst->targetTilesY = 9;
-    bgDst->flags |= BACKGROUND_FLAG_4;
-    DrawBackground(bgDst);
-
-    bgDst = &gStageBackgroundsRam.unk0;
-    gBgCntRegs[0] = BGCNT_SCREENBASE(30) | BGCNT_16COLOR | BGCNT_CHARBASE(1) | BGCNT_PRIORITY(3);
-
-    memcpy(bgDst, &bgSrc[3], sizeof(Background));
-
-    bgDst->tilemapId = TM_EXTRA_BOSS_BACKGROUND;
-    bgDst->graphics.dest = (void *)BG_CHAR_ADDR(1);
-
-    // TODO: Should this be a different macro?
-    bgDst->layoutVram = (void *)BG_TILE_ADDR(480);
-    bgDst->targetTilesX = 32;
-    bgDst->targetTilesY = 20;
-    bgDst->flags = BACKGROUND_FLAGS_BG_ID(0);
-    DrawBackground(bgDst);
-
-    gBgScrollRegs[0][0] = 0;
-    gBgScrollRegs[0][1] = 0;
-    gBgScrollRegs[1][0] = 0;
-    gBgScrollRegs[1][1] = 0;
-    gBgScrollRegs[2][0] = 0;
-    gBgScrollRegs[2][1] = 0;
-    gBgScrollRegs[3][0] = 0;
-    gBgScrollRegs[3][1] = 0;
-
-    for (i = 0; i < ARRAY_COUNT(sExtraBossPalette); i++) {
-        SET_PALETTE_COLOR_BG(0, i, sExtraBossPalette[i]);
-    }
-
-    gFlags |= FLAGS_UPDATE_BACKGROUND_PALETTES;
-}
-#endif // COLLECT_RINGS_ROM
-
-/************************************ MISC TASKS ************************************/
 
 void DestroyCameraMovementTask(void)
 {
@@ -2406,6 +1075,7 @@ void Task_UpdateCamera(void)
     gOamMatrixIndex = 4;
 }
 
+#if (GAME == GAME_SA2)
 #ifndef COLLECT_RINGS_ROM
 void CreateStageBg_Default(void)
 {
@@ -2419,161 +1089,89 @@ void CreateStageBg_Dummy(void) { }
 #endif
 
 void StageBgUpdate_Dummy(s32 x, s32 y) { }
-#ifndef COLLECT_RINGS_ROM
-/************************************ BOSS 1 ************************************/
-
-void StageBgUpdate_Zone1ActBoss(UNUSED s32 x, UNUSED s32 y)
-{
-    struct Camera *cam = &gCamera;
-    if (!PLAYER_IS_ALIVE) {
-        gStageTime--;
-    }
-
-    gBgScrollRegs[0][0] = ((gStageTime + 4) >> 3) & 0xFF;
-    gBgScrollRegs[0][1] = cam->y >> 9;
-    gHBlankCallbacks[gNumHBlankCallbacks++] = HBlankCB_801E434;
-    gFlags |= FLAGS_EXECUTE_HBLANK_CALLBACKS;
-}
-
-/************************************ BOSS 2 ************************************/
-
-void StageBgUpdate_Zone2ActBoss(UNUSED s32 a, UNUSED s32 b)
-{
-    if (!PLAYER_IS_ALIVE) {
-        gStageTime--;
-    }
-
-    StageBgUpdate_Zone2Acts12(gStageTime, 4000);
-}
-
-/************************************ BOSS 3 ************************************/
-
-void StageBgUpdate_Zone3ActBoss(UNUSED s32 a, UNUSED s32 b)
-{
-    gBgScrollRegs[0][1] = 0;
-    gBgScrollRegs[3][1] = 0;
-    gBgScrollRegs[0][0] = 0;
-    gBgScrollRegs[3][0] = 0;
-}
-
-/************************************ BOSS 5 ************************************/
-
-void StageBgUpdate_Zone5ActBoss(UNUSED s32 a, UNUSED s32 b)
-{
-    gDispCnt &= ~DISPCNT_BG1_ON;
-    gBgScrollRegs[0][0]++;
-    gHBlankCallbacks[gNumHBlankCallbacks++] = HBlankCB_BgUpdateZone5ActBoss;
-    gFlags |= FLAGS_EXECUTE_HBLANK_CALLBACKS;
-}
-
-/************************************ BOSS 6 ************************************/
-
-void StageBgUpdate_Zone6ActBoss(UNUSED s32 a, UNUSED s32 b)
-{
-    gBgCntRegs[0] |= BGCNT_PRIORITY(3);
-    gBgCntRegs[3] &= ~BGCNT_PRIORITY(3);
-    gBgCntRegs[3] |= BGCNT_PRIORITY(2);
-    gBgScrollRegs[0][0] = (gBgScrollRegs[0][0] - 2) & 0xFF;
-    gBgScrollRegs[0][1] = (gBgScrollRegs[0][1] + 1) & 0xFF;
-}
-
-/*********************************** BOSS/ZONE 7 ********************************/
-
-// Not sure why this is defined here, it's possible the function name was confused
-// and this was defined twice in the same function
-void StageBgUpdate_Zone7Acts12(s32 x, s32 y)
-{
-    u32 act = !!(gCurrentLevel ^ (LEVEL_INDEX(ZONE_7, ACT_1)));
-    u32 bgId = 0;
-    u8 regionId = 0;
-
-    if (x >= sZone7BgTransitionRegions[act][regionId]) {
-        while (TRUE) {
-            if (++regionId >= NUM_ZONE7_BG_TRANSITION_POSITIONS) {
-                break;
-            }
-            if (x < sZone7BgTransitionRegions[act][regionId]) {
-                bgId = regionId % 2;
-                break;
-            }
-        };
-    };
-
-    if (bgId == 0) {
-        Zone7BgUpdate_Inside(x, y);
-    } else {
-        Zone7BgUpdate_Outside(x, y);
-    }
-
-    gPlayer.unk99[15] = bgId;
-}
-
-void StageBgUpdate_Zone7ActBoss(UNUSED s32 x, UNUSED s32 y)
-{
-    if (!PLAYER_IS_ALIVE) {
-        gStageTime--;
-    }
-
-    Zone7BgUpdate_Inside(gStageTime, 945);
-}
-
-/************************************ BOSS FINAL ************************************/
-
-void StageBgUpdate_ZoneFinalActXX(UNUSED s32 x, UNUSED s32 y)
-{
-    if (!PLAYER_IS_ALIVE) {
-        gStageTime--;
-    }
-
-    gHBlankCallbacks[gNumHBlankCallbacks++] = HBlankCB_BgUpdateZoneFinalActXX;
-    gFlags |= FLAGS_EXECUTE_HBLANK_CALLBACKS;
-}
-
-/************************************ BOSS EXTRA ************************************/
-
-#include "game/sa2/stage/bosses/common.h"
-#include "game/sa2/stage/bosses/boss_9.h"
-
-void StageBgUpdate_ZoneFinalActTA53(UNUSED s32 a, UNUSED s32 b)
-{
-    u32 aBool = FALSE;
-    int_vcount y;
-
-    if (gActiveBossTask != NULL) {
-        TA53Boss *boss = TASK_DATA(gActiveBossTask);
-        aBool = boss->unk10 & 0x1;
-    }
-
-    if (aBool) {
-        u16 *offset;
-        gFlags |= FLAGS_EXECUTE_HBLANK_COPY;
-        gHBlankCopyTarget = (void *)&REG_BG1HOFS;
-        gHBlankCopySize = 2;
-
-        offset = (u16 *)gBgOffsetsHBlankPrimary;
-        for (y = 0; y < DISPLAY_HEIGHT - 1; y++) {
-            s16 val = SIN(((y + gStageTime) * 40) & ONE_CYCLE) >> 12;
-            *offset++ = val;
-        }
-    }
-}
-
-/************************************ CALLBACKS ************************************/
-
 #endif
 
-// Unused
-void sub_801E3F0(void)
+#if (GAME == GAME_SA1)
+#include "../src/game/sa1/stage/backgrounds/zone_4_init.inc.c"
+#include "../src/game/sa1/stage/backgrounds/zone_5_init.inc.c"
+#include "../src/game/sa1/stage/backgrounds/zone_7.inc.c"
+#include "../src/game/sa1/stage/backgrounds/zone_2.inc.c"
+#include "../src/game/sa1/stage/backgrounds/zone_5.inc.c"
+#elif (GAME == GAME_SA2)
+#ifndef COLLECT_RINGS_ROM
+#include "../src/game/sa2/stage/backgrounds/zone_1_boss.inc.c"
+#include "../src/game/sa2/stage/backgrounds/zone_2_boss.inc.c"
+#include "../src/game/sa2/stage/backgrounds/zone_3_boss.inc.c"
+#include "../src/game/sa2/stage/backgrounds/zone_5_boss.inc.c"
+#include "../src/game/sa2/stage/backgrounds/zone_6_boss.inc.c"
+#include "../src/game/sa2/stage/backgrounds/zone_7.inc.c"
+#include "../src/game/sa2/stage/backgrounds/zone_final_boss.inc.c"
+#include "../src/game/sa2/stage/backgrounds/zone_extra_boss.inc.c"
+#endif
+#endif
+
+// TODO: extract these as camera_utils?
+#if (GAME == GAME_SA1)
+void VBlankCallback_803F920(void) { *(vu32 *)&REG_BG1HOFS = 0; }
+
+void HBlankCallback_803F92C(int_vcount line)
+{
+    s32 newLine = line - 90;
+
+    if ((newLine >= 0) && (line != DISPLAY_HEIGHT - 1)) {
+        u32 *ptr = gBgOffsetsHBlankSecondary;
+        ptr += 90;
+
+        *(vu32 *)&REG_BG1HOFS = ptr[newLine];
+    } else {
+        *(vu32 *)&REG_BG1HOFS = 0;
+    }
+}
+#endif
+
+UNUSED void SA2_LABEL(sub_801E3F0)(void)
 {
     struct Camera *cam = &gCamera;
+
     if (gStageTime & 0x1) {
-        u16 rand = (PseudoRandom32() & 0x70000) >> 16;
-        cam->shiftY = rand - 8;
+        cam->shiftY = ((u32)(PseudoRandom32() & 0x70000) >> 16) - 8;
     }
 }
 
-#ifndef COLLECT_RINGS_ROM
+#if (GAME == GAME_SA1)
+// Not sure why this is defined here
+struct Task *SpawnCasinoFireworkMP(s16 x, s16 y, s32 fireworkType)
+{
+    const TileInfoFirework *tileInfo = &gTileInfoZone3Fireworks[fireworkType % ARRAY_COUNT(gTileInfoZone3Fireworks)];
+    CasinoParadiseFirework *firework;
+    struct Task *t;
+    Sprite *s;
 
+    t = CreateMultiplayerSpriteTask(x, y, 0, 0, Task_UpdateFireworkAnimation, TaskDestructor_MultiplayerSpriteTask);
+    firework = TASK_DATA(t);
+    s = &firework->s;
+
+    s->graphics.dest = VramMalloc(tileInfo->numTiles);
+    s->graphics.anim = tileInfo->anim;
+    s->variant = tileInfo->variant;
+    s->oamFlags = SPRITE_OAM_ORDER(31);
+    s->frameFlags = SPRITE_FLAG(PRIORITY, 3);
+
+    return t;
+}
+
+void HBlankCallback_803FA1C(int_vcount line)
+{
+    if (line == 100) {
+        REG_BG0CNT &= ~BGCNT_TXT512x512;
+        REG_BG0CNT |= BGCNT_TXT256x512;
+        *(u32 *)&REG_BG0HOFS = (0 | (DISPLAY_HEIGHT << 16));
+    } else if (line > 101 && line < 134) {
+        REG_BLDY = 16 - ((line - 101) >> 1);
+    }
+}
+#elif (GAME == GAME_SA2)
+#ifndef COLLECT_RINGS_ROM
 void HBlankCB_801E434(int_vcount vcount)
 {
     if (vcount == 73) {
@@ -2613,5 +1211,5 @@ void HBlankCB_BgUpdateZoneFinalActXX(int_vcount vcount)
         REG_BG3HOFS = (u8)gStageTime;
     }
 }
-
+#endif
 #endif

@@ -9,7 +9,7 @@
 extern void HBlankCallback_803F92C(int_vcount line);
 extern void VBlankCallback_803F920(void);
 
-void StageBgUpdate_Zone7Act2(void)
+void StageBgUpdate_Zone7Act2(s32 x, s32 y)
 {
     struct Camera *cam = &gCamera;
     Background *bg = &gStageBackgroundsRam.unkC0;

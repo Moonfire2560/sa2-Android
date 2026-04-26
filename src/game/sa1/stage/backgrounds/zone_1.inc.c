@@ -1,6 +1,6 @@
 #include "global.h"
 #include "flags.h"
-#include "game/shared/stage/camera.h"
+
 #include "game/globals.h"
 #include "game/shared/stage/camera.h"
 
