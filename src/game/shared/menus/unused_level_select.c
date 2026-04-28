@@ -198,7 +198,7 @@ void Task_CreateSelectedTask(void)
 
     if (levelId == LEVEL_INDEX(ZONE_1, ACT_1)) {
         gCurrentLevel = LEVEL_INDEX(ZONE_1, ACT_1);
-        ApplyGameStageSettings();
+        ApplyGameStageSettingsAndStart();
     } else if (levelId == 0xFF) {
         CreateStaffCredits();
     } else if (levelId == 0xFE) {

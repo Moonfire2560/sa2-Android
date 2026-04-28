@@ -2,54 +2,108 @@
 #include "core.h"
 #include "sprite.h"
 
+#include "lib/m4a/m4a.h"
+
+#include "game/globals.h"
 #include "game/shared/stage/entities_manager.h"
 #include "game/shared/stage/music_manager.h"
 #include "game/shared/stage/palette_loader.h"
 #include "game/shared/stage/pause_menu.h"
 #include "game/shared/stage/rings_manager.h"
-#include "game/sa2/save.h"
-#include "game/sa2/ui/game_over.h"
-#include "game/sa2/stage/cheese.h"
-#include "game/sa2/stage/player_controls.h"
-#include "game/sa2/stage/player_super_sonic.h"
-#include "game/sa2/stage/race_progress.h"
+
 #include "game/shared/stage/screen_shake.h"
 #include "game/shared/stage/stage.h"
 #include "game/shared/stage/player.h"
 #include "game/shared/stage/camera.h"
-#include "game/sa2/ui/time_attack_lobby.h"
-#if (GAME == GAME_SA1)
-#include "game/time_over.h"
-#endif
+
 #include "game/shared/stage/mp_finish.h"
 #include "game/shared/stage/mp_indicators.h"
-#include "game/sa2/collect_rings/time_display.h"
+#include "game/shared/stage/mp_event_mgr.h"
 #include "game/shared/stage/mp_player.h"
+#include "game/shared/stage/spot_lights_manager.h"
 
-#include "lib/m4a/m4a.h"
+#if (GAME == GAME_SA1)
+#include "game/sa1/save.h"
+#include "game/sa1/ui/game_over.h"
+#include "game/sa1/ui/time_attack_lobby.h"
+#include "game/sa1/ui/time_over.h"
+#include "game/sa1/stage/mp_chao.h"
+#include "game/sa1/stage/player_controls.h"
+#include "game/sa1/parameters/stage.h"
+
+#include "constants/sa1/characters.h"
+#include "constants/sa1/songs.h"
+#include "constants/sa1/zones.h"
+#elif (GAME == GAME_SA2)
+#include "game/sa2/save.h"
+#include "game/sa2/ui/game_over.h"
+#include "game/sa2/ui/time_attack_lobby.h"
+#include "game/sa2/stage/cheese.h"
+#include "game/sa2/stage/player_controls.h"
+#include "game/sa2/stage/player_super_sonic.h"
+#include "game/sa2/stage/race_progress.h"
+#include "game/sa2/collect_rings/time_display.h"
 
 #include "constants/sa2/animations.h"
 #include "constants/sa2/characters.h"
 #include "constants/sa2/songs.h"
 #include "constants/sa2/zones.h"
-
-#include "game/shared/stage/mp_event_mgr.h"
+#endif
 
 #define BOSS_RINGS_DEFAULT_RESPAWN_COUNT 10
 
 struct Task *gGameStageTask = NULL;
 
 void Task_GameStage(void);
-
-void TaskDestructor_GameStage(struct Task *);
-
-void CreatePlayer(u32, u32, Player *);
-void CreateBossRunManager(u8);
+void TaskDestructor_GameStage(struct Task *t);
 void StageInit_CollectRings(void);
 
-void SetupStageIntro(void);
+extern void CreateStageWaterTask(s32 waterLevel, u32 p1, u32 mask);
+#if (GAME == GAME_SA1)
+extern struct Task *CreateMultiplayerChao(u8, u8);
+extern struct Task *sub_80550F8(void);
+// stage_ui_z.c
+typedef struct Struct_sub_80550F8 {
+    u8 filler0[0x27];
+    bool8 screenBlank;
+} Struct_sub_80550F8; /* size: 0x28 */
+extern void CreateChaoHuntHUD();
 
-void CreateStageWaterTask(u32, u32, u32);
+void StageInit_Zone1Act1(void);
+void StageInit_Zone1Act2(void);
+void StageInit_Zone2Act1(void);
+void StageInit_Zone2Act2(void);
+void StageInit_Zone3Act1(void);
+void StageInit_Zone3Act2(void);
+void StageInit_Zone4Act1(void);
+void StageInit_Zone4Act2(void);
+void StageInit_Zone5Act1(void);
+void StageInit_Zone5Act2(void);
+void StageInit_Zone6Act1(void);
+void StageInit_Zone6Act2(void);
+void StageInit_Zone7Act1(void);
+void StageInit_Zone7Act2(void);
+void StageInit_ForestChaoGarden(void);
+void StageInit_FactoryChaoGarden(void);
+void StageInit_PinballChaoGarden(void);
+void StageInit_SpaceChaoGarden(void);
+
+const VoidFn sStageInitProcs[NUM_LEVEL_IDS] = {
+    StageInit_Zone1Act1,         StageInit_Zone1Act2, //
+    StageInit_Zone2Act1,         StageInit_Zone2Act2, //
+    StageInit_Zone3Act1,         StageInit_Zone3Act2, //
+    StageInit_Zone4Act1,         StageInit_Zone4Act2, //
+    StageInit_Zone5Act1,         StageInit_Zone5Act2, //
+    StageInit_Zone6Act1,         StageInit_Zone6Act2, //
+    StageInit_Zone7Act1,         StageInit_Zone7Act2, //
+    StageInit_ForestChaoGarden,  StageInit_FactoryChaoGarden, //
+    StageInit_PinballChaoGarden, StageInit_SpaceChaoGarden,
+};
+#elif (GAME == GAME_SA2)
+// TODO: stage_intro.h
+extern void SetupStageIntro(void);
+// TODO: in boss run header
+extern void CreateBossRunManager(u8);
 
 void StageInit_Zone1Act1(void);
 void StageInit_Zone3Act1(void);
@@ -79,6 +133,7 @@ void StageInit_31(void);
 void StageInit_32(void);
 void StageInit_33(void);
 void StageInit_Dummy(void);
+
 #ifndef COLLECT_RINGS_ROM
 // NOTE(Jace): Many of these call copies of the exact same procedure,
 //             so for non-matching builds we could just exclude
@@ -120,9 +175,7 @@ const VoidFn sStageInitProcs[NUM_LEVEL_IDS] = { StageInit_Zone1Act1,
 #else
 extern const VoidFn sStageInitProcs[NUM_LEVEL_IDS];
 #endif
-extern const s8 CollHeightMap_zone_1_act_1_fg[];
-extern const u8 CollTileRot_zone_1_act_1_fg[];
-extern const u8 CollFlags_zone_1_act_1_fg[];
+#endif
 
 #ifndef COLLECT_RINGS_ROM
 #if (GAME == GAME_SA2)
@@ -299,7 +352,7 @@ void CreateGameStage(void)
             }
         }
     } else {
-        StageInit_MPCollectRings();
+        StageInit_CollectRings();
     }
 #elif (GAME == GAME_SA2)
     gSpikesUnknownTimer = 0;
@@ -1020,7 +1073,7 @@ void StageInit_PinballChaoGarden(void)
 #endif
 
 #if (GAME == GAME_SA1)
-void ApplyGameStageSettings(void)
+void ApplyGameStageSettingsAndStart(void)
 {
     gLevelScore = 0;
     gNumLives = 3;

@@ -52,7 +52,7 @@ sa2/src/game/sa1/multiplayer/chao_message.o(.bss);
 sa2/src/game/dummy_task.o(.data);
 
 . = 0x000058C0;
-src/game/shared/stage/stage.o(.data);
+sa2/src/game/shared/stage/stage.o(.data);
 
 . = 0x000058D0; gStageBackgroundsRam  = .;
 . = 0x000059D0; gCamera = .;

@@ -275,6 +275,7 @@ SA2_C_FILES := \
 	src/game/shared/stage/water_effects.c \
 	src/game/shared/stage/spot_light_beam_task.c \
 	src/game/shared/stage/camera.c \
+	src/game/shared/stage/stage.c \
 	src/game/sa1/ui/game_2_0.c \
 	src/game/sa1/ui/game_2_1.c \
 	src/game/sa1/ui/stage_results.c \

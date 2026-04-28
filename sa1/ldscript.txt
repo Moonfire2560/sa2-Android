@@ -113,7 +113,7 @@ SECTIONS {
         sa2/src/game/game.o(.text);
         sa2/src/game/dummy_task.o(.text);
 
-        src/game/shared/stage/stage.o(.text);
+        sa2/src/game/shared/stage/stage.o(.text);
         sa2/src/game/shared/stage/camera.o(.text);
         sa2/src/game/shared/stage/terrain_collision.o(.text);
         sa2/src/game/shared/stage/mp_sprite_task.o(.text);
@@ -344,7 +344,7 @@ SECTIONS {
         sa2/src/game/shared/multiplayer/communication_outcome.o(.rodata);
         sa2/src/game/shared/stage/amy_attack_heart_effect.o(.rodata);
         sa2/src/game/shared/stage/music_manager.o(.rodata);
-        src/game/shared/stage/stage.o(.rodata);
+        sa2/src/game/shared/stage/stage.o(.rodata);
         sa2/src/game/shared/stage/camera.o(.rodata);
         src/data/sa1/tilemap_table.o(.rodata);
         sa2/src/game/shared/stage/terrain_collision.o(.rodata);
