@@ -132,8 +132,8 @@ struct Ranges {
     struct Range b;
 };
 
-void SA2_LABEL(Task_8008DCC)(void);
-void SpawnMapEntities();
+static void SA2_LABEL(Task_8008DCC)(void);
+static void SpawnMapEntities();
 
 void SA2_LABEL(TaskDestructor_80095FC)(struct Task *);
 
@@ -475,7 +475,7 @@ extern void CreateEntity_WaterBridge(MapEntity *me, u16 regionX, u16 regionY, u8
 extern void CreateEntity_MysteryItemBox(MapEntity *me, u16 regionX, u16 regionY, u8 id);
 
 // Used for the Single Pak, "Collect Rings" stage
-const MapEntityInit gSpriteInits_InteractablesMultiplayer[] = {
+const MapEntityInit gSpriteInits_CollectRingsInteractables[] = {
     /* 000 */ CreateEntity_Spikes_Up,
     /* 001 */ CreateEntity_Spikes_Down,
     /* 002 */ CreateEntity_Spikes_Horizontal,
@@ -752,7 +752,7 @@ const u16 enemyDefeatScores[NUM_ENEMY_DEFEAT_SCORES] = {
     100, 200, 400, 800, 1000,
 };
 
-const MapEntityInit gSpriteInits_InteractablesMultiplayer[] = {
+const MapEntityInit gSpriteInits_CollectRingsInteractables[] = {
     CreateEntity_Toggle_PlayerLayer,
     CreateEntity_Toggle_PlayerLayer,
     CreateEntity_Spring_Normal_Up,
@@ -842,12 +842,37 @@ void CreateStageEntitiesManager(void)
     gEntitiesManagerTask = t;
 }
 
-void SpawnMapEntities()
+#if (GAME == GAME_SA1)
+#define RANGE_INIT(var)  CamCoord(var)[4]
+#define RANGE_xLow(var)  (var)[0]
+#define RANGE_yLow(var)  (var)[1]
+#define RANGE_xHigh(var) (var)[2]
+#define RANGE_yHigh(var) (var)[3]
+typedef u16 region;
+#else
+typedef struct {
+    CamCoord xLow, yLow;
+    CamCoord xHigh, yHigh;
+} Range;
+
+#define RANGE_INIT(var)  Range var
+#define RANGE_xLow(var)  (var)[0]
+#define RANGE_yLow(var)  (var)[1]
+#define RANGE_xHigh(var) (var)[2]
+#define RANGE_yHigh(var) (var)[3]
+typedef u32 region;
+#endif
+
+static void SpawnMapEntities()
 {
+    // Required to be here to help the stack match
+#ifndef NON_MATCHING
+    u32 temp, space;
+#endif
     if ((gStageFlags & 2) == 0) {
         u32 i;
-        u16 regionX, regionY;
-        CamCoord rangeData[4];
+        region regionX, regionY;
+        RANGE_INIT(range);
         u32 h_regionCount, v_regionCount;
 
         EntitiesManager *em = TASK_DATA(gCurTask);
@@ -862,48 +887,51 @@ void SpawnMapEntities()
         }
 
         interactables++;
+#ifndef NON_MATCHING
+        h_regionCount = (u16)(temp = *interactables++);
+#else
         h_regionCount = (u16)*interactables++;
+#endif
         v_regionCount = (u16)*interactables++;
 
-        // range = &rangeData;
-        rangeData[0] = gCamera.x - 128;
-        rangeData[2] = gCamera.x + (DISPLAY_WIDTH + 128);
+        RANGE_xLow(range) = gCamera.x - 128;
+        RANGE_xHigh(range) = gCamera.x + (DISPLAY_WIDTH + 128);
 
-        rangeData[1] = gCamera.y - 128;
-        rangeData[3] = gCamera.y + (DISPLAY_HEIGHT + 128);
+        RANGE_yLow(range) = gCamera.y - 128;
+        RANGE_yHigh(range) = gCamera.y + (DISPLAY_HEIGHT + 128);
 
-        if (rangeData[0] < 0) {
-            rangeData[0] = 0;
+        if (RANGE_xLow(range) < 0) {
+            RANGE_xLow(range) = 0;
         }
-        if (rangeData[1] < 0) {
-            rangeData[1] = 0;
+        if (RANGE_yLow(range) < 0) {
+            RANGE_yLow(range) = 0;
         }
-        if (rangeData[2] < 0) {
-            rangeData[2] = 0;
+        if (RANGE_xHigh(range) < 0) {
+            RANGE_xHigh(range) = 0;
         }
-        if (rangeData[3] < 0) {
-            rangeData[3] = 0;
-        }
-
-        if ((u32)rangeData[0] >= Q(h_regionCount)) {
-            rangeData[0] = Q(h_regionCount) - 1;
-        }
-        if ((u32)rangeData[1] >= Q(v_regionCount)) {
-            rangeData[1] = Q(v_regionCount) - 1;
+        if (RANGE_yHigh(range) < 0) {
+            RANGE_yHigh(range) = 0;
         }
 
-        if ((u32)rangeData[2] >= Q(h_regionCount)) {
-            rangeData[2] = Q(h_regionCount) - 1;
+        if ((u32)RANGE_xLow(range) >= Q(h_regionCount)) {
+            RANGE_xLow(range) = Q(h_regionCount) - 1;
+        }
+        if ((u32)RANGE_yLow(range) >= Q(v_regionCount)) {
+            RANGE_yLow(range) = Q(v_regionCount) - 1;
         }
 
-        if ((u32)rangeData[3] >= Q(v_regionCount)) {
-            rangeData[3] = Q(v_regionCount) - 1;
+        if ((u32)RANGE_xHigh(range) >= Q(h_regionCount)) {
+            RANGE_xHigh(range) = Q(h_regionCount) - 1;
         }
 
-        regionY = I(rangeData[1]);
-        while (Q(regionY) < rangeData[3] && regionY < v_regionCount) {
-            regionX = I(rangeData[0]);
-            while (Q(regionX) < rangeData[2] && regionX < h_regionCount) {
+        if ((u32)RANGE_yHigh(range) >= Q(v_regionCount)) {
+            RANGE_yHigh(range) = Q(v_regionCount) - 1;
+        }
+
+        regionY = I(RANGE_yLow(range));
+        while (Q(regionY) < RANGE_yHigh(range) && regionY < v_regionCount) {
+            regionX = I(RANGE_xLow(range));
+            while (Q(regionX) < RANGE_xHigh(range) && regionX < h_regionCount) {
                 if (gGameMode != GAME_MODE_MULTI_PLAYER_COLLECT_RINGS) {
                     i = READ_START_INDEX(interactables, h_regionCount, regionX, regionY);
                     if (i != 0) {
@@ -912,7 +940,8 @@ void SpawnMapEntities()
                             if ((s8)me->x >= -2) {
                                 CamCoord x = TO_WORLD_POS(me->x, regionX);
                                 CamCoord y = TO_WORLD_POS(me->y, regionY);
-                                if (x >= rangeData[0] && x <= rangeData[2] && y >= rangeData[1] && y <= rangeData[3]) {
+                                if (x >= RANGE_xLow(range) && x <= RANGE_xHigh(range) && y >= RANGE_yLow(range)
+                                    && y <= RANGE_yHigh(range)) {
                                     gSpriteInits_Interactables[me->index](me, regionX, regionY, i);
                                 }
                             }
@@ -926,7 +955,8 @@ void SpawnMapEntities()
                             if ((s8)me->x >= -2) {
                                 CamCoord x = TO_WORLD_POS(me->x, regionX);
                                 CamCoord y = TO_WORLD_POS(me->y, regionY);
-                                if (x >= rangeData[0] && x <= rangeData[2] && y >= rangeData[1] && y <= rangeData[3]) {
+                                if (x >= RANGE_xLow(range) && x <= RANGE_xHigh(range) && y >= RANGE_yLow(range)
+                                    && y <= RANGE_yHigh(range)) {
                                     CreateEntity_ItemBox((void *)me, regionX, regionY, i);
                                 }
                             }
@@ -941,13 +971,20 @@ void SpawnMapEntities()
                             if ((s8)me->x >= -2) {
                                 CamCoord x = TO_WORLD_POS(me->x, regionX);
                                 CamCoord y = TO_WORLD_POS(me->y, regionY);
-                                if (x >= rangeData[0] && x <= rangeData[2] && y >= rangeData[1] && y <= rangeData[3]) {
+                                if (x >= RANGE_xLow(range) && x <= RANGE_xHigh(range) && y >= RANGE_yLow(range)
+                                    && y <= RANGE_yHigh(range)) {
                                     gSpriteInits_Enemies[me->index](me, regionX, regionY, i);
                                 }
                             }
                         }
                     }
                 } else {
+#ifndef NON_MATCHING
+                    // Only required in the collect rings rom for non matching
+                    if (0) {
+                        while (1) { }
+                    }
+#endif
                     i = READ_START_INDEX(interactables, h_regionCount, regionX, regionY);
                     if (i != 0) {
                         MapEntity *me = ((void *)interactables + (i - 8));
@@ -955,8 +992,9 @@ void SpawnMapEntities()
                             if ((s8)me->x >= -2) {
                                 CamCoord x = TO_WORLD_POS(me->x, regionX);
                                 CamCoord y = TO_WORLD_POS(me->y, regionY);
-                                if (x >= rangeData[0] && x <= rangeData[2] && y >= rangeData[1] && y <= rangeData[3]) {
-                                    gSpriteInits_InteractablesMultiplayer[me->index](me, regionX, regionY, i);
+                                if (x >= RANGE_xLow(range) && x <= RANGE_xHigh(range) && y >= RANGE_yLow(range)
+                                    && y <= RANGE_yHigh(range)) {
+                                    gSpriteInits_CollectRingsInteractables[me->index](me, regionX, regionY, i);
                                 }
                             }
                         }
@@ -964,7 +1002,14 @@ void SpawnMapEntities()
                 }
                 regionX++;
             }
-            regionY++;
+#ifndef NON_MATCHING
+            // Only required in the collect rings rom for non matching
+            do {
+#endif
+                regionY++;
+#ifndef NON_MATCHING
+            } while (0);
+#endif
         }
         em->prevCamX = gCamera.x;
         em->prevCamY = gCamera.y;
@@ -973,7 +1018,7 @@ void SpawnMapEntities()
     }
 }
 
-void SA2_LABEL(Task_8008DCC)(void)
+static void SA2_LABEL(Task_8008DCC)(void)
 {
     if (!(gStageFlags & 2)) {
         u32 i;
@@ -1223,7 +1268,7 @@ void SA2_LABEL(Task_8008DCC)(void)
                                     CamCoord x = TO_WORLD_POS(me->x, regionX);
                                     CamCoord y = TO_WORLD_POS(me->y, regionY);
                                     if (x >= RANGE1[0] && x <= RANGE1[2] && y >= RANGE1[1] && y <= RANGE1[3]) {
-                                        gSpriteInits_InteractablesMultiplayer[me->index](me, regionX, regionY, i);
+                                        gSpriteInits_CollectRingsInteractables[me->index](me, regionX, regionY, i);
                                     }
                                 }
                             }
@@ -1291,7 +1336,7 @@ void SA2_LABEL(Task_8008DCC)(void)
                                     CamCoord x = TO_WORLD_POS(me->x, regionX);
                                     CamCoord y = TO_WORLD_POS(me->y, regionY);
                                     if (x >= RANGE2[0] && x <= RANGE2[2] && y >= RANGE2[1] && y <= RANGE2[3]) {
-                                        gSpriteInits_InteractablesMultiplayer[me->index](me, regionX, regionY, i);
+                                        gSpriteInits_CollectRingsInteractables[me->index](me, regionX, regionY, i);
                                     }
                                 }
                             }
