@@ -27,7 +27,7 @@ SECTIONS {
 
         /* Game */
         sa2/src/game/shared/stage/rings_manager.o(.text);
-        src/game/shared/stage/entities_manager.o(.text);
+        sa2/src/game/shared/stage/entities_manager.o(.text);
         sa2/src/game/shared/stage/collision_1.o(.text);
         sa2/src/game/shared/stage/collision_3.o(.text);
         sa2/src/game/shared/stage/collision_2.o(.text);
@@ -305,7 +305,7 @@ SECTIONS {
         sa2/src/game/sa1/save.o(.rodata);
         data/sa1/chao_garden.o(.rodata);
         src/data/sa1/entity_tables.o(.rodata);
-        src/game/shared/stage/entities_manager.o(.rodata);
+        sa2/src/game/shared/stage/entities_manager.o(.rodata);
         sa2/src/game/sa1/stage/itembox.o(.rodata);
         sa2/src/game/sa1/menus/title_screen.o(.rodata);
         sa2/src/game/shared/menus/unused_level_select.o(.rodata);

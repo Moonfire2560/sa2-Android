@@ -277,6 +277,7 @@ SA2_C_FILES := \
 	src/game/shared/stage/camera.c \
 	src/game/shared/stage/stage.c \
 	src/game/shared/stage/rings_manager.c \
+	src/game/shared/stage/entities_manager.c \
 	src/game/sa1/ui/game_2_0.c \
 	src/game/sa1/ui/game_2_1.c \
 	src/game/sa1/ui/stage_results.c \
