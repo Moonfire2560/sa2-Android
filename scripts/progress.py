@@ -32,8 +32,6 @@ def read_non_matching_funcs(filepath, game):
                         match = re.findall(r'\W*\w*\W*(\w*).*\)', line)
                         if match:
                             result.append(match[0])
-    if result:
-        print(filepath, result)
     return result
 
 
