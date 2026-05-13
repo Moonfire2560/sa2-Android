@@ -1,0 +1,232 @@
+{
+	"artifacts" : 
+	[
+		{
+			"path" : "C:/Github/sa2-Android/android/app/build/intermediates/cxx/Debug/282a2914/obj/arm64-v8a/libsa2.so"
+		}
+	],
+	"backtrace" : 1,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_library",
+			"target_link_libraries",
+			"add_definitions",
+			"include_directories"
+		],
+		"files" : 
+		[
+			"CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 43,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 47,
+				"parent" : 0
+			},
+			{
+				"command" : 2,
+				"file" : 0,
+				"line" : 23,
+				"parent" : 0
+			},
+			{
+				"command" : 3,
+				"file" : 0,
+				"line" : 13,
+				"parent" : 0
+			}
+		]
+	},
+	"compileGroups" : 
+	[
+		{
+			"compileCommandFragments" : 
+			[
+				{
+					"fragment" : "-g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security  -Wall -Wno-unused-variable -Wno-unused-function -fno-limit-debug-info  -fPIC"
+				}
+			],
+			"defines" : 
+			[
+				{
+					"backtrace" : 3,
+					"define" : "DISPLAY_HEIGHT=240"
+				},
+				{
+					"backtrace" : 3,
+					"define" : "DISPLAY_WIDTH=426"
+				},
+				{
+					"backtrace" : 3,
+					"define" : "ENABLE_AUDIO=1"
+				},
+				{
+					"backtrace" : 3,
+					"define" : "GAME=GAME_SA2"
+				},
+				{
+					"backtrace" : 3,
+					"define" : "GAME_LANGUAGE=LANGUAGE_MULTI"
+				},
+				{
+					"backtrace" : 3,
+					"define" : "NDEBUG"
+				},
+				{
+					"backtrace" : 3,
+					"define" : "PLATFORM_GBA=0"
+				},
+				{
+					"backtrace" : 3,
+					"define" : "PLATFORM_SDL=1"
+				},
+				{
+					"backtrace" : 3,
+					"define" : "REVISION=0"
+				},
+				{
+					"backtrace" : 3,
+					"define" : "SONIC_ADVANCE_2=1"
+				},
+				{
+					"backtrace" : 3,
+					"define" : "WIDESCREEN_HACK=1"
+				},
+				{
+					"backtrace" : 3,
+					"define" : "__ANDROID__"
+				},
+				{
+					"define" : "sa2_EXPORTS"
+				}
+			],
+			"includes" : 
+			[
+				{
+					"backtrace" : 4,
+					"path" : "C:/Github/sa2-Android/android/app/src/main/cpp/../../../../../include"
+				},
+				{
+					"backtrace" : 4,
+					"path" : "C:/Github/sa2-Android/android/app/src/main/cpp/../../../../../include/game"
+				},
+				{
+					"backtrace" : 4,
+					"path" : "C:/Github/sa2-Android/android/app/src/main/cpp/../../../../../include/constants"
+				},
+				{
+					"backtrace" : 4,
+					"path" : "C:/Github/sa2-Android/android/app/src/main/cpp/../../../../../src"
+				},
+				{
+					"backtrace" : 4,
+					"path" : "C:/Github/sa2-Android/android/app/.cxx/Debug/282a2914/arm64-v8a/SDL/include"
+				},
+				{
+					"backtrace" : 4,
+					"path" : "C:/Github/sa2-Android/android/app/.cxx/Debug/282a2914/arm64-v8a/SDL/include/SDL2"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "C:/Github/sa2-Android/android/app/.cxx/Debug/282a2914/arm64-v8a/SDL/include-config-debug/SDL2"
+				}
+			],
+			"language" : "C",
+			"sourceIndexes" : 
+			[
+				0
+			],
+			"sysroot" : 
+			{
+				"path" : "C:/Users/austi/AppData/Local/Android/Sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/windows-x86_64/sysroot"
+			}
+		}
+	],
+	"dependencies" : 
+	[
+		{
+			"backtrace" : 2,
+			"id" : "SDL2::@e7c329919722962a2ad4"
+		}
+	],
+	"id" : "sa2::@6890427a1f51a3e7e1df",
+	"link" : 
+	{
+		"commandFragments" : 
+		[
+			{
+				"fragment" : "-Wl,--build-id=sha1 -Wl,--no-rosegment -Wl,--fatal-warnings -Wl,--gc-sections -Wl,--no-undefined -Qunused-arguments",
+				"role" : "flags"
+			},
+			{
+				"backtrace" : 2,
+				"fragment" : "C:\\Github\\sa2-Android\\android\\app\\build\\intermediates\\cxx\\Debug\\282a2914\\obj\\arm64-v8a\\libSDL2.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 2,
+				"fragment" : "-llog",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 2,
+				"fragment" : "-landroid",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 2,
+				"fragment" : "-lGLESv2",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "-latomic -lm",
+				"role" : "libraries"
+			}
+		],
+		"language" : "C",
+		"sysroot" : 
+		{
+			"path" : "C:/Users/austi/AppData/Local/Android/Sdk/ndk/25.1.8937393/toolchains/llvm/prebuilt/windows-x86_64/sysroot"
+		}
+	},
+	"name" : "sa2",
+	"nameOnDisk" : "libsa2.so",
+	"paths" : 
+	{
+		"build" : ".",
+		"source" : "."
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "Source Files",
+			"sourceIndexes" : 
+			[
+				0
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "test_main.c",
+			"sourceGroupIndex" : 0
+		}
+	],
+	"type" : "SHARED_LIBRARY"
+}

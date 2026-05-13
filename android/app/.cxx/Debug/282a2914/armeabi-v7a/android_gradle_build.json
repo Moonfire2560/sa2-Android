@@ -1,0 +1,86 @@
+{
+  "buildFiles": [
+    "C:\\Github\\sa2-Android\\android\\app\\src\\main\\cpp\\CMakeLists.txt",
+    "C:\\Github\\sa2-Android\\android\\app\\src\\main\\cpp\\SDL\\CMakeLists.txt",
+    "C:\\Github\\sa2-Android\\android\\app\\src\\main\\cpp\\SDL\\cmake\\CheckCPUArchitecture.cmake",
+    "C:\\Github\\sa2-Android\\android\\app\\src\\main\\cpp\\SDL\\cmake\\macros.cmake",
+    "C:\\Github\\sa2-Android\\android\\app\\src\\main\\cpp\\SDL\\cmake\\sdlchecks.cmake",
+    "C:\\Github\\sa2-Android\\android\\app\\src\\main\\cpp\\SDL\\cmake\\sdlfind.cmake",
+    "C:\\Github\\sa2-Android\\android\\app\\src\\main\\cpp\\SDL\\cmake\\sdlplatform.cmake",
+    "C:\\Github\\sa2-Android\\android\\app\\src\\main\\cpp\\SDL\\cmake_uninstall.cmake.in",
+    "C:\\Github\\sa2-Android\\android\\app\\src\\main\\cpp\\SDL\\include\\SDL_config.h.cmake",
+    "C:\\Github\\sa2-Android\\android\\app\\src\\main\\cpp\\SDL\\include\\SDL_revision.h.cmake"
+  ],
+  "cleanCommandsComponents": [
+    [
+      "C:\\Users\\austi\\AppData\\Local\\Android\\Sdk\\cmake\\3.22.1\\bin\\ninja.exe",
+      "-C",
+      "C:\\Github\\sa2-Android\\android\\app\\.cxx\\Debug\\282a2914\\armeabi-v7a",
+      "clean"
+    ]
+  ],
+  "buildTargetsCommandComponents": [
+    "C:\\Users\\austi\\AppData\\Local\\Android\\Sdk\\cmake\\3.22.1\\bin\\ninja.exe",
+    "-C",
+    "C:\\Github\\sa2-Android\\android\\app\\.cxx\\Debug\\282a2914\\armeabi-v7a",
+    "{LIST_OF_TARGETS_TO_BUILD}"
+  ],
+  "libraries": {
+    "SDL2::@e7c329919722962a2ad4": {
+      "toolchain": "toolchain",
+      "abi": "armeabi-v7a",
+      "artifactName": "SDL2",
+      "output": "C:\\Github\\sa2-Android\\android\\app\\build\\intermediates\\cxx\\Debug\\282a2914\\obj\\armeabi-v7a\\libSDL2.so",
+      "runtimeFiles": []
+    },
+    "SDL2-static::@e7c329919722962a2ad4": {
+      "toolchain": "toolchain",
+      "abi": "armeabi-v7a",
+      "artifactName": "SDL2-static",
+      "output": "C:\\Github\\sa2-Android\\android\\app\\.cxx\\Debug\\282a2914\\armeabi-v7a\\SDL\\libSDL2.a"
+    },
+    "SDL2_test::@e7c329919722962a2ad4": {
+      "toolchain": "toolchain",
+      "abi": "armeabi-v7a",
+      "artifactName": "SDL2_test",
+      "output": "C:\\Github\\sa2-Android\\android\\app\\.cxx\\Debug\\282a2914\\armeabi-v7a\\SDL\\libSDL2_test.a"
+    },
+    "SDL2main::@e7c329919722962a2ad4": {
+      "toolchain": "toolchain",
+      "abi": "armeabi-v7a",
+      "artifactName": "SDL2main",
+      "output": "C:\\Github\\sa2-Android\\android\\app\\.cxx\\Debug\\282a2914\\armeabi-v7a\\SDL\\libSDL2main.a"
+    },
+    "sa2::@6890427a1f51a3e7e1df": {
+      "toolchain": "toolchain",
+      "abi": "armeabi-v7a",
+      "artifactName": "sa2",
+      "output": "C:\\Github\\sa2-Android\\android\\app\\build\\intermediates\\cxx\\Debug\\282a2914\\obj\\armeabi-v7a\\libsa2.so",
+      "runtimeFiles": [
+        "C:\\Github\\sa2-Android\\android\\app\\build\\intermediates\\cxx\\Debug\\282a2914\\obj\\armeabi-v7a\\libSDL2.so"
+      ]
+    },
+    "sdl_headers_copy::@e7c329919722962a2ad4": {
+      "toolchain": "toolchain",
+      "abi": "armeabi-v7a",
+      "artifactName": "sdl_headers_copy"
+    },
+    "uninstall::@e7c329919722962a2ad4": {
+      "toolchain": "toolchain",
+      "abi": "armeabi-v7a",
+      "artifactName": "uninstall"
+    }
+  },
+  "toolchains": {
+    "toolchain": {
+      "cCompilerExecutable": "C:\\Users\\austi\\AppData\\Local\\Android\\Sdk\\ndk\\25.1.8937393\\toolchains\\llvm\\prebuilt\\windows-x86_64\\bin\\clang.exe",
+      "cppCompilerExecutable": "C:\\Users\\austi\\AppData\\Local\\Android\\Sdk\\ndk\\25.1.8937393\\toolchains\\llvm\\prebuilt\\windows-x86_64\\bin\\clang++.exe"
+    }
+  },
+  "cFileExtensions": [
+    "c"
+  ],
+  "cppFileExtensions": [
+    "cpp"
+  ]
+}

@@ -1,0 +1,10 @@
+C:\Github\sa2-Android\android\app\src\main\cpp\CMakeLists.txt
+C:\Github\sa2-Android\android\app\src\main\cpp\SDL\CMakeLists.txt
+C:\Github\sa2-Android\android\app\src\main\cpp\SDL\cmake\CheckCPUArchitecture.cmake
+C:\Github\sa2-Android\android\app\src\main\cpp\SDL\cmake\macros.cmake
+C:\Github\sa2-Android\android\app\src\main\cpp\SDL\cmake\sdlchecks.cmake
+C:\Github\sa2-Android\android\app\src\main\cpp\SDL\cmake\sdlfind.cmake
+C:\Github\sa2-Android\android\app\src\main\cpp\SDL\cmake\sdlplatform.cmake
+C:\Github\sa2-Android\android\app\src\main\cpp\SDL\cmake_uninstall.cmake.in
+C:\Github\sa2-Android\android\app\src\main\cpp\SDL\include\SDL_config.h.cmake
+C:\Github\sa2-Android\android\app\src\main\cpp\SDL\include\SDL_revision.h.cmake
